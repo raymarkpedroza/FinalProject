@@ -11,7 +11,7 @@ namespace Pastebook.Models
         public int UserId { get; set; }
         public int FriendId { get; set; }
         public char Request { get; set; }
-        public char IsBLOCKED { get; set; }
+        public char IsBlocked { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

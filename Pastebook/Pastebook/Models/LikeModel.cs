@@ -7,7 +7,7 @@ namespace Pastebook.Models
 {
     public class LikeModel
     {
-        public int LikeId { get; set; }
+        public int Id { get; set; }
         public int PostId { get; set; }
         public int LikedBy { get; set; }
     }

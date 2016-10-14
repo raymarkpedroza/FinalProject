@@ -14,12 +14,6 @@ namespace PastebookEF
     
     public partial class PASTEBOOK_FRIEND
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PASTEBOOK_FRIEND()
-        {
-            this.PASTEBOOK_NOTIFICATION = new HashSet<PASTEBOOK_NOTIFICATION>();
-        }
-    
         public int ID { get; set; }
         public int USER_ID { get; set; }
         public int FRIEND_ID { get; set; }
@@ -28,8 +22,6 @@ namespace PastebookEF
         public System.DateTime CREATED_DATE { get; set; }
     
         public virtual PASTEBOOK_USER PASTEBOOK_USER { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION { get; set; }
         public virtual PASTEBOOK_USER PASTEBOOK_USER1 { get; set; }
     }
 }

@@ -27,11 +27,10 @@ namespace PastebookEF
             this.PASTEBOOK_POST1 = new HashSet<PASTEBOOK_POST>();
         }
     
-        public int USER_ID { get; set; }
+        public int ID { get; set; }
         public string USER_NAME { get; set; }
         public string PASSWORD { get; set; }
         public string SALT { get; set; }
-        public string EMAIL_ADDRESS { get; set; }
         public string FIRST_NAME { get; set; }
         public string LAST_NAME { get; set; }
         public System.DateTime BIRTHDAY { get; set; }
@@ -41,6 +40,7 @@ namespace PastebookEF
         public byte[] PROFILE_PIC { get; set; }
         public System.DateTime DATE_CREATED { get; set; }
         public string ABOUT_ME { get; set; }
+        public string EMAIL_ADDRESS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PASTEBOOK_COMMENT> PASTEBOOK_COMMENT { get; set; }

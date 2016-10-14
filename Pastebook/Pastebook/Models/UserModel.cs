@@ -7,7 +7,7 @@ namespace Pastebook.Models
 {
     public class UserModel
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string Username { get; set; }
         public string ConfirmPassword { get; set; }
         public string Password { get; set; }
@@ -18,9 +18,9 @@ namespace Pastebook.Models
         public DateTime Birthday { get; set; }
         public int CountryId { get; set; }
         public string MobileNumber { get; set; }
-        public char Gender { get; set; }
-        public string ProfilePicture { get; set; }
-        public DateTime DATE_CREATED { get; set; }
+        public string Gender { get; set; }
+        public byte[] ProfilePicture { get; set; }
+        public DateTime DateCreated { get; set; }
         public string AboutMe { get; set; }
     }
 }

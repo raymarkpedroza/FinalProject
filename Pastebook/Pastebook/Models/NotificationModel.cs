@@ -7,15 +7,13 @@ namespace Pastebook.Models
 {
     public class NotificationModel
     {
-        public int NotificationId { get; set; }
+        public int Id { get; set; }
         public int NotificationType { get; set; }
         public int ReceiverId { get; set; }
         public int SenderId { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int LikeId { get; set; }
         public int CommentId { get; set; }
         public int PostId { get; set; }
-        public int FriendId { get; set; }
         public char Seen { get; set; }
     }
 }
