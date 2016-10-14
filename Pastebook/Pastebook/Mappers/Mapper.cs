@@ -3,206 +3,206 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Pastebook.Models;
-using PastebookEF;
+using PastebookBusinessLogic.Entities;
 
 namespace Pastebook.Mappers
 {
     public static class Mapper
     {
-        public static PASTEBOOK_USER MapMVCUserToDBUSer(UserModel mvcUser)
+        public static UserEntity MapMVCUserToBLUSer(UserModel mvcUser)
         {
-            PASTEBOOK_USER tbUser = new PASTEBOOK_USER();
+            UserEntity blUser = new UserEntity();
 
-            tbUser.ID = mvcUser.Id;
-            tbUser.USER_NAME = mvcUser.Username;
-            tbUser.PASSWORD = mvcUser.Password;
-            tbUser.SALT = mvcUser.Salt;
-            tbUser.EMAIL_ADDRESS = mvcUser.EmailAddress;
-            tbUser.FIRST_NAME = mvcUser.Firstname;
-            tbUser.LAST_NAME = mvcUser.Lastname;
-            tbUser.BIRTHDAY = mvcUser.Birthday;
-            tbUser.COUNTRY_ID = mvcUser.CountryId;
-            tbUser.MOBILE_NO = mvcUser.MobileNumber;
-            tbUser.GENDER = mvcUser.Gender;
-            tbUser.PROFILE_PIC = mvcUser.ProfilePicture;
-            tbUser.DATE_CREATED = mvcUser.DateCreated;
-            tbUser.ABOUT_ME = mvcUser.AboutMe;
+            blUser.Id = mvcUser.Id;
+            blUser.Username = mvcUser.Username;
+            blUser.Password = mvcUser.Password;
+            blUser.Salt = mvcUser.Salt;
+            blUser.EmailAddress = mvcUser.EmailAddress;
+            blUser.Firstname = mvcUser.Firstname;
+            blUser.Lastname = mvcUser.Lastname;
+            blUser.Birthday = mvcUser.Birthday;
+            blUser.CountryId = mvcUser.CountryId;
+            blUser.MobileNumber = mvcUser.MobileNumber;
+            blUser.Gender = mvcUser.Gender;
+            blUser.ProfilePicture = mvcUser.ProfilePicture;
+            blUser.DateCreated = mvcUser.DateCreated;
+            blUser.AboutMe = mvcUser.AboutMe;
 
-            return tbUser;
+            return blUser;
         }
 
-        public static UserModel MapDBUserToMVCUSer(PASTEBOOK_USER tbUser)
+        public static UserModel MapBLUserToMVCUSer(UserEntity blUser)
         {
             UserModel mvcUser = new UserModel();
 
-            mvcUser.Id = tbUser.ID;
-            mvcUser.Username = tbUser.USER_NAME;
-            mvcUser.Password = tbUser.PASSWORD;
-            mvcUser.Salt = tbUser.SALT;
-            mvcUser.EmailAddress = tbUser.EMAIL_ADDRESS;
-            mvcUser.Firstname = tbUser.FIRST_NAME;
-            mvcUser.Lastname = tbUser.LAST_NAME;
-            mvcUser.Birthday = tbUser.BIRTHDAY;
-            mvcUser.CountryId = (int)tbUser.COUNTRY_ID;
-            mvcUser.MobileNumber = tbUser.MOBILE_NO;
-            mvcUser.Gender = tbUser.GENDER;
-            mvcUser.ProfilePicture = tbUser.PROFILE_PIC;
-            mvcUser.DateCreated = tbUser.DATE_CREATED;
-            mvcUser.AboutMe = tbUser.ABOUT_ME;
+            mvcUser.Id = blUser.Id;
+            mvcUser.Username = blUser.Username;
+            mvcUser.Password = blUser.Password;
+            mvcUser.Salt = blUser.Salt;
+            mvcUser.EmailAddress = blUser.EmailAddress;
+            mvcUser.Firstname = blUser.Firstname;
+            mvcUser.Lastname = blUser.Lastname;
+            mvcUser.Birthday = blUser.Birthday;
+            mvcUser.CountryId = blUser.CountryId;
+            mvcUser.MobileNumber = blUser.MobileNumber;
+            mvcUser.Gender = blUser.Gender;
+            mvcUser.ProfilePicture = blUser.ProfilePicture;
+            mvcUser.DateCreated = blUser.DateCreated;
+            mvcUser.AboutMe = blUser.AboutMe;
 
             return mvcUser;
         }
 
-        public static PASTEBOOK_COMMENT MapMVCCommentToDBComment(CommentModel mvcComment)
+        public static CommentEntity MapMVCCommentToBLComment(CommentModel mvcComment)
         {
-            PASTEBOOK_COMMENT tbComment = new PASTEBOOK_COMMENT();
+            CommentEntity blComment = new CommentEntity();
 
-            tbComment.ID = mvcComment.Id;
-            tbComment.POST_ID = mvcComment.PostId;
-            tbComment.POSTER_ID = mvcComment.PosterId;
-            tbComment.CONTENT = mvcComment.Content;
-            tbComment.DATE_CREATED = mvcComment.DateCreated;
+            blComment.Id = mvcComment.Id;
+            blComment.PostId = mvcComment.PostId;
+            blComment.PosterId = mvcComment.PosterId;
+            blComment.Content = mvcComment.Content;
+            blComment.DateCreated = mvcComment.DateCreated;
 
-            return tbComment;
+            return blComment;
         }
 
-        public static CommentModel MapDBCommentToMVCComment(PASTEBOOK_COMMENT tbComment)
+        public static CommentModel MapBLCommentToMVCComment(CommentEntity blComment)
         {
             CommentModel mvcComment = new CommentModel();
 
-            mvcComment.Id = tbComment.ID;
-            mvcComment.PostId = tbComment.POST_ID;
-            mvcComment.PosterId = tbComment.POSTER_ID;
-            mvcComment.Content = tbComment.CONTENT;
-            mvcComment.DateCreated = tbComment.DATE_CREATED;
+            mvcComment.Id = blComment.Id;
+            mvcComment.PostId = blComment.PostId;
+            mvcComment.PosterId = blComment.PosterId;
+            mvcComment.Content = blComment.Content;
+            mvcComment.DateCreated = blComment.DateCreated;
 
             return mvcComment;
         }
 
-        public static PASTEBOOK_FRIEND MapMVCFriendToDBFriend(FriendModel mvcFriend)
+        public static FriendEntity MapMVCFriendToBLFriend(FriendModel mvcFriend)
         {
-            PASTEBOOK_FRIEND tbFriend = new PASTEBOOK_FRIEND();
+            FriendEntity blFriend = new FriendEntity();
 
-            tbFriend.ID = mvcFriend.Id;
-            tbFriend.USER_ID = mvcFriend.UserId;
-            tbFriend.FRIEND_ID = mvcFriend.FriendId;
-            tbFriend.REQUEST = mvcFriend.Request.ToString();
-            tbFriend.IsBLOCKED = mvcFriend.IsBlocked.ToString();
-            tbFriend.CREATED_DATE = mvcFriend.CreatedDate;
+            blFriend.Id = mvcFriend.Id;
+            blFriend.UserId = mvcFriend.UserId;
+            blFriend.FriendId = mvcFriend.FriendId;
+            blFriend.Request = mvcFriend.Request;
+            blFriend.IsBlocked = mvcFriend.IsBlocked;
+            blFriend.CreatedDate = mvcFriend.CreatedDate;
 
-            return tbFriend;
+            return blFriend;
         }
 
-        public static FriendModel MapMVCFriendToDBFriend(PASTEBOOK_FRIEND tbFriend)
+        public static FriendModel MapBLFriendToMVCFriend(FriendEntity blFriend)
         {
             FriendModel mvcFriend = new FriendModel();
 
-            mvcFriend.Id = tbFriend.ID;
-            mvcFriend.UserId = tbFriend.USER_ID;
-            mvcFriend.FriendId = tbFriend.FRIEND_ID;
-            mvcFriend.Request = Convert.ToChar(tbFriend.REQUEST);
-            mvcFriend.IsBlocked = Convert.ToChar(tbFriend.IsBLOCKED);
-            mvcFriend.CreatedDate = tbFriend.CREATED_DATE;
+            mvcFriend.Id = blFriend.Id;
+            mvcFriend.UserId = blFriend.UserId;
+            mvcFriend.FriendId = blFriend.FriendId;
+            mvcFriend.Request = Convert.ToChar(blFriend.Request);
+            mvcFriend.IsBlocked = Convert.ToChar(blFriend.IsBlocked);
+            mvcFriend.CreatedDate = blFriend.CreatedDate;
 
             return mvcFriend;
         }
 
-        public static PASTEBOOK_LIKE MapMVCLikeToDBLike(LikeModel mvcLike)
+        public static LikeEntity MapMVCLikeToBLLike(LikeModel mvcLike)
         {
-            PASTEBOOK_LIKE tbLike = new PASTEBOOK_LIKE();
+            LikeEntity tbLike = new LikeEntity();
 
-            tbLike.ID = mvcLike.Id;
-            tbLike.POST_ID = mvcLike.PostId;
-            tbLike.LIKED_BY = mvcLike.LikedBy;
+            tbLike.Id = mvcLike.Id;
+            tbLike.PostId = mvcLike.PostId;
+            tbLike.LikedBy = mvcLike.LikedBy;
 
             return tbLike;
         }
 
-        public static LikeModel MapDBLikeToMVCLike(PASTEBOOK_LIKE tbLike)
+        public static LikeModel MapBLLikeToMVCLike(LikeEntity blLike)
         {
             LikeModel mvcLike = new LikeModel();
 
-            mvcLike.Id = tbLike.ID;
-            mvcLike.PostId = tbLike.POST_ID;
-            mvcLike.LikedBy = tbLike.LIKED_BY;
+            mvcLike.Id = blLike.Id;
+            mvcLike.PostId = blLike.PostId;
+            mvcLike.LikedBy = blLike.LikedBy;
 
             return mvcLike;
         }
 
-        public static PASTEBOOK_NOTIFICATION MapMVCNotificationToDBNotification(NotificationModel mvcNotification)
+        public static NotificationEntity MapMVCNotificationToBLNotification(NotificationModel mvcNotification)
         {
-            PASTEBOOK_NOTIFICATION tbNotification = new PASTEBOOK_NOTIFICATION();
+            NotificationEntity blNotification = new NotificationEntity();
 
-            tbNotification.ID = mvcNotification.Id;
-            tbNotification.NOTIF_TYPE = mvcNotification.NotificationType;
-            tbNotification.RECEIVER_ID = mvcNotification.ReceiverId;
-            tbNotification.SENDER_ID = mvcNotification.SenderId;
-            tbNotification.CREATED_DATE = mvcNotification.CreatedDate;
-            tbNotification.COMMENT_ID = mvcNotification.CommentId;
-            tbNotification.POST_ID = mvcNotification.PostId;
-            tbNotification.SEEN = mvcNotification.Seen.ToString();
+            blNotification.Id = mvcNotification.Id;
+            blNotification.NotificationType = mvcNotification.NotificationType;
+            blNotification.ReceiverId = mvcNotification.ReceiverId;
+            blNotification.SenderId = mvcNotification.SenderId;
+            blNotification.CreatedDate = mvcNotification.CreatedDate;
+            blNotification.CommentId = mvcNotification.CommentId;
+            blNotification.PostId = mvcNotification.PostId;
+            blNotification.Seen = mvcNotification.Seen;
 
-            return tbNotification;
+            return blNotification;
         }
 
-        public static NotificationModel MapDBNotificationToMVCNotification(PASTEBOOK_NOTIFICATION tbNotification)
+        public static NotificationModel MapBLNotificationToMVCNotification(NotificationEntity blNotification)
         {
             NotificationModel mvcNotification = new NotificationModel();
 
-            mvcNotification.Id = tbNotification.ID;
-            mvcNotification.NotificationType = tbNotification.NOTIF_TYPE;
-            mvcNotification.ReceiverId = tbNotification.RECEIVER_ID;
-            mvcNotification.SenderId = tbNotification.SENDER_ID;
-            mvcNotification.CreatedDate = tbNotification.CREATED_DATE;
-            mvcNotification.CommentId = (int)tbNotification.COMMENT_ID;
-            mvcNotification.PostId = (int)tbNotification.POST_ID;
-            mvcNotification.Seen = Convert.ToChar(tbNotification.SEEN);
+            mvcNotification.Id = blNotification.Id;
+            mvcNotification.NotificationType = blNotification.NotificationType;
+            mvcNotification.ReceiverId = blNotification.ReceiverId;
+            mvcNotification.SenderId = blNotification.SenderId;
+            mvcNotification.CreatedDate = blNotification.CreatedDate;
+            mvcNotification.CommentId = blNotification.CommentId;
+            mvcNotification.PostId = blNotification.PostId;
+            mvcNotification.Seen = blNotification.Seen;
 
             return mvcNotification;
         }
 
-        public static PASTEBOOK_POST MapMVCPostToDBPost(PostModel mvcPost)
+        public static PostEntity MapMVCPostToBLPost(PostModel mvcPost)
         {
-            PASTEBOOK_POST tbPost = new PASTEBOOK_POST();
+            PostEntity blPost = new PostEntity();
 
-            tbPost.ID = mvcPost.Id;
-            tbPost.CREATED_DATE = mvcPost.CreatedDate;
-            tbPost.CONTENT = mvcPost.Content;
-            tbPost.PROFILE_OWNER_ID = mvcPost.ProfileOwnerId;
-            tbPost.POSTER_ID = mvcPost.PosterId;
+            blPost.Id = mvcPost.Id;
+            blPost.CreatedDate = mvcPost.CreatedDate;
+            blPost.Content = mvcPost.Content;
+            blPost.ProfileOwnerId = mvcPost.ProfileOwnerId;
+            blPost.PosterId = mvcPost.PosterId;
 
-            return tbPost;
+            return blPost;
         }
 
-        public static PostModel MapDBPostToMVCPost(PASTEBOOK_POST tbPost)
+        public static PostModel MapBLPostToMVCPost(PostEntity blPost)
         {
             PostModel mvcPost = new PostModel();
 
-            mvcPost.Id = tbPost.ID;
-            mvcPost.CreatedDate = tbPost.CREATED_DATE;
-            mvcPost.Content = tbPost.CONTENT;
-            mvcPost.ProfileOwnerId = tbPost.PROFILE_OWNER_ID;
-            mvcPost.PosterId = tbPost.POSTER_ID;
+            mvcPost.Id = blPost.Id;
+            mvcPost.CreatedDate = blPost.CreatedDate;
+            mvcPost.Content = blPost.Content;
+            mvcPost.ProfileOwnerId = blPost.ProfileOwnerId;
+            mvcPost.PosterId = blPost.PosterId;
 
             return mvcPost;
         }
 
-        public static REF_COUNTRY MapMVCCountryTODBCountry(CountryModel mvcCountry)
+        public static CountryEntity MapMVCCountryTOBLCountry(CountryModel mvcCountry)
         {
-            REF_COUNTRY tbCountry = new REF_COUNTRY();
+            CountryEntity blCountry = new CountryEntity();
 
-            tbCountry.ID = mvcCountry.Id;
-            tbCountry.COUNTRY = mvcCountry.Country;
+            blCountry.Id = mvcCountry.Id;
+            blCountry.Country = mvcCountry.Country;
 
-            return tbCountry;
+            return blCountry;
         }
 
-        public static CountryModel MapMVCCountryTODBCountry(REF_COUNTRY tbCountry)
+        public static CountryModel MapBLCountryTOMVCCountry(CountryEntity blCountry)
         {
             CountryModel mvcCountry = new CountryModel();
 
-            mvcCountry.Id = tbCountry.ID;
-            mvcCountry.Country = tbCountry.COUNTRY;
+            mvcCountry.Id = blCountry.Id;
+            mvcCountry.Country = blCountry.Country;
 
             return mvcCountry;
         }
