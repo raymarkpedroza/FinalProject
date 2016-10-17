@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookBusinessLogic.Entities
+namespace PastebookWebService.Entities
 {
-    public class CommentEntity
+    public class PostEntity
     {
         public int Id { get; set; }
-        public int PostId { get; set; }
-        public int PosterId { get; set; }
+        public DateTime CreatedDate { get; set; }
         public string Content { get; set; }
-        public DateTime DateCreated { get; set; }
+        public int ProfileOwnerId { get; set; }
+        public int PosterId { get; set; }
     }
 }

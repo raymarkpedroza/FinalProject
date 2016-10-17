@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookBusinessLogic.Entities
+namespace PastebookWebService.Entities
 {
     public class UserEntity
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string ConfirmPassword { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
         public string EmailAddress { get; set; }

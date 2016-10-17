@@ -77,8 +77,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PastebookEF">
-      <HintPath>..\..\PastebookEF\PastebookEF\bin\Debug\PastebookEF.dll</HintPath>
+    <Reference Include="PastebookBusinessLogic">
+      <HintPath>..\..\PastebookBusinessLogic\PastebookBusinessLogic\bin\Debug\PastebookBusinessLogic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
