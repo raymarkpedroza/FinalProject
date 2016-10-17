@@ -11,12 +11,17 @@ namespace PastebookWebService.Managers
 {
     public class UserManager
     {
+        PasswordManager passwordManager = new PasswordManager();
+
         public int RegisterUser(UserEntity wcfUserEntity)
         {
             int result = 0;
             PASTEBOOK_USER dbUserTable = new PASTEBOOK_USER();
 
             dbUserTable = Mapper.MapWCFUserEntityToDBUserTable(wcfUserEntity);
+            string salt = string.Empty;
+            dbUserTable.PASSWORD = passwordManager.GeneratePasswordHash(dbUserTable.PASSWORD, out salt);
+            dbUserTable.SALT = salt;
 
             try
             {
@@ -52,6 +57,26 @@ namespace PastebookWebService.Managers
             }
 
             return user;
+        }
+
+        public List<UserEntity> RetrieveAllUsers()
+        {
+            List<UserEntity> listOfUsers = new List<UserEntity>();
+            try
+            {
+                using (var context = new PASTEBOOKEntities())
+                {
+                    foreach (var user in context.PASTEBOOK_USER)
+                    {
+                        listOfUsers.Add(Mapper.MapDBUserTableToWCFUserEntity(user));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return listOfUsers;
         }
     }
 }

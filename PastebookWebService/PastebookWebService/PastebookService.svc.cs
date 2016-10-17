@@ -8,6 +8,7 @@ using System.Text;
 using PastebookWebService.Requests;
 using PastebookWebService.Responses;
 using PastebookWebService.Managers;
+using PastebookWebService.Entities;
 
 namespace PastebookWebService
 {
@@ -18,17 +19,6 @@ namespace PastebookWebService
         UserManager userManager = new UserManager();
         PasswordManager passwordManager = new PasswordManager();
         PostManager postManager = new PostManager();
-
-        public EncryptPasswordResponse EncryptPassword(EncryptPasswordRequest request)
-        {
-
-            string salt = string.Empty;
-            EncryptPasswordResponse response = new EncryptPasswordResponse();
-            response.HashPassword = passwordManager.GeneratePasswordHash(request.Password, out salt);
-            response.Salt = salt;
-
-            return response;
-        }
 
         public RegisterUserResponse RegisterUser(RegisterUserRequest request)
         {
@@ -58,6 +48,39 @@ namespace PastebookWebService
         {
             RetrievePostsResponse response = new RetrievePostsResponse();
             response.ListOfPosts = postManager.RetrieveNewsfeed(request.UserId, request.ListOfFriendsId);
+
+            return response;
+        }
+
+        public CommentEntity Comment()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CountryEntity Country()
+        {
+            throw new NotImplementedException();
+        }
+
+        public FriendEntity Friend()
+        {
+            throw new NotImplementedException();
+        }
+
+        public LikeEntity Like()
+        {
+            throw new NotImplementedException();
+        }
+
+        public NotificationEntity Notify()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RetrieveAllUserResponse RetrieveAllUser()
+        {
+            RetrieveAllUserResponse response = new RetrieveAllUserResponse();
+            response.ListOfUser = userManager.RetrieveAllUsers();
 
             return response;
         }

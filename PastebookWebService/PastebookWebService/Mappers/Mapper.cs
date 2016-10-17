@@ -14,7 +14,7 @@ namespace PastebookWebService.Mappers
         {
             PASTEBOOK_USER dbUserTable = new PASTEBOOK_USER();
 
-            dbUserTable.ID = wcfUserEntity.Id;
+            //dbUserTable.ID = wcfUserEntity.Id;
             dbUserTable.USER_NAME = wcfUserEntity.Username;
             dbUserTable.PASSWORD = wcfUserEntity.Password;
             dbUserTable.SALT = wcfUserEntity.Salt;
@@ -36,7 +36,7 @@ namespace PastebookWebService.Mappers
         {
             UserEntity wcfUserEntity = new UserEntity();
 
-            wcfUserEntity.Id = dbUserTable.ID;
+            //wcfUserEntity.Id = dbUserTable.ID;
             wcfUserEntity.Username = dbUserTable.USER_NAME;
             wcfUserEntity.Password = dbUserTable.PASSWORD;
             wcfUserEntity.Salt = dbUserTable.SALT;

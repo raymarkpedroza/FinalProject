@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b018915d-40c0-4d37-93d1-b38559c94629" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PastebookService.xsd" MetadataType="Schema" ID="7ddc2bd0-b090-4887-b434-c921f416f3d7" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PastebookService1.xsd" MetadataType="Schema" ID="921ce858-01b9-4aaa-881a-018f0c0ef9d7" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd5" />
+    <MetadataFile FileName="PastebookService2.xsd" MetadataType="Schema" ID="eb43dd26-be49-470a-a604-298888322625" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PastebookService3.xsd" MetadataType="Schema" ID="c61319f7-d41d-4097-9a30-870dff216118" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PastebookService.wsdl" MetadataType="Wsdl" ID="b80d2a84-8764-496f-a008-3ad3fa81b239" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?wsdl" />
+    <MetadataFile FileName="PastebookService4.xsd" MetadataType="Schema" ID="326192b8-ac13-400d-8f74-34015f671264" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PastebookService5.xsd" MetadataType="Schema" ID="c408f530-1bd7-49cc-a9e6-d1f4296e6cb5" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PastebookService.disco" MetadataType="Disco" ID="0b865650-5cab-4a88-b795-777ff921038b" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,4 +1,5 @@
-﻿using PastebookWebService.Requests;
+﻿using PastebookWebService.Entities;
+using PastebookWebService.Requests;
 using PastebookWebService.Responses;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,6 @@ namespace PastebookWebService
     public interface IPastebookService
     {
         [OperationContract]
-        EncryptPasswordResponse EncryptPassword(EncryptPasswordRequest request);
-
-        [OperationContract]
         RegisterUserResponse RegisterUser(RegisterUserRequest request);
 
         [OperationContract]
@@ -27,5 +25,23 @@ namespace PastebookWebService
 
         [OperationContract]
         RetrievePostsResponse RetrieveNewsfeed(RetrievePostsRequest request);
+
+        [OperationContract]
+        RetrieveAllUserResponse RetrieveAllUser();
+
+        [OperationContract]
+        CommentEntity Comment();
+
+        [OperationContract]
+        CountryEntity Country();
+
+        [OperationContract]
+        FriendEntity Friend();
+
+        [OperationContract]
+        LikeEntity Like();
+
+        [OperationContract]
+        NotificationEntity Notify();
     }
 }

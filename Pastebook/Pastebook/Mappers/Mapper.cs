@@ -3,208 +3,206 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Pastebook.Models;
-using PastebookBusinessLogic.Entities;
+using Pastebook.PastebookServiceReference;
 
 namespace Pastebook.Mappers
 {
     public static class Mapper
     {
-        public static UserEntity MapMVCUserToBLUSer(UserModel mvcUser)
+        public static UserEntity MapMVCUserModelToWCFUserEntity(UserModel mvcUserModel)
         {
-            UserEntity blUser = new UserEntity();
+            UserEntity wcfUserEntity = new UserEntity();
 
-            blUser.Id = mvcUser.Id;
-            blUser.Username = mvcUser.Username;
-            blUser.Password = mvcUser.Password;
-            blUser.Salt = mvcUser.Salt;
-            blUser.EmailAddress = mvcUser.EmailAddress;
-            blUser.Firstname = mvcUser.Firstname;
-            blUser.Lastname = mvcUser.Lastname;
-            blUser.Birthday = mvcUser.Birthday;
-            blUser.CountryId = mvcUser.CountryId;
-            blUser.MobileNumber = mvcUser.MobileNumber;
-            blUser.Gender = mvcUser.Gender;
-            blUser.ProfilePicture = mvcUser.ProfilePicture;
-            blUser.DateCreated = mvcUser.DateCreated;
-            blUser.AboutMe = mvcUser.AboutMe;
+            //wcfUserEntity.Id = mvcUserModel.Id;
+            wcfUserEntity.Username = mvcUserModel.Username;
+            wcfUserEntity.Password = mvcUserModel.Password;
+            wcfUserEntity.EmailAddress = mvcUserModel.EmailAddress;
+            wcfUserEntity.Firstname = mvcUserModel.Firstname;
+            wcfUserEntity.Lastname = mvcUserModel.Lastname;
+            wcfUserEntity.Birthday = mvcUserModel.Birthday;
+            wcfUserEntity.CountryId = mvcUserModel.CountryId;
+            wcfUserEntity.MobileNumber = mvcUserModel.MobileNumber;
+            wcfUserEntity.Gender = mvcUserModel.Gender;
+            wcfUserEntity.ProfilePicture = mvcUserModel.ProfilePicture;
+            wcfUserEntity.DateCreated = mvcUserModel.DateCreated;
+            wcfUserEntity.AboutMe = mvcUserModel.AboutMe;
 
-            return blUser;
+            return wcfUserEntity;
         }
 
-        public static UserModel MapBLUserToMVCUSer(UserEntity blUser)
+        public static UserModel MapWCFUserEntityToMVCUserModel(UserEntity wcfUserEntity)
         {
-            UserModel mvcUser = new UserModel();
+            UserModel mvcUserModel = new UserModel();
 
-            mvcUser.Id = blUser.Id;
-            mvcUser.Username = blUser.Username;
-            mvcUser.Password = blUser.Password;
-            mvcUser.Salt = blUser.Salt;
-            mvcUser.EmailAddress = blUser.EmailAddress;
-            mvcUser.Firstname = blUser.Firstname;
-            mvcUser.Lastname = blUser.Lastname;
-            mvcUser.Birthday = blUser.Birthday;
-            mvcUser.CountryId = blUser.CountryId;
-            mvcUser.MobileNumber = blUser.MobileNumber;
-            mvcUser.Gender = blUser.Gender;
-            mvcUser.ProfilePicture = blUser.ProfilePicture;
-            mvcUser.DateCreated = blUser.DateCreated;
-            mvcUser.AboutMe = blUser.AboutMe;
+            //mvcUserModel.Id = wcfUserEntity.Id;
+            mvcUserModel.Username = wcfUserEntity.Username;
+            mvcUserModel.Password = wcfUserEntity.Password;
+            mvcUserModel.EmailAddress = wcfUserEntity.EmailAddress;
+            mvcUserModel.Firstname = wcfUserEntity.Firstname;
+            mvcUserModel.Lastname = wcfUserEntity.Lastname;
+            mvcUserModel.Birthday = wcfUserEntity.Birthday;
+            mvcUserModel.CountryId = wcfUserEntity.CountryId;
+            mvcUserModel.MobileNumber = wcfUserEntity.MobileNumber;
+            mvcUserModel.Gender = wcfUserEntity.Gender;
+            mvcUserModel.ProfilePicture = wcfUserEntity.ProfilePicture;
+            mvcUserModel.DateCreated = wcfUserEntity.DateCreated;
+            mvcUserModel.AboutMe = wcfUserEntity.AboutMe;
 
-            return mvcUser;
+            return mvcUserModel;
         }
 
-        public static CommentEntity MapMVCCommentToBLComment(CommentModel mvcComment)
+        public static CommentEntity MapMVCCommentModelToWCFCommentEntity(CommentModel mvcCommentModel)
         {
-            CommentEntity blComment = new CommentEntity();
+            CommentEntity wcfCommentEntity = new CommentEntity();
 
-            blComment.Id = mvcComment.Id;
-            blComment.PostId = mvcComment.PostId;
-            blComment.PosterId = mvcComment.PosterId;
-            blComment.Content = mvcComment.Content;
-            blComment.DateCreated = mvcComment.DateCreated;
+            wcfCommentEntity.Id = mvcCommentModel.Id;
+            wcfCommentEntity.PostId = mvcCommentModel.PostId;
+            wcfCommentEntity.PosterId = mvcCommentModel.PosterId;
+            wcfCommentEntity.Content = mvcCommentModel.Content;
+            wcfCommentEntity.DateCreated = mvcCommentModel.DateCreated;
 
-            return blComment;
+            return wcfCommentEntity;
         }
 
-        public static CommentModel MapBLCommentToMVCComment(CommentEntity blComment)
+        public static CommentModel MapWCFCommentEntityToMVCCommentModel(CommentEntity wcfCommentEntity)
         {
-            CommentModel mvcComment = new CommentModel();
+            CommentModel mvcCommentModel = new CommentModel();
 
-            mvcComment.Id = blComment.Id;
-            mvcComment.PostId = blComment.PostId;
-            mvcComment.PosterId = blComment.PosterId;
-            mvcComment.Content = blComment.Content;
-            mvcComment.DateCreated = blComment.DateCreated;
+            mvcCommentModel.Id = wcfCommentEntity.Id;
+            mvcCommentModel.PostId = wcfCommentEntity.PostId;
+            mvcCommentModel.PosterId = wcfCommentEntity.PosterId;
+            mvcCommentModel.Content = wcfCommentEntity.Content;
+            mvcCommentModel.DateCreated = wcfCommentEntity.DateCreated;
 
-            return mvcComment;
+            return mvcCommentModel;
         }
 
-        public static FriendEntity MapMVCFriendToBLFriend(FriendModel mvcFriend)
+        public static FriendEntity MapMVCFriendModelToWCFFriendEntity(FriendModel mvcFriendModel)
         {
-            FriendEntity blFriend = new FriendEntity();
+            FriendEntity wcfFriendEntity = new FriendEntity();
 
-            blFriend.Id = mvcFriend.Id;
-            blFriend.UserId = mvcFriend.UserId;
-            blFriend.FriendId = mvcFriend.FriendId;
-            blFriend.Request = mvcFriend.Request;
-            blFriend.IsBlocked = mvcFriend.IsBlocked;
-            blFriend.CreatedDate = mvcFriend.CreatedDate;
+            wcfFriendEntity.Id = mvcFriendModel.Id;
+            wcfFriendEntity.UserId = mvcFriendModel.UserId;
+            wcfFriendEntity.FriendId = mvcFriendModel.FriendId;
+            wcfFriendEntity.Request = mvcFriendModel.Request;
+            wcfFriendEntity.IsBlocked = mvcFriendModel.IsBlocked;
+            wcfFriendEntity.CreatedDate = mvcFriendModel.CreatedDate;
 
-            return blFriend;
+            return wcfFriendEntity;
         }
 
-        public static FriendModel MapBLFriendToMVCFriend(FriendEntity blFriend)
+        public static FriendModel MapWCFFriendEntityToMVCFriendModel(FriendEntity wcfFriendEntity)
         {
-            FriendModel mvcFriend = new FriendModel();
+            FriendModel mvcFriendModel = new FriendModel();
 
-            mvcFriend.Id = blFriend.Id;
-            mvcFriend.UserId = blFriend.UserId;
-            mvcFriend.FriendId = blFriend.FriendId;
-            mvcFriend.Request = Convert.ToChar(blFriend.Request);
-            mvcFriend.IsBlocked = Convert.ToChar(blFriend.IsBlocked);
-            mvcFriend.CreatedDate = blFriend.CreatedDate;
+            mvcFriendModel.Id = wcfFriendEntity.Id;
+            mvcFriendModel.UserId = wcfFriendEntity.UserId;
+            mvcFriendModel.FriendId = wcfFriendEntity.FriendId;
+            mvcFriendModel.Request = Convert.ToChar(wcfFriendEntity.Request);
+            mvcFriendModel.IsBlocked = Convert.ToChar(wcfFriendEntity.IsBlocked);
+            mvcFriendModel.CreatedDate = wcfFriendEntity.CreatedDate;
 
-            return mvcFriend;
+            return mvcFriendModel;
         }
 
-        public static LikeEntity MapMVCLikeToBLLike(LikeModel mvcLike)
+        public static LikeEntity MapMVCLikeModelToWCFLikeEntity(LikeModel mvcLikeModel)
         {
-            LikeEntity tbLike = new LikeEntity();
+            LikeEntity wcfLikeEntity = new LikeEntity();
 
-            tbLike.Id = mvcLike.Id;
-            tbLike.PostId = mvcLike.PostId;
-            tbLike.LikedBy = mvcLike.LikedBy;
+            wcfLikeEntity.Id = mvcLikeModel.Id;
+            wcfLikeEntity.PostId = mvcLikeModel.PostId;
+            wcfLikeEntity.LikedBy = mvcLikeModel.LikedBy;
 
-            return tbLike;
+            return wcfLikeEntity;
         }
 
-        public static LikeModel MapBLLikeToMVCLike(LikeEntity blLike)
+        public static LikeModel MapWCFLikeEntityToMVCLikeModel(LikeEntity wcfLikeEntity)
         {
-            LikeModel mvcLike = new LikeModel();
+            LikeModel mvcLikeModel = new LikeModel();
 
-            mvcLike.Id = blLike.Id;
-            mvcLike.PostId = blLike.PostId;
-            mvcLike.LikedBy = blLike.LikedBy;
+            mvcLikeModel.Id = wcfLikeEntity.Id;
+            mvcLikeModel.PostId = wcfLikeEntity.PostId;
+            mvcLikeModel.LikedBy = wcfLikeEntity.LikedBy;
 
-            return mvcLike;
+            return mvcLikeModel;
         }
 
-        public static NotificationEntity MapMVCNotificationToBLNotification(NotificationModel mvcNotification)
+        public static NotificationEntity MapMVCNotificationModelToWCFNotificationEntity(NotificationModel mvcNotificationModel)
         {
-            NotificationEntity blNotification = new NotificationEntity();
+            NotificationEntity wcfNotificationEntity = new NotificationEntity();
 
-            blNotification.Id = mvcNotification.Id;
-            blNotification.NotificationType = mvcNotification.NotificationType;
-            blNotification.ReceiverId = mvcNotification.ReceiverId;
-            blNotification.SenderId = mvcNotification.SenderId;
-            blNotification.CreatedDate = mvcNotification.CreatedDate;
-            blNotification.CommentId = mvcNotification.CommentId;
-            blNotification.PostId = mvcNotification.PostId;
-            blNotification.Seen = mvcNotification.Seen;
+            wcfNotificationEntity.Id = mvcNotificationModel.Id;
+            wcfNotificationEntity.NotificationType = mvcNotificationModel.NotificationType;
+            wcfNotificationEntity.ReceiverId = mvcNotificationModel.ReceiverId;
+            wcfNotificationEntity.SenderId = mvcNotificationModel.SenderId;
+            wcfNotificationEntity.CreatedDate = mvcNotificationModel.CreatedDate;
+            wcfNotificationEntity.CommentId = mvcNotificationModel.CommentId;
+            wcfNotificationEntity.PostId = mvcNotificationModel.PostId;
+            wcfNotificationEntity.Seen = mvcNotificationModel.Seen;
 
-            return blNotification;
+            return wcfNotificationEntity;
         }
 
-        public static NotificationModel MapBLNotificationToMVCNotification(NotificationEntity blNotification)
+        public static NotificationModel MapWCFNotificationEntityToMVCNotificationModel(NotificationEntity wcfNotificationEntity)
         {
-            NotificationModel mvcNotification = new NotificationModel();
+            NotificationModel mvcNotificationModel = new NotificationModel();
 
-            mvcNotification.Id = blNotification.Id;
-            mvcNotification.NotificationType = blNotification.NotificationType;
-            mvcNotification.ReceiverId = blNotification.ReceiverId;
-            mvcNotification.SenderId = blNotification.SenderId;
-            mvcNotification.CreatedDate = blNotification.CreatedDate;
-            mvcNotification.CommentId = blNotification.CommentId;
-            mvcNotification.PostId = blNotification.PostId;
-            mvcNotification.Seen = blNotification.Seen;
+            mvcNotificationModel.Id = wcfNotificationEntity.Id;
+            mvcNotificationModel.NotificationType = wcfNotificationEntity.NotificationType;
+            mvcNotificationModel.ReceiverId = wcfNotificationEntity.ReceiverId;
+            mvcNotificationModel.SenderId = wcfNotificationEntity.SenderId;
+            mvcNotificationModel.CreatedDate = wcfNotificationEntity.CreatedDate;
+            mvcNotificationModel.CommentId = wcfNotificationEntity.CommentId;
+            mvcNotificationModel.PostId = wcfNotificationEntity.PostId;
+            mvcNotificationModel.Seen = wcfNotificationEntity.Seen;
 
-            return mvcNotification;
+            return mvcNotificationModel;
         }
 
-        public static PostEntity MapMVCPostToBLPost(PostModel mvcPost)
+        public static PostEntity MapMVCPostModelToWCFPostEntity(PostModel mvcPostModel)
         {
-            PostEntity blPost = new PostEntity();
+            PostEntity wcfPostEntity = new PostEntity();
 
-            blPost.Id = mvcPost.Id;
-            blPost.CreatedDate = mvcPost.CreatedDate;
-            blPost.Content = mvcPost.Content;
-            blPost.ProfileOwnerId = mvcPost.ProfileOwnerId;
-            blPost.PosterId = mvcPost.PosterId;
+            wcfPostEntity.Id = mvcPostModel.Id;
+            wcfPostEntity.CreatedDate = mvcPostModel.CreatedDate;
+            wcfPostEntity.Content = mvcPostModel.Content;
+            wcfPostEntity.ProfileOwnerId = mvcPostModel.ProfileOwnerId;
+            wcfPostEntity.PosterId = mvcPostModel.PosterId;
 
-            return blPost;
+            return wcfPostEntity;
         }
 
-        public static PostModel MapBLPostToMVCPost(PostEntity blPost)
+        public static PostModel MapWCFPostEntityToMVCPostModel(PostEntity wcfPostEntity)
         {
-            PostModel mvcPost = new PostModel();
+            PostModel mvcPostModel = new PostModel();
 
-            mvcPost.Id = blPost.Id;
-            mvcPost.CreatedDate = blPost.CreatedDate;
-            mvcPost.Content = blPost.Content;
-            mvcPost.ProfileOwnerId = blPost.ProfileOwnerId;
-            mvcPost.PosterId = blPost.PosterId;
+            mvcPostModel.Id = wcfPostEntity.Id;
+            mvcPostModel.CreatedDate = wcfPostEntity.CreatedDate;
+            mvcPostModel.Content = wcfPostEntity.Content;
+            mvcPostModel.ProfileOwnerId = wcfPostEntity.ProfileOwnerId;
+            mvcPostModel.PosterId = wcfPostEntity.PosterId;
 
-            return mvcPost;
+            return mvcPostModel;
         }
 
-        public static CountryEntity MapMVCCountryTOBLCountry(CountryModel mvcCountry)
+        public static CountryEntity MapMVCCountryModelToWCFCountryEntity(CountryModel mvcCountryModel)
         {
-            CountryEntity blCountry = new CountryEntity();
+            CountryEntity wcfCountryEntity = new CountryEntity();
 
-            blCountry.Id = mvcCountry.Id;
-            blCountry.Country = mvcCountry.Country;
+            wcfCountryEntity.Id = mvcCountryModel.Id;
+            wcfCountryEntity.Country = mvcCountryModel.Country;
 
-            return blCountry;
+            return wcfCountryEntity;
         }
 
-        public static CountryModel MapBLCountryTOMVCCountry(CountryEntity blCountry)
+        public static CountryModel MapWCFCountryEntityToMVCCountryModel(CountryEntity wcfCountryEntity)
         {
-            CountryModel mvcCountry = new CountryModel();
+            CountryModel mvcCountryModel = new CountryModel();
 
-            mvcCountry.Id = blCountry.Id;
-            mvcCountry.Country = blCountry.Country;
+            mvcCountryModel.Id = wcfCountryEntity.Id;
+            mvcCountryModel.Country = wcfCountryEntity.Country;
 
-            return mvcCountry;
+            return mvcCountryModel;
         }
 
     }

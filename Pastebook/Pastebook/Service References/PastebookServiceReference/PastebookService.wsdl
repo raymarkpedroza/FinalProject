@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PastebookService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPastebookService_EncryptPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:EncryptPassword" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_EncryptPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EncryptPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_PasswordMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:PasswordMatch" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_PasswordMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PasswordMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUser" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveNewsfeed_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveNewsfeed" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveNewsfeed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveNewsfeedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveAllUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAllUser" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveAllUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAllUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Comment_InputMessage">
+    <wsdl:part name="parameters" element="tns:Comment" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Comment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Country_InputMessage">
+    <wsdl:part name="parameters" element="tns:Country" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Country_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CountryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Friend_InputMessage">
+    <wsdl:part name="parameters" element="tns:Friend" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Friend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FriendResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Like_InputMessage">
+    <wsdl:part name="parameters" element="tns:Like" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Like_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LikeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Notify_InputMessage">
+    <wsdl:part name="parameters" element="tns:Notify" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_Notify_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPastebookService">
+    <wsdl:operation name="EncryptPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/EncryptPassword" message="tns:IPastebookService_EncryptPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/EncryptPasswordResponse" message="tns:IPastebookService_EncryptPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RegisterUser" message="tns:IPastebookService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RegisterUserResponse" message="tns:IPastebookService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PasswordMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/PasswordMatch" message="tns:IPastebookService_PasswordMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/PasswordMatchResponse" message="tns:IPastebookService_PasswordMatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUser" message="tns:IPastebookService_RetrieveUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserResponse" message="tns:IPastebookService_RetrieveUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveNewsfeed">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveNewsfeed" message="tns:IPastebookService_RetrieveNewsfeed_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveNewsfeedResponse" message="tns:IPastebookService_RetrieveNewsfeed_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAllUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllUser" message="tns:IPastebookService_RetrieveAllUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllUserResponse" message="tns:IPastebookService_RetrieveAllUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Comment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Comment" message="tns:IPastebookService_Comment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/CommentResponse" message="tns:IPastebookService_Comment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Country">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Country" message="tns:IPastebookService_Country_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/CountryResponse" message="tns:IPastebookService_Country_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Friend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Friend" message="tns:IPastebookService_Friend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/FriendResponse" message="tns:IPastebookService_Friend_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Like">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Like" message="tns:IPastebookService_Like_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/LikeResponse" message="tns:IPastebookService_Like_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Notify" message="tns:IPastebookService_Notify_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/NotifyResponse" message="tns:IPastebookService_Notify_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPastebookService" type="tns:IPastebookService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EncryptPassword">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/EncryptPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PasswordMatch">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/PasswordMatch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUser">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveNewsfeed">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveNewsfeed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAllUser">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveAllUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Comment">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/Comment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Country">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/Country" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Friend">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/Friend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Like">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/Like" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/Notify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PastebookService">
+    <wsdl:port name="BasicHttpBinding_IPastebookService" binding="tns:BasicHttpBinding_IPastebookService">
+      <soap:address location="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

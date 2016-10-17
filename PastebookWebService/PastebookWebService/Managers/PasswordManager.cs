@@ -9,8 +9,6 @@ namespace PastebookWebService.Managers
 {
     public class PasswordManager
     {
-        private RNGCryptoServiceProvider cryptoServiceProvider = new RNGCryptoServiceProvider();
-        private const int SALT_SIZE = 24;
 
         //password
         public string GeneratePasswordHash(string password, out string salt)
@@ -44,8 +42,10 @@ namespace PastebookWebService.Managers
         //salt
         public string GetSaltString()
         {
+            RNGCryptoServiceProvider cryptoServiceProvider = new RNGCryptoServiceProvider();
+            
             // Lets create a byte array to store the salt bytes
-            byte[] saltBytes = new byte[SALT_SIZE];
+            byte[] saltBytes = new byte[24];
 
             // lets generate the salt in the byte array
             cryptoServiceProvider.GetNonZeroBytes(saltBytes);
