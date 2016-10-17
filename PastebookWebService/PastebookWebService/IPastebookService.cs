@@ -30,6 +30,12 @@ namespace PastebookWebService
         RetrieveAllUserResponse RetrieveAllUser();
 
         [OperationContract]
+        RetrieveAllCountriesResponse RetrieveAllCountries();
+
+        [OperationContract]
+        EncryptPasswordResponse EncryptPassword(EncryptPasswordRequest request);
+
+        [OperationContract]
         CommentEntity Comment();
 
         [OperationContract]

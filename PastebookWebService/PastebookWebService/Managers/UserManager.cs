@@ -16,12 +16,10 @@ namespace PastebookWebService.Managers
         public int RegisterUser(UserEntity wcfUserEntity)
         {
             int result = 0;
-            PASTEBOOK_USER dbUserTable = new PASTEBOOK_USER();
 
+            PASTEBOOK_USER dbUserTable = new PASTEBOOK_USER();
             dbUserTable = Mapper.MapWCFUserEntityToDBUserTable(wcfUserEntity);
-            string salt = string.Empty;
-            dbUserTable.PASSWORD = passwordManager.GeneratePasswordHash(dbUserTable.PASSWORD, out salt);
-            dbUserTable.SALT = salt;
+           
 
             try
             {
@@ -34,7 +32,6 @@ namespace PastebookWebService.Managers
 
             catch (Exception ex)
             {
-                
             }
 
             return result;

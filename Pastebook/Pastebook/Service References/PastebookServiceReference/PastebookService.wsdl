@@ -5,17 +5,12 @@
       <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" />
-      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" />
-      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" />
       <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IPastebookService_EncryptPassword_InputMessage">
-    <wsdl:part name="parameters" element="tns:EncryptPassword" />
-  </wsdl:message>
-  <wsdl:message name="IPastebookService_EncryptPassword_OutputMessage">
-    <wsdl:part name="parameters" element="tns:EncryptPasswordResponse" />
-  </wsdl:message>
   <wsdl:message name="IPastebookService_RegisterUser_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterUser" />
   </wsdl:message>
@@ -45,6 +40,18 @@
   </wsdl:message>
   <wsdl:message name="IPastebookService_RetrieveAllUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveAllUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveAllCountries_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAllCountries" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveAllCountries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAllCountriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_EncryptPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:EncryptPassword" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_EncryptPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EncryptPasswordResponse" />
   </wsdl:message>
   <wsdl:message name="IPastebookService_Comment_InputMessage">
     <wsdl:part name="parameters" element="tns:Comment" />
@@ -77,10 +84,6 @@
     <wsdl:part name="parameters" element="tns:NotifyResponse" />
   </wsdl:message>
   <wsdl:portType name="IPastebookService">
-    <wsdl:operation name="EncryptPassword">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/EncryptPassword" message="tns:IPastebookService_EncryptPassword_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/EncryptPasswordResponse" message="tns:IPastebookService_EncryptPassword_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="RegisterUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RegisterUser" message="tns:IPastebookService_RegisterUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RegisterUserResponse" message="tns:IPastebookService_RegisterUser_OutputMessage" />
@@ -100,6 +103,14 @@
     <wsdl:operation name="RetrieveAllUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllUser" message="tns:IPastebookService_RetrieveAllUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllUserResponse" message="tns:IPastebookService_RetrieveAllUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAllCountries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllCountries" message="tns:IPastebookService_RetrieveAllCountries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveAllCountriesResponse" message="tns:IPastebookService_RetrieveAllCountries_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EncryptPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/EncryptPassword" message="tns:IPastebookService_EncryptPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/EncryptPasswordResponse" message="tns:IPastebookService_EncryptPassword_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Comment">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Comment" message="tns:IPastebookService_Comment_InputMessage" />
@@ -124,15 +135,6 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPastebookService" type="tns:IPastebookService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="EncryptPassword">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/EncryptPassword" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="RegisterUser">
       <soap:operation soapAction="http://tempuri.org/IPastebookService/RegisterUser" style="document" />
       <wsdl:input>
@@ -171,6 +173,24 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveAllUser">
       <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveAllUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAllCountries">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveAllCountries" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EncryptPassword">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/EncryptPassword" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

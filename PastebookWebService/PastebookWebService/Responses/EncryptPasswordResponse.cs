@@ -7,9 +7,12 @@ using System.Web;
 namespace PastebookWebService.Responses
 {
     [DataContract]
-    public class RegisterUserResponse:BaseResponse
+    public class EncryptPasswordResponse
     {
         [DataMember]
-        public int Result { get; set; }
+        public string Salt { get; set; }
+
+        [DataMember]
+        public string HashPassword { get; set; }
     }
 }

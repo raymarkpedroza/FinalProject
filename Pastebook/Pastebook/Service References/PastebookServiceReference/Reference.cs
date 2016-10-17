@@ -15,112 +15,6 @@ namespace Pastebook.PastebookServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EncryptPasswordRequest", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests")]
-    [System.SerializableAttribute()]
-    public partial class EncryptPasswordRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PasswordField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Password {
-            get {
-                return this.PasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
-                    this.PasswordField = value;
-                    this.RaisePropertyChanged("Password");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EncryptPasswordResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
-    [System.SerializableAttribute()]
-    public partial class EncryptPasswordResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HashPasswordField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SaltField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string HashPassword {
-            get {
-                return this.HashPasswordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HashPasswordField, value) != true)) {
-                    this.HashPasswordField = value;
-                    this.RaisePropertyChanged("HashPassword");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Salt {
-            get {
-                return this.SaltField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SaltField, value) != true)) {
-                    this.SaltField = value;
-                    this.RaisePropertyChanged("Salt");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RegisterUserRequest", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests")]
     [System.SerializableAttribute()]
     public partial class RegisterUserRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -403,15 +297,19 @@ namespace Pastebook.PastebookServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RegisterUserResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
     [System.SerializableAttribute()]
-    public partial class RegisterUserResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Pastebook.PastebookServiceReference.RegisterUserResponse))]
+    public partial class BaseResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ResultField;
+        private string[] ListOfErrorsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Exception[] ListOfExceptionsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -424,14 +322,27 @@ namespace Pastebook.PastebookServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Result {
+        public string[] ListOfErrors {
             get {
-                return this.ResultField;
+                return this.ListOfErrorsField;
             }
             set {
-                if ((this.ResultField.Equals(value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
+                if ((object.ReferenceEquals(this.ListOfErrorsField, value) != true)) {
+                    this.ListOfErrorsField = value;
+                    this.RaisePropertyChanged("ListOfErrors");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Exception[] ListOfExceptions {
+            get {
+                return this.ListOfExceptionsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListOfExceptionsField, value) != true)) {
+                    this.ListOfExceptionsField = value;
+                    this.RaisePropertyChanged("ListOfExceptions");
                 }
             }
         }
@@ -442,6 +353,29 @@ namespace Pastebook.PastebookServiceReference {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegisterUserResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
+    [System.SerializableAttribute()]
+    public partial class RegisterUserResponse : Pastebook.PastebookServiceReference.BaseResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ResultField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Result {
+            get {
+                return this.ResultField;
+            }
+            set {
+                if ((this.ResultField.Equals(value) != true)) {
+                    this.ResultField = value;
+                    this.RaisePropertyChanged("Result");
+                }
             }
         }
     }
@@ -920,6 +854,218 @@ namespace Pastebook.PastebookServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RetrieveAllCountriesResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
+    [System.SerializableAttribute()]
+    public partial class RetrieveAllCountriesResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Pastebook.PastebookServiceReference.CountryEntity[] ListOfCountriesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Pastebook.PastebookServiceReference.CountryEntity[] ListOfCountries {
+            get {
+                return this.ListOfCountriesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ListOfCountriesField, value) != true)) {
+                    this.ListOfCountriesField = value;
+                    this.RaisePropertyChanged("ListOfCountries");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CountryEntity", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities")]
+    [System.SerializableAttribute()]
+    public partial class CountryEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EncryptPasswordRequest", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests")]
+    [System.SerializableAttribute()]
+    public partial class EncryptPasswordRequest : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EncryptPasswordResponse", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses")]
+    [System.SerializableAttribute()]
+    public partial class EncryptPasswordResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HashPasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SaltField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HashPassword {
+            get {
+                return this.HashPasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HashPasswordField, value) != true)) {
+                    this.HashPasswordField = value;
+                    this.RaisePropertyChanged("HashPassword");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Salt {
+            get {
+                return this.SaltField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SaltField, value) != true)) {
+                    this.SaltField = value;
+                    this.RaisePropertyChanged("Salt");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CommentEntity", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities")]
     [System.SerializableAttribute()]
     public partial class CommentEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1013,67 +1159,6 @@ namespace Pastebook.PastebookServiceReference {
                 if ((this.PosterIdField.Equals(value) != true)) {
                     this.PosterIdField = value;
                     this.RaisePropertyChanged("PosterId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CountryEntity", Namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities")]
-    [System.SerializableAttribute()]
-    public partial class CountryEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CountryField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -1451,12 +1536,6 @@ namespace Pastebook.PastebookServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PastebookServiceReference.IPastebookService")]
     public interface IPastebookService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/EncryptPassword", ReplyAction="http://tempuri.org/IPastebookService/EncryptPasswordResponse")]
-        Pastebook.PastebookServiceReference.EncryptPasswordResponse EncryptPassword(Pastebook.PastebookServiceReference.EncryptPasswordRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/EncryptPassword", ReplyAction="http://tempuri.org/IPastebookService/EncryptPasswordResponse")]
-        System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.EncryptPasswordResponse> EncryptPasswordAsync(Pastebook.PastebookServiceReference.EncryptPasswordRequest request);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/RegisterUser", ReplyAction="http://tempuri.org/IPastebookService/RegisterUserResponse")]
         Pastebook.PastebookServiceReference.RegisterUserResponse RegisterUser(Pastebook.PastebookServiceReference.RegisterUserRequest request);
         
@@ -1486,6 +1565,18 @@ namespace Pastebook.PastebookServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/RetrieveAllUser", ReplyAction="http://tempuri.org/IPastebookService/RetrieveAllUserResponse")]
         System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.RetrieveAllUserResponse> RetrieveAllUserAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/RetrieveAllCountries", ReplyAction="http://tempuri.org/IPastebookService/RetrieveAllCountriesResponse")]
+        Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse RetrieveAllCountries();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/RetrieveAllCountries", ReplyAction="http://tempuri.org/IPastebookService/RetrieveAllCountriesResponse")]
+        System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse> RetrieveAllCountriesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/EncryptPassword", ReplyAction="http://tempuri.org/IPastebookService/EncryptPasswordResponse")]
+        Pastebook.PastebookServiceReference.EncryptPasswordResponse EncryptPassword(Pastebook.PastebookServiceReference.EncryptPasswordRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/EncryptPassword", ReplyAction="http://tempuri.org/IPastebookService/EncryptPasswordResponse")]
+        System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.EncryptPasswordResponse> EncryptPasswordAsync(Pastebook.PastebookServiceReference.EncryptPasswordRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPastebookService/Comment", ReplyAction="http://tempuri.org/IPastebookService/CommentResponse")]
         Pastebook.PastebookServiceReference.CommentEntity Comment();
@@ -1545,14 +1636,6 @@ namespace Pastebook.PastebookServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public Pastebook.PastebookServiceReference.EncryptPasswordResponse EncryptPassword(Pastebook.PastebookServiceReference.EncryptPasswordRequest request) {
-            return base.Channel.EncryptPassword(request);
-        }
-        
-        public System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.EncryptPasswordResponse> EncryptPasswordAsync(Pastebook.PastebookServiceReference.EncryptPasswordRequest request) {
-            return base.Channel.EncryptPasswordAsync(request);
-        }
-        
         public Pastebook.PastebookServiceReference.RegisterUserResponse RegisterUser(Pastebook.PastebookServiceReference.RegisterUserRequest request) {
             return base.Channel.RegisterUser(request);
         }
@@ -1591,6 +1674,22 @@ namespace Pastebook.PastebookServiceReference {
         
         public System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.RetrieveAllUserResponse> RetrieveAllUserAsync() {
             return base.Channel.RetrieveAllUserAsync();
+        }
+        
+        public Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse RetrieveAllCountries() {
+            return base.Channel.RetrieveAllCountries();
+        }
+        
+        public System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse> RetrieveAllCountriesAsync() {
+            return base.Channel.RetrieveAllCountriesAsync();
+        }
+        
+        public Pastebook.PastebookServiceReference.EncryptPasswordResponse EncryptPassword(Pastebook.PastebookServiceReference.EncryptPasswordRequest request) {
+            return base.Channel.EncryptPassword(request);
+        }
+        
+        public System.Threading.Tasks.Task<Pastebook.PastebookServiceReference.EncryptPasswordResponse> EncryptPasswordAsync(Pastebook.PastebookServiceReference.EncryptPasswordRequest request) {
+            return base.Channel.EncryptPasswordAsync(request);
         }
         
         public Pastebook.PastebookServiceReference.CommentEntity Comment() {

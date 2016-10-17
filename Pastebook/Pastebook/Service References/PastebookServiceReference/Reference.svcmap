@@ -30,6 +30,7 @@
     <MetadataFile FileName="PastebookService4.xsd" MetadataType="Schema" ID="326192b8-ac13-400d-8f74-34015f671264" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd1" />
     <MetadataFile FileName="PastebookService5.xsd" MetadataType="Schema" ID="c408f530-1bd7-49cc-a9e6-d1f4296e6cb5" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd0" />
     <MetadataFile FileName="PastebookService.disco" MetadataType="Disco" ID="0b865650-5cab-4a88-b795-777ff921038b" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?disco" />
+    <MetadataFile FileName="PastebookService6.xsd" MetadataType="Schema" ID="5535202e-40c4-4e98-945e-7c69bac34cb7" SourceId="1" SourceUrl="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd6" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

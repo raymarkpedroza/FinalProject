@@ -84,5 +84,26 @@ namespace PastebookWebService
 
             return response;
         }
+
+        public RetrieveAllCountriesResponse RetrieveAllCountries()
+        {
+            CountryManager countryManager = new CountryManager();
+            RetrieveAllCountriesResponse response = new RetrieveAllCountriesResponse();
+
+            response.ListOfCountries = countryManager.RetrieveAllCountry();
+
+            return response;
+        }
+
+        public EncryptPasswordResponse EncryptPassword(EncryptPasswordRequest request)
+        {
+            EncryptPasswordResponse response = new EncryptPasswordResponse();
+            string salt = string.Empty;
+
+            response.HashPassword = passwordManager.GeneratePasswordHash(request.Password, out salt);
+            response.Salt = salt;
+
+            return response;
+        }
     }
 }

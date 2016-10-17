@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Managers\CountryManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="Models\CommentModel.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Models\LikeModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PastebookServiceReference\Reference.cs">
@@ -181,6 +183,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Images\logo.png" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -200,9 +203,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.EncryptPasswordResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.PasswordMatchResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -233,9 +233,18 @@
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveAllUserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.EncryptPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\PastebookServiceReference\PastebookService.disco" />
     <None Include="Service References\PastebookServiceReference\configuration91.svcinfo" />
     <None Include="Service References\PastebookServiceReference\configuration.svcinfo" />
+    <None Include="Service References\PastebookServiceReference\PastebookService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PastebookServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -277,6 +286,7 @@
     </None>
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

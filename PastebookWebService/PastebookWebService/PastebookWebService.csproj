@@ -113,6 +113,7 @@
     <Compile Include="Entities\NotificationEntity.cs" />
     <Compile Include="Entities\PostEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Managers\CountryManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\PasswordManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
@@ -122,11 +123,14 @@
     </Compile>
     <Compile Include="IPastebookService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\EncryptPasswordRequest.cs" />
     <Compile Include="Requests\RetrieverUserRequest.cs" />
     <Compile Include="Requests\PasswordMatchRequest.cs" />
     <Compile Include="Requests\RegisterUserRequest.cs" />
     <Compile Include="Requests\RetrievePostsRequest.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
+    <Compile Include="Responses\EncryptPasswordResponse.cs" />
+    <Compile Include="Responses\RetrieveAllCountriesResponse.cs" />
     <Compile Include="Responses\RetrieveAllUserResponse.cs" />
     <Compile Include="Responses\RetrievePostsResponse.cs" />
     <Compile Include="Responses\RetrieveUserResponse.cs" />

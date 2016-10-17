@@ -1,75 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" />
-  <xs:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" />
-  <xs:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" />
-  <xs:element name="EncryptPassword">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q1:EncryptPasswordRequest" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="EncryptPasswordResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="EncryptPasswordResult" nillable="true" type="q2:EncryptPasswordResponse" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" />
+  <xs:import schemaLocation="http://172.19.30.185/PastebookWebService/PastebookWebService/PastebookService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" />
   <xs:element name="RegisterUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q3:RegisterUserRequest" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q1:RegisterUserRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegisterUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RegisterUserResult" nillable="true" type="q4:RegisterUserResponse" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RegisterUserResult" nillable="true" type="q2:RegisterUserResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PasswordMatch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q5:PasswordMatchRequest" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q3:PasswordMatchRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PasswordMatchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="PasswordMatchResult" nillable="true" type="q6:PasswordMatchResponse" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="PasswordMatchResult" nillable="true" type="q4:PasswordMatchResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q7:RetrieverUserRequest" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q5:RetrieverUserRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveUserResult" nillable="true" type="q8:RetrieveUserResponse" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveUserResult" nillable="true" type="q6:RetrieveUserResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveNewsfeed">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q9:RetrievePostsRequest" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q7:RetrievePostsRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveNewsfeedResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveNewsfeedResult" nillable="true" type="q10:RetrievePostsResponse" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveNewsfeedResult" nillable="true" type="q8:RetrievePostsResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -81,7 +67,33 @@
   <xs:element name="RetrieveAllUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveAllUserResult" nillable="true" type="q11:RetrieveAllUserResponse" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveAllUserResult" nillable="true" type="q9:RetrieveAllUserResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAllCountries">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAllCountriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveAllCountriesResult" nillable="true" type="q10:RetrieveAllCountriesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EncryptPassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q11:EncryptPasswordRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EncryptPasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="EncryptPasswordResult" nillable="true" type="q12:EncryptPasswordResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,7 +105,7 @@
   <xs:element name="CommentResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CommentResult" nillable="true" type="q12:CommentEntity" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CommentResult" nillable="true" type="q13:CommentEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,7 +117,7 @@
   <xs:element name="CountryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CountryResult" nillable="true" type="q13:CountryEntity" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CountryResult" nillable="true" type="q14:CountryEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -117,7 +129,7 @@
   <xs:element name="FriendResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="FriendResult" nillable="true" type="q14:FriendEntity" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="FriendResult" nillable="true" type="q15:FriendEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -129,7 +141,7 @@
   <xs:element name="LikeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="LikeResult" nillable="true" type="q15:LikeEntity" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="LikeResult" nillable="true" type="q16:LikeEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,7 +153,7 @@
   <xs:element name="NotifyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="NotifyResult" nillable="true" type="q16:NotificationEntity" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="NotifyResult" nillable="true" type="q17:NotificationEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace PastebookWebService.Responses
+namespace PastebookWebService.Requests
 {
     [DataContract]
-    public class RegisterUserResponse:BaseResponse
+    public class EncryptPasswordRequest
     {
         [DataMember]
-        public int Result { get; set; }
+        public string Password { get; set; }
     }
 }

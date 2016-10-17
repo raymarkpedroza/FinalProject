@@ -21,23 +21,28 @@ namespace Pastebook.Models
         public string Lastname { get; set; }
 
         [Required]
+        [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
         public DateTime Birthday { get; set; }
 
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
         public string CountryName { get; set; }
 
+        [Display(Name = "Mobile Number")]
         [DataType(DataType.PhoneNumber)]
         public string MobileNumber { get; set; }
 

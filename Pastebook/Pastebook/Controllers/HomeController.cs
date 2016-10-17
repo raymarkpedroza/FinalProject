@@ -10,6 +10,12 @@ namespace Pastebook.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["User"] != null)
+            {
+                return RedirectToAction("Index","User");
+            }
+
+            else
             return View();
         }
 

@@ -3,11 +3,46 @@
     padding-bottom: 20px;
 }
 
+#logo-home {
+    width: 15%;
+}
+
+#intro {
+    margin-top: 30px;
+    margin-right: 70px;
+}
+
+label.required-asterisk:before
+{
+     content: "*";
+}
+
+#logout-link{
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+#login-form {
+    margin-top:30px;
+    border-radius: 15px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    padding-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.navbar-inverse {
+    background-color: #01579B;
+    border-color: #fff;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -17,8 +52,8 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
