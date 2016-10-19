@@ -11,17 +11,88 @@
 }
 
 #prof-pic {
-    height: 100px ;
+    height: 100px;
     width: 100px;
     text-align:center;
     margin-top:10px;
     margin-left:90px;
 }
 
+#profile-profile-picture {
+    height: 100px ;
+    width: 100px;
+    text-align:center;
+    margin-top:10px;
+    margin-left:400px;
+}
+
+#profile-prof-pic {
+    height: 100px ;
+    width: 100px;
+    margin-top:10px;
+    margin-left:10px;
+    display:block;
+}
+
+#textboxSearch {
+    margin-top:15px;
+}
+
+#profile-link{
+    margin-right:10px;
+    margin-top:10px;
+}
+
+#profile-username {
+    color:#fff;
+}
+
+#profile-fullname, #profile-username {
+    font-size:20px;
+}
+
+#profile-user-details {
+    background-color:#fff;
+    padding-bottom:20px;
+    font-size: 11px;
+}
+
+#profile-username {
+    color:#fff;
+    white-space:nowrap;
+}
+
 #writePost {
     background-color:#fff;
-    padding: 10px 10px;
+    padding:10px 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    margin-left:13px;
+}
+
+.like {
+    color: #EF5350;
+}
+
+.comment {
+    color:#1976D2;
+}
+
+.comment-count:hover {
+    color: #9E9E9E;
+}
+
+.comment-count {
+    color: #aaa;
+}
+
+.post-comments {
+    margin-top:10px;
+    padding: 10px 10px;
+}
+
+.textArea-comment {
+    resize:none;
+    margin-bottom: 10px;
 }
 
 .pastebookPost {
@@ -32,15 +103,27 @@
 }
 
 .post-header {
-    background-color:#37474F;
-    color:#fff;
+    /*background-color:#37474F;*/
+    color:#000;
     padding: 5px 5px;
+}
+
+#writePost-header {
+    margin-bottom:12px;
+}
+
+#interactButtons {
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 .post-content {
     margin-top:10px;
 }
 
+.post-reaction {
+    margin-bottom:1px;
+}
 .post-reaction-like {
     background-color:#37474F;
     color:#fff;
@@ -61,6 +144,14 @@
     color:#fff;
 }
 
+#newsfeedPost {
+    margin-right:-13px;
+}
+
+#timelinePost {
+    margin-right:-26px;
+}
+
 .post-reaction-buttons:hover {
     background-color:#eee;
     color:#37474F;
@@ -68,10 +159,22 @@
 
 .post-reaction-count {
     margin-top:10px;
+    color:#aaa;
+}
+
+.post-comment {
+    font-size:11px;
 }
 
 #user-profile {
     background-color:#fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 10px 10px;
+}
+
+.date {
+    color:#aaa;
+    font-size:11px;
 }
 
 #intro {
@@ -91,7 +194,17 @@
     border-radius: 5px;
 }
 
-#newsfeed {
+#newsfeed, #profile {
+    margin-top:10px;
+}
+
+#profile-header {
+    background-color:#424242;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 10px 10px;
+}
+
+#profile-content {
     margin-top:10px;
 }
 
@@ -107,7 +220,7 @@ label.required-asterisk:before
 
 #logout-link{
     margin-right: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .icon{

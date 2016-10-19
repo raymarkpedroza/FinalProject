@@ -28,6 +28,19 @@ namespace Pastebook.Controllers
         }
 
         [HttpGet]
+        public new ActionResult Profile(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                UserModel model = new UserModel();
+                model = userManger.RetrieveUserById(id);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
@@ -57,6 +70,7 @@ namespace Pastebook.Controllers
                 Session["UserId"] = user.Id;
                 Session["Username"] = user.Username;
                 Session["Email"] = user.EmailAddress;
+                Session["UserFullname"] = user.Firstname + " " + user.Lastname;
                 return RedirectToAction("Index");
             }
 
@@ -68,7 +82,8 @@ namespace Pastebook.Controllers
 
         public ActionResult Logout()
         {
-            Session["Username"] = null;
+            Session.RemoveAll();
+
             return RedirectToAction("Index","Home");
         }
     }

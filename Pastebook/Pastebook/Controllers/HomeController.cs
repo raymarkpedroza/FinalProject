@@ -10,7 +10,7 @@ namespace Pastebook.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["User"] != null)
+            if (Session["Username"] != null)
             {
                 return RedirectToAction("Index","User");
             }

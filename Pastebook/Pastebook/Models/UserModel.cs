@@ -48,6 +48,8 @@ namespace Pastebook.Models
 
         public string Gender { get; set; }
         public byte[] ProfilePicture { get; set; }
+
+        [Display(Name = "Pastebook Account Date Created")]
         public DateTime DateCreated { get; set; }
         public string AboutMe { get; set; }
     }

@@ -1,41 +1,118 @@
 ﻿@model Pastebook.Models.UserModel
 
-<div class="container" id="newsfeed">
-    <div class="row">
-        <div class="col-md-4" id="user-profile">
-            <img src="~/Content/Images/pastebook-default.png" id ="prof-pic" class="img-circle" alt="Profile Picture">
-            <div class="text-center">
-                <div class="user-fullname">
-                    @Html.ActionLink(Model.Firstname +" "+ Model.Lastname, "Profile", "User")
+<div id="profile">
+    <div class="container">
+        <div class="row">
+            <div id="profile-header" class="text-center col-md-12">
+                <div id="profile-profile-picture">
+                    <img src="~/Content/Images/pastebook-default.png" id="profile-prof-pic" class="img-circle" alt="Profile Picture">
                 </div>
 
                 <div>
-                    @Html.ActionLink("Edit Profile","User","Profile")
-                </div>
+                    <div id="profile-fullname">
+                        @Html.ActionLink(Model.Firstname + " " + Model.Lastname, "Profile", "User")
+                    </div>
+                    <div id="profile-username">
+                        (@Model.Username)
+                    </div>
 
-                <div>
-                    @Html.ActionLink("View Friends", "User", "Friends")
+                    <div id="interactButtons">
+                        @if (!(Model.Id == (int)Session["UserId"]))
+                        {
+                            <button id="btnAddFriend" class="btn"><span class="glyphicon glyphicon-plus"></span>Add Friend</button>
+                            <button id="btnBlock" class="btn"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div id="writePost">
-                <div id="writePost-header">
-                    <span class="glyphicon glyphicon-pencil"></span>Status
+
+        <div class="row">
+            <div id="profile-content">
+                <div class="col-md-4" id="profile-user-details">
+                    <h3>
+                        Introduction
+                    </h3>
+                    @if (Model.AboutMe != null)
+                    {
+                    @Html.DisplayFor(model => model.AboutMe, Model.AboutMe)
+                    }
+
+                    else
+                    {
+                        <a data-value=@Model.Id>+ Describe who you are</a>
+                    }
+
+                    <hr>
+
+                    <h3>
+                        Personal Information
+                    </h3>
+
+                    <div id="profile-user-gender">
+                        @Html.LabelFor(model=>model.Gender):
+                        @Html.DisplayFor(model => model.Gender, Model.Gender)
+                    </div>
+
+                    <div id="profile-user-country">
+                        @Html.LabelFor(model => model.CountryId):
+                        @Html.DisplayFor(model => model.CountryId, Model.CountryId)
+                    </div>
+
+                    <div id="profile-user-birthday">
+                        @Html.LabelFor(model => model.Birthday):
+                        @Model.Birthday.ToString("MMMM dd, yyyy")
+                    </div>
+
+                    <hr>
+
+                    <h3>
+                        Contact Information
+                    </h3>
+
+                    <div id="profile-user-contactnumber">
+                        @Html.LabelFor(model=>model.MobileNumber):
+                        @Html.DisplayFor(model => model.MobileNumber, Model.MobileNumber)
+                    </div>
+
+                    <div id="profile-user-email">
+                        @Html.LabelFor(model => model.EmailAddress):
+                        @Html.DisplayFor(model => model.EmailAddress, Model.EmailAddress)
+                    </div>
+
+                    <hr>
+
+                    <h3>
+                        Pastebook Information
+                    </h3>
+
+                    <div id="profile-user-contactnumber">
+                        @Html.LabelFor(model => model.DateCreated):
+                        @Model.DateCreated.ToString("MMMM dd, yyyy")
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="writePost" class="col-md-12">
+                    <div id="writePost-header">
+                        <span class="glyphicon glyphicon-pencil"></span>Status
+                    </div>
+
+                        <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
+                        <div class="clearfix"><input type="button" value="Post" class="btn pull-right" id="btnPost" /></div>
                 </div>
 
-                <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
-                    <div class="clearfix"><input type="button" value="Post" class="btn pull-right" id="btnPost"/></div>
+                <div id="timelinePost">
+                    @{Html.RenderAction("GetUserPosts", "Post");}
                 </div>
-            <div id="newsfeedPost">
-                @{Html.RenderAction("GetUserPosts", "Post");}
             </div>
         </div>
     </div>
 </div>
 
 @section scripts{
-    
+
     <script>
         var createPostURL = '@Url.Action("CreatePost","Post")'
         var addLikeURL = '@Url.Action("AddLike","Reaction")'
@@ -56,11 +133,11 @@
                     type: 'POST',
                     success: function (data) {
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetUserPosts","Post")',
                             dataType: "html",
                             success: function (result)
                             {
-                                $("#newsfeedPost").html(result);
+                                $("#timelinePost").html(result);
                                 $('#textAreaPost').val('')
                                 $('.post-comments').hide();
                             }
@@ -88,7 +165,7 @@
                             url: '@Url.Action("GetUserPosts", "Post")',
                             dataType: "html",
                             success: function (result) {
-                                $("#newsfeedPost").html(result);
+                                $("#timelinePost").html(result);
                                 $('.post-comments').hide();
                             }
                         });
@@ -116,7 +193,7 @@
                             url: '@Url.Action("GetUserPosts", "Post")',
                             dataType: "html",
                             success: function (result) {
-                                $("#newsfeedPost").html(result);
+                                $("#timelinePost").html(result);
                                 $('.post-comments').hide();
                             }
                         });
@@ -155,8 +232,9 @@
                 }
 
             });
-           
+
         });
     </script>
 }
+
 

@@ -6,54 +6,60 @@
         <div class="pastebookPost">
             <div class="post-header">
                 <div><label>@postWithPoster.User.Firstname @postWithPoster.User.Lastname</label></div>
-                @postWithPoster.Post.CreatedDate.ToString("MMMM dd, yyyy") at @postWithPoster.Post.CreatedDate.ToShortTimeString()
+                <p class="date">@postWithPoster.Post.CreatedDate.ToString("MMMM dd, yyyy") at @postWithPoster.Post.CreatedDate.ToShortTimeString()</p>
             </div>
             <div class="post-content">
                 @postWithPoster.Post.Content
             </div>
-            
-            <div class="post-reaction-count">
-            <span>
-            @if (postWithPoster.ListOfLikes.Count > 0)
-            {
-                @postWithPoster.ListOfLikes.Count<span class="glyphicon glyphicon-heart"></span>
-            }
 
-            @if (postWithPoster.ListOfCommentsWithCommenters.Count > 0)
-            {
-                @postWithPoster.ListOfCommentsWithCommenters.Count<span class="glyphicon glyphicon-comment"></span>
-            }
-            </span>
+            <div class="post-reaction-count">
+                <span>
+                    @if (postWithPoster.ListOfLikes.Count > 0)
+                    {
+                        <span class="glyphicon glyphicon-heart like"></span>@postWithPoster.ListOfLikes.Count
+                    }
+
+                    @if (postWithPoster.ListOfCommentsWithCommenters.Count > 0)
+                    {
+                        <span class="pull-right"><a class="comment-count" data-value=@postWithPoster.Post.Id>@postWithPoster.ListOfCommentsWithCommenters.Count Comments</a></span>
+                    }
+                </span>
             </div>
 
             <hr>
             <div class="post-reaction">
-                @if (postWithPoster.ListOfLikes.Any(x=>x.LikedBy == (int)Session["UserId"]))
+                @if (postWithPoster.ListOfLikes.Any(x => x.LikedBy == (int)Session["UserId"]))
                 {
-                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.Id disabled><span class="glyphicon glyphicon-heart"></span></button>
+                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.Id disabled><span class="glyphicon glyphicon-heart"></span></button>
                 }
 
                 else
                 {
-                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.Id><span class="glyphicon glyphicon-heart"></span></button>
+                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.Id><span class="glyphicon glyphicon-heart"></span></button>
                 }
 
                 <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@postWithPoster.Post.Id><span class="glyphicon glyphicon-comment"></span></button>
             </div>
 
-            @foreach (var commentersComment in postWithPoster.ListOfCommentsWithCommenters)
-            {
+            <div class="post-comments" value=@postWithPoster.Post.Id>
+                @foreach (var commentersComment in postWithPoster.ListOfCommentsWithCommenters)
+                {
+                    <hr>
+                    <div class="post-comment">
+                        <div class="post-comment-header">
+                            <span><label>@commentersComment.User.Firstname @commentersComment.User.Lastname</label></span> @commentersComment.Comment.Content
+                        </div>
+                        <div class="post-comment-content">
+                        </div>
+                        <p class="date">@commentersComment.Comment.DateCreated.ToString("MMMM dd, yyyy") at @commentersComment.Comment.DateCreated.ToShortTimeString()</p>
+                    </div>
+                }
                 <hr>
-                <div class="post-comment">
-                    <div class="post-comment-header">
-                        <span><label>@commentersComment.User.Firstname @commentersComment.User.Lastname</label></span>
-                    </div>
-                    <div class="post-comment-content">
-                        @commentersComment.Comment.Content
-                    </div>
-                    @commentersComment.Comment.DateCreated.ToString("MMMM dd, yyyy") at @commentersComment.Comment.DateCreated.ToShortTimeString()
+                <div class="write-comment clearfix">
+                    <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@postWithPoster.Post.Id placeholder="Write comment.."></textarea>
+                    <button type="button" class="btn pull-right" id="btnComment" value=@postWithPoster.Post.Id>Add Comment</button>
                 </div>
-            }
+            </div>
         </div>
     </div>
 }

@@ -22,7 +22,7 @@ namespace Pastebook.Managers
             return response.Result;
         }
 
-        public List<UserPostModel> RetrievePosts(int id)
+        public List<UserPostModel> RetrieveUserPosts(int id)
         {
             List<UserPostModel> listOfPostsWithPoster = new List<UserPostModel>();
             List<UserCommentModel> listOfCommentsWithCommenters;
@@ -79,6 +79,69 @@ namespace Pastebook.Managers
             }
 
             return listOfPostsWithPoster.OrderByDescending(x=>x.Post.CreatedDate).ToList();
+        }
+
+        public List<UserPostModel> RetrieveNewsfeedPosts(int id, List<FriendModel> listOfFriends)
+        {
+            List<UserPostModel> listOfPostsWithPoster = new List<UserPostModel>();
+            List<UserCommentModel> listOfCommentsWithCommenters;
+            List<LikeModel> listOfLikes;
+
+            RetrievePostsRequest retrievePostsRequest = new RetrievePostsRequest();
+            retrievePostsRequest.UserId = id;
+
+            foreach (var friend in listOfFriends)
+            {
+                retrievePostsRequest.ListOfFriendsId.ToList().Add(friend.Id);
+            }
+
+            RetrievePostsResponse retrievePostsResponse = new RetrievePostsResponse();
+            retrievePostsResponse = pastebookServiceClient.RetrievePosts(retrievePostsRequest);
+
+
+            foreach (var post in retrievePostsResponse.ListOfPosts)
+            {
+                RetrieveUserByIdRequest retrieveUserRequest = new RetrieveUserByIdRequest();
+                retrieveUserRequest.Id = post.PosterId;
+                RetrieveUserByIdResponse retrieveUserResponse = new RetrieveUserByIdResponse();
+                retrieveUserResponse = pastebookServiceClient.RetrieveUserById(retrieveUserRequest);
+
+                RetrieveCommentRequest retrieveCommentRequest = new RetrieveCommentRequest();
+                retrieveCommentRequest.PostId = post.Id;
+
+                RetrieveCommentResponse retrieveCommentResponse = new RetrieveCommentResponse();
+                retrieveCommentResponse = pastebookServiceClient.RetrieveComment(retrieveCommentRequest);
+
+                listOfCommentsWithCommenters = new List<UserCommentModel>();
+                foreach (var comment in retrieveCommentResponse.ListOfComments)
+                {
+                    RetrieveUserByIdRequest retrieveCommenterRequest = new RetrieveUserByIdRequest();
+                    retrieveCommenterRequest.Id = post.PosterId;
+                    RetrieveUserByIdResponse retrieveCommenterResponse = new RetrieveUserByIdResponse();
+                    retrieveCommenterResponse = pastebookServiceClient.RetrieveUserById(retrieveCommenterRequest);
+
+                    UserCommentModel commenterComment = new UserCommentModel();
+                    commenterComment.Comment = Mapper.MapWCFCommentEntityToMVCCommentModel(comment);
+                    commenterComment.User = Mapper.MapWCFUserEntityToMVCUserModel(retrieveCommenterResponse.User);
+                    listOfCommentsWithCommenters.Add(commenterComment);
+                }
+
+                RetrieveLikeRequest retrieveLikeRequest = new RetrieveLikeRequest();
+                retrieveLikeRequest.PostId = post.Id;
+
+                RetrieveLikeResponse retrieveLikeResponse = new RetrieveLikeResponse();
+                retrieveLikeResponse = pastebookServiceClient.RetrieveLike(retrieveLikeRequest);
+
+                listOfLikes = new List<LikeModel>();
+                foreach (var like in retrieveLikeResponse.ListOfLikes)
+                {
+                    listOfLikes.Add(Mapper.MapWCFLikeEntityToMVCLikeModel(like));
+                }
+
+                listOfPostsWithPoster.Add(new UserPostModel() { User = Mapper.MapWCFUserEntityToMVCUserModel(retrieveUserResponse.User), Post = Mapper.MapWCFPostEntityToMVCPostModel(post), ListOfCommentsWithCommenters = listOfCommentsWithCommenters, ListOfLikes = listOfLikes });
+            }
+
+            return listOfPostsWithPoster.OrderByDescending(x => x.Post.CreatedDate).ToList();
         }
     }
 }

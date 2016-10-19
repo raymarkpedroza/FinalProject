@@ -25,12 +25,17 @@ namespace Pastebook.Controllers
             return Json( new {result = result });
         }
 
-        public PartialViewResult GetPosts()
+        public PartialViewResult GetUserPosts()
         {
             NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
-            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrievePosts((int)Session["UserId"]);
+            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveUserPosts((int)Session["UserId"]);
 
             return PartialView("~/Views/User/_NewsfeedPartialView.cshtml", newsfeedViewModel);
         }
+
+        //public PartialViewResult GetComments()
+        //{
+
+        //}
     }
 }

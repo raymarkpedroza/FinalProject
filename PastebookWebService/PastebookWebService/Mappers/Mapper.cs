@@ -112,7 +112,6 @@ namespace PastebookWebService.Mappers
         {
             PASTEBOOK_LIKE dbLikeTable = new PASTEBOOK_LIKE();
 
-            //dbLikeTable.ID = wcfLikeEntity.Id;
             dbLikeTable.POST_ID = wcfLikeEntity.PostId;
             dbLikeTable.LIKED_BY = wcfLikeEntity.LikedBy;
 

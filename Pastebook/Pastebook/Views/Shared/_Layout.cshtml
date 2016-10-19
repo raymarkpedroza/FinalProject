@@ -20,26 +20,54 @@
                 </button>
             </div>
             <div>
-                <a href="@Url.Action("Index", "Home")">
-                    <span class="glyphicon glyphicon-home icon">Home</span>
-                </a>
-                @if (Session["Username"] != null)
-                {
-                @*<img src="@Url.Content("~/Content/Images/logo-black.png")" id="logo-home" />*@
-                
-                @*<span class="badge">1</span>*@
-                <span class="glyphicon glyphicon-bell icon">Notification</span>
-                <span class="glyphicon glyphicon-user icon">Friends</span>
-                <input type="text" placeholder="search" id="textboxSearch"/>
-                <button type="button">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
+                <span id="searchBar">
+                    @if (Session["UserFullname"] != null)
+                    {
+                        <input type="text" placeholder="search" id="textboxSearch" />
+                        <button type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    }
+                </span>
 
-                <div class="pull-right" id="logout-link"> 
-                    <span>Hi @Session["Username"]!</span>
-                    @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "link" })
-                </div>
-                }
+                <div class="pull-right">
+                    
+                    @if (Session["UserFullname"] != null)
+                    {
+                        <div class="btn-group" id="profile-link">
+                        <span>
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "User")
+                        </span>
+                        </div>
+                    }
+                    
+
+                    <div class="btn-group">
+                    <a href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-home icon"></span>
+                    </a>
+                    </div>
+                    @if (Session["UserFullname"] != null)
+                    {
+                        <div class="btn-group">
+                        <span class="glyphicon glyphicon-user icon" id="friendRequests" data-toggle="dropdown"><span class="caret"></span></span>
+                        <ul class="dropdown-menu" aria-labelledby="friendRequests">
+                            <li><a href="#">Mamark added you</a></li>
+                        </ul>
+                        </div>
+
+                        <div class="btn-group">
+                            <span class="glyphicon glyphicon-bell icon" id="notifications" data-toggle="dropdown"><span class="caret"></span></span>
+                            <ul class="dropdown-menu" aria-labelledby="notifications">
+                                <li><a href="#">Posted on your timeline</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-group" id="logout-link">
+                            @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "link" })
+                        </div>
+                    }
+                        </div>
             </div>
 
             @*<div class="navbar-collapse collapse">
@@ -63,7 +91,18 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("modal", required: false)
+    @RenderSection("reload", required: false);
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+@section reload{
+    <script>
+        @*var session = @Session["Username"].ToString()
+        $(documents).ready(function (){
+            if (session == null) {
+                location.reload()
+            };
+        });*@
+    </script>
+}
