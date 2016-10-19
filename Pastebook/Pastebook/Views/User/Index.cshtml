@@ -1,99 +1,151 @@
-﻿@model IEnumerable<Pastebook.Models.UserModel>
+﻿@model Pastebook.Models.UserModel
 
-<p>
-    @Html.ActionLink("Create New", "Register")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CountryId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CountryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MobileNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AboutMe)
-        </th>
-        <th></th>
-    </tr>
+<div class="container" id="newsfeed">
+    <div class="row">
+        <div class="col-md-4" id="user-profile">
+            <img src="~/Content/Images/pastebook-default.png" id ="prof-pic" class="img-circle" alt="Profile Picture">
+            <div class="text-center">
+            @Html.DisplayFor(m => m.Firstname)
+            @Html.DisplayFor(m => m.Lastname)
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div id="writePost">
+            <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
+                <div class="clearfix"><input type="button" value="Post" class="btn pull-right" id="btnPost"/></div>
+            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConfirmPassword)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CountryId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CountryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MobileNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AboutMe)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+            <div id="newsfeedPost">
+                @{Html.RenderAction("GetPosts", "Post");}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section modal{
+<div id="commentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Comment</h4>
+            </div>
+            <div class="modal-body">
+                <textarea rows="5" cols="70" id="textAreaComment" placeholder="Write comment.." class="col-md-12"></textarea>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="clearfix">
+                    <button type="button" class="btn" id="btnComment">Add Comment</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 }
 
-</table>
+@section scripts{
+    
+    <script>
+        var createPostURL = '@Url.Action("CreatePost","Post")'
+        var addLikeURL = '@Url.Action("AddLike","Reaction")'
+        var addCommentURL = '@Url.Action("AddComment","Reaction")'
+        var addNotificationURL = '@Url.Action("AddNotification", "Notification")'
+
+        $(document).ready(function () {
+            $(document).delegate("#btnPost","click", function () {
+                var data = {
+                    content: $('#textAreaPost').val(),
+                }
+
+                $.ajax({
+                    url: createPostURL,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        $.ajax({
+                            url: '@Url.Action("GetPosts","Post")',
+                            dataType: "html",
+                            success: function (result)
+                            {
+                                $("#newsfeedPost").html(result);
+                                $('#textAreaPost').val('')
+                            }
+                        });
+                    },
+
+                    error: function () {
+                        alert('Something went wrong.')
+                    }
+                })
+
+            });
+
+
+            $(document).delegate(".post-reaction-like", "click", function () {
+                var data = {
+                    postId: this.value,
+                }
+                $.ajax({
+                    url: addLikeURL,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        $.ajax({
+                            url: '@Url.Action("GetPosts", "Post")',
+                            dataType: "html",
+                            success: function (result) {
+                                $("#newsfeedPost").html(result);
+                            }
+                        });
+                    },
+
+                    error: function () {
+                        alert('Something went wrong.')
+                    }
+                })
+
+            });
+
+            $(document).delegate("#btnComment", "click", function () {
+                var data = {
+                    postId: this.value,
+                    content: $("#textAreaComment").val()
+                }
+                $.ajax({
+                    url: addCommentURL,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        $("#textAreaComment").val('')
+                        $('#commentModal').modal('hide');
+
+                        $.ajax({
+                            url: '@Url.Action("GetPosts", "Post")',
+                            dataType: "html",
+                            success: function (result) {
+                                $("#newsfeedPost").html(result);
+                            }
+                        });
+                    },
+
+                    error: function () {
+                        alert('Something went wrong.')
+                    }
+                })
+
+            });
+
+            $(document).delegate(".post-reaction-comment", "click", function () {
+                $('#commentModal').modal('show');
+                $('#btnComment').val(this.value);
+            });
+           
+        });
+    </script>
+}
+

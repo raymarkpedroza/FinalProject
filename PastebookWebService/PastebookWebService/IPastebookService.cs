@@ -21,7 +21,10 @@ namespace PastebookWebService
         PasswordMatchResponse PasswordMatch(PasswordMatchRequest request);
 
         [OperationContract]
-        RetrieveUserResponse RetrieveUser(RetrieverUserRequest request);
+        RetrieveUserByEmailResponse RetrieveUserByEmail(RetrieverUserByEmailRequest request);
+
+        [OperationContract]
+        RetrieveUserByIdResponse RetrieveUserById(RetrieveUserByIdRequest request);
 
         [OperationContract]
         RetrievePostsResponse RetrieveNewsfeed(RetrievePostsRequest request);
@@ -34,6 +37,27 @@ namespace PastebookWebService
 
         [OperationContract]
         EncryptPasswordResponse EncryptPassword(EncryptPasswordRequest request);
+
+        [OperationContract]
+        CreatePostResponse CreatePost(CreatePostRequest request);
+
+        [OperationContract]
+        RetrievePostsResponse RetrievePosts(RetrievePostsRequest request);
+
+        [OperationContract]
+        AddCommentResponse AddComment(AddCommentRequest request);
+
+        [OperationContract]
+        AddNotificationResponse AddNotification(AddNotificationRequest request);
+
+        [OperationContract]
+        AddLikeResponse AddLike(AddLikeRequest request);
+
+        [OperationContract]
+        RetrieveCommentResponse RetrieveComment(RetrieveCommentRequest request);
+
+        [OperationContract]
+        RetrieveLikeResponse RetrieveLike(RetrieveLikeRequest request);
 
         [OperationContract]
         CommentEntity Comment();

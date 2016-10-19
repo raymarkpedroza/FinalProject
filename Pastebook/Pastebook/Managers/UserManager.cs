@@ -32,6 +32,17 @@ namespace Pastebook.Managers
             return registerResponse.Result;
         }
 
+        public UserModel RetrieveUserById(int id)
+        {
+            RetrieveUserByIdRequest request = new RetrieveUserByIdRequest();
+            request.Id = id;
+
+            RetrieveUserByIdResponse response = new RetrieveUserByIdResponse();
+            response = pastebookServiceClient.RetrieveUserById(request);
+
+            return Mapper.MapWCFUserEntityToMVCUserModel(response.User);
+        }
+
         public List<UserModel> RetrieveAllUser()
         {
             List<UserModel> listOfUsers = new List<UserModel>();
@@ -47,17 +58,15 @@ namespace Pastebook.Managers
             return listOfUsers;
         }
 
-        public bool LoginUser(string email, string password)
+        public bool LoginUser(string email, string password, out UserModel userModel)
         {
             bool result = false;
 
-            RetrieverUserRequest retrieveUserRequest = new RetrieverUserRequest();
+            RetrieverUserByEmailRequest retrieveUserRequest = new RetrieverUserByEmailRequest();
             retrieveUserRequest.EmailAddress = email;
 
-            RetrieveUserResponse retrieveUserResponse = new RetrieveUserResponse();
-            retrieveUserResponse = pastebookServiceClient.RetrieveUser(retrieveUserRequest);
-
-            UserModel userModel = new UserModel();
+            RetrieveUserByEmailResponse retrieveUserResponse = new RetrieveUserByEmailResponse();
+            retrieveUserResponse = pastebookServiceClient.RetrieveUserByEmail(retrieveUserRequest);
 
             userModel = Mapper.MapWCFUserEntityToMVCUserModel(retrieveUserResponse.User);
 

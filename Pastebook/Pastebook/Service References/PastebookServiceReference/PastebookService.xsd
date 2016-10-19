@@ -16,12 +16,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PasswordMatchRequest" nillable="true" type="tns:PasswordMatchRequest" />
-  <xs:complexType name="RetrieverUserRequest">
+  <xs:complexType name="RetrieverUserByEmailRequest">
     <xs:sequence>
       <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RetrieverUserRequest" nillable="true" type="tns:RetrieverUserRequest" />
+  <xs:element name="RetrieverUserByEmailRequest" nillable="true" type="tns:RetrieverUserByEmailRequest" />
+  <xs:complexType name="RetrieveUserByIdRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveUserByIdRequest" nillable="true" type="tns:RetrieveUserByIdRequest" />
   <xs:complexType name="RetrievePostsRequest">
     <xs:sequence>
       <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ListOfFriendsId" nillable="true" type="q2:ArrayOfint" />
@@ -35,4 +41,40 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EncryptPasswordRequest" nillable="true" type="tns:EncryptPasswordRequest" />
+  <xs:complexType name="CreatePostRequest">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="Post" nillable="true" type="q3:PostEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreatePostRequest" nillable="true" type="tns:CreatePostRequest" />
+  <xs:complexType name="AddCommentRequest">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="Comment" nillable="true" type="q4:CommentEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddCommentRequest" nillable="true" type="tns:AddCommentRequest" />
+  <xs:complexType name="AddNotificationRequest">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="Notification" nillable="true" type="q5:NotificationEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddNotificationRequest" nillable="true" type="tns:AddNotificationRequest" />
+  <xs:complexType name="AddLikeRequest">
+    <xs:sequence>
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="Like" nillable="true" type="q6:LikeEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddLikeRequest" nillable="true" type="tns:AddLikeRequest" />
+  <xs:complexType name="RetrieveCommentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PostId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveCommentRequest" nillable="true" type="tns:RetrieveCommentRequest" />
+  <xs:complexType name="RetrieveLikeRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PostId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveLikeRequest" nillable="true" type="tns:RetrieveLikeRequest" />
 </xs:schema>

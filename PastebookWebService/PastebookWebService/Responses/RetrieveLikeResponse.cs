@@ -8,14 +8,14 @@ using System.Web;
 namespace PastebookWebService.Responses
 {
     [DataContract]
-    public class RetrieveUserResponse
+    public class RetrieveLikeResponse
     {
-        public RetrieveUserResponse()
+        public RetrieveLikeResponse()
         {
-            User = new UserEntity();
+            ListOfLikes = new List<LikeEntity>();
         }
 
         [DataMember]
-        public UserEntity User { get; set; }
+        public List<LikeEntity> ListOfLikes { get; set; }
     }
 }

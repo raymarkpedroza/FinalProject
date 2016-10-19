@@ -31,7 +31,8 @@ namespace PastebookWebService.Managers
                     var retrievePostsPostedOnUserPage = context.PASTEBOOK_POST.Where(x => x.PROFILE_OWNER_ID == userId);
                     foreach (var post in retrievePostsPostedOnUserPage)
                     {
-                        listOfPosts.Add(Mapper.MapDBPostTableToWCFPostEntity(post));
+                        if(!listOfPosts.Any(x=>x.Id == post.ID))
+                            listOfPosts.Add(Mapper.MapDBPostTableToWCFPostEntity(post));
                     }
 
                     //friendspost
@@ -55,6 +56,25 @@ namespace PastebookWebService.Managers
             }
 
             return listOfPosts;
+        }
+
+        public int CreatePost(PostEntity post)
+        {
+            int result = 0;
+            try
+            {
+                using (var context = new PASTEBOOKEntities())
+                {
+                    context.PASTEBOOK_POST.Add(Mapper.MapWCFPostEntityToDBPostTable(post));
+                    result = context.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return result;
         }
     }
 }

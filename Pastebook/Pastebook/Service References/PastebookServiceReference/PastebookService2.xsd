@@ -26,27 +26,33 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PasswordMatchResponse" nillable="true" type="tns:PasswordMatchResponse" />
-  <xs:complexType name="RetrieveUserResponse">
+  <xs:complexType name="RetrieveUserByEmailResponse">
     <xs:sequence>
       <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="User" nillable="true" type="q3:UserEntity" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="RetrieveUserResponse" nillable="true" type="tns:RetrieveUserResponse" />
+  <xs:element name="RetrieveUserByEmailResponse" nillable="true" type="tns:RetrieveUserByEmailResponse" />
+  <xs:complexType name="RetrieveUserByIdResponse">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="User" nillable="true" type="q4:UserEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveUserByIdResponse" nillable="true" type="tns:RetrieveUserByIdResponse" />
   <xs:complexType name="RetrievePostsResponse">
     <xs:sequence>
-      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfPosts" nillable="true" type="q4:ArrayOfPostEntity" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfPosts" nillable="true" type="q5:ArrayOfPostEntity" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RetrievePostsResponse" nillable="true" type="tns:RetrievePostsResponse" />
   <xs:complexType name="RetrieveAllUserResponse">
     <xs:sequence>
-      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfUser" nillable="true" type="q5:ArrayOfUserEntity" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfUser" nillable="true" type="q6:ArrayOfUserEntity" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RetrieveAllUserResponse" nillable="true" type="tns:RetrieveAllUserResponse" />
   <xs:complexType name="RetrieveAllCountriesResponse">
     <xs:sequence>
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfCountries" nillable="true" type="q6:ArrayOfCountryEntity" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfCountries" nillable="true" type="q7:ArrayOfCountryEntity" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RetrieveAllCountriesResponse" nillable="true" type="tns:RetrieveAllCountriesResponse" />
@@ -57,4 +63,40 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EncryptPasswordResponse" nillable="true" type="tns:EncryptPasswordResponse" />
+  <xs:complexType name="CreatePostResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreatePostResponse" nillable="true" type="tns:CreatePostResponse" />
+  <xs:complexType name="AddCommentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddCommentResponse" nillable="true" type="tns:AddCommentResponse" />
+  <xs:complexType name="AddNotificationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddNotificationResponse" nillable="true" type="tns:AddNotificationResponse" />
+  <xs:complexType name="AddLikeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddLikeResponse" nillable="true" type="tns:AddLikeResponse" />
+  <xs:complexType name="RetrieveCommentResponse">
+    <xs:sequence>
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfComments" nillable="true" type="q8:ArrayOfCommentEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveCommentResponse" nillable="true" type="tns:RetrieveCommentResponse" />
+  <xs:complexType name="RetrieveLikeResponse">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="ListOfLikes" nillable="true" type="q9:ArrayOfLikeEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveLikeResponse" nillable="true" type="tns:RetrieveLikeResponse" />
 </xs:schema>

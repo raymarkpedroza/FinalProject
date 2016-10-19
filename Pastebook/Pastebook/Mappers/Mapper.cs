@@ -34,7 +34,7 @@ namespace Pastebook.Mappers
         {
             UserModel mvcUserModel = new UserModel();
 
-            //mvcUserModel.Id = wcfUserEntity.Id;
+            mvcUserModel.Id = wcfUserEntity.Id;
             mvcUserModel.Username = wcfUserEntity.Username;
             mvcUserModel.Password = wcfUserEntity.Password;
             mvcUserModel.EmailAddress = wcfUserEntity.EmailAddress;

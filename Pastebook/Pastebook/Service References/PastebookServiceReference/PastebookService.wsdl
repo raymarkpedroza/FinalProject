@@ -23,11 +23,17 @@
   <wsdl:message name="IPastebookService_PasswordMatch_OutputMessage">
     <wsdl:part name="parameters" element="tns:PasswordMatchResponse" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_RetrieveUser_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUser" />
+  <wsdl:message name="IPastebookService_RetrieveUserByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserByEmail" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_RetrieveUser_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUserResponse" />
+  <wsdl:message name="IPastebookService_RetrieveUserByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveUserById_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserById" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveUserById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IPastebookService_RetrieveNewsfeed_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveNewsfeed" />
@@ -52,6 +58,48 @@
   </wsdl:message>
   <wsdl:message name="IPastebookService_EncryptPassword_OutputMessage">
     <wsdl:part name="parameters" element="tns:EncryptPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_CreatePost_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePost" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_CreatePost_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreatePostResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrievePosts_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePosts" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrievePosts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePostsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddComment_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddComment" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddComment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddNotification_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNotification" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddNotification_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddLike_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddLike" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_AddLike_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddLikeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveComment_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveComment" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveComment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveLike_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveLike" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveLike_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveLikeResponse" />
   </wsdl:message>
   <wsdl:message name="IPastebookService_Comment_InputMessage">
     <wsdl:part name="parameters" element="tns:Comment" />
@@ -92,9 +140,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/PasswordMatch" message="tns:IPastebookService_PasswordMatch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/PasswordMatchResponse" message="tns:IPastebookService_PasswordMatch_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUser" message="tns:IPastebookService_RetrieveUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserResponse" message="tns:IPastebookService_RetrieveUser_OutputMessage" />
+    <wsdl:operation name="RetrieveUserByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserByEmail" message="tns:IPastebookService_RetrieveUserByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserByEmailResponse" message="tns:IPastebookService_RetrieveUserByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUserById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserById" message="tns:IPastebookService_RetrieveUserById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveUserByIdResponse" message="tns:IPastebookService_RetrieveUserById_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveNewsfeed">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveNewsfeed" message="tns:IPastebookService_RetrieveNewsfeed_InputMessage" />
@@ -111,6 +163,34 @@
     <wsdl:operation name="EncryptPassword">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/EncryptPassword" message="tns:IPastebookService_EncryptPassword_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/EncryptPasswordResponse" message="tns:IPastebookService_EncryptPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreatePost">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/CreatePost" message="tns:IPastebookService_CreatePost_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/CreatePostResponse" message="tns:IPastebookService_CreatePost_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePosts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrievePosts" message="tns:IPastebookService_RetrievePosts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrievePostsResponse" message="tns:IPastebookService_RetrievePosts_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddComment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/AddComment" message="tns:IPastebookService_AddComment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/AddCommentResponse" message="tns:IPastebookService_AddComment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNotification">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/AddNotification" message="tns:IPastebookService_AddNotification_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/AddNotificationResponse" message="tns:IPastebookService_AddNotification_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddLike">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/AddLike" message="tns:IPastebookService_AddLike_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/AddLikeResponse" message="tns:IPastebookService_AddLike_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveComment">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveComment" message="tns:IPastebookService_RetrieveComment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveCommentResponse" message="tns:IPastebookService_RetrieveComment_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveLike">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveLike" message="tns:IPastebookService_RetrieveLike_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveLikeResponse" message="tns:IPastebookService_RetrieveLike_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Comment">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Comment" message="tns:IPastebookService_Comment_InputMessage" />
@@ -153,8 +233,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveUser">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveUser" style="document" />
+    <wsdl:operation name="RetrieveUserByEmail">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveUserByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUserById">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveUserById" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -191,6 +280,69 @@
     </wsdl:operation>
     <wsdl:operation name="EncryptPassword">
       <soap:operation soapAction="http://tempuri.org/IPastebookService/EncryptPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePost">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/CreatePost" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePosts">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrievePosts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddComment">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/AddComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNotification">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/AddNotification" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddLike">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/AddLike" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveComment">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveLike">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveLike" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

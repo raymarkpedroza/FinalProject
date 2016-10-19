@@ -1,15 +1,103 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #eee;
 }
 
 #logo-home {
-    width: 15%;
+    width: 1.5%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#prof-pic {
+    height: 100px ;
+    width: 100px;
+    text-align:center;
+    margin-top:10px;
+    margin-left:90px;
+}
+
+#writePost {
+    background-color:#fff;
+    padding: 10px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.pastebookPost {
+    background-color: #fff;
+    margin-top:10px;
+    padding: 10px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.post-header {
+    background-color:#37474F;
+    color:#fff;
+    padding: 5px 5px;
+}
+
+.post-content {
+    margin-top:10px;
+}
+
+.post-reaction-like {
+    background-color:#37474F;
+    color:#fff;
+}
+
+.post-reaction-like:disabled {
+    background-color:#f00;
+    color:#fff;
+}
+
+.post-reaction-like:focus {
+    background-color:#ff0000;
+    color:#fff;
+}
+
+.post-reaction-comment {
+    background-color:#37474F;
+    color:#fff;
+}
+
+.post-reaction-buttons:hover {
+    background-color:#eee;
+    color:#37474F;
+}
+
+.post-reaction-count {
+    margin-top:10px;
+}
+
+#user-profile {
+    background-color:#fff;
 }
 
 #intro {
     margin-top: 30px;
     margin-right: 70px;
+}
+
+.link {
+    color:#000;
+}
+
+.link:hover {
+    color:#aaa;
+}
+
+#textboxSearch {
+    border-radius: 5px;
+}
+
+#newsfeed {
+    margin-top:10px;
+}
+
+#textAreaPost {
+    resize:none;
+    margin-bottom: 10px;
 }
 
 label.required-asterisk:before
@@ -18,8 +106,20 @@ label.required-asterisk:before
 }
 
 #logout-link{
-    margin-top: 10px;
     margin-right: 20px;
+    margin-top: 20px;
+}
+
+.icon{
+    font-size: 16px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #000;
+}
+
+.icon:hover{
+    color: #aaa;
 }
 
 #login-form {
@@ -32,8 +132,8 @@ label.required-asterisk:before
 }
 
 .navbar-inverse {
-    background-color: #01579B;
-    border-color: #fff;
+    background-color: #fff;
+    border-color: #aaa;
 }
 
 /* Set padding to keep content from hitting the edges */

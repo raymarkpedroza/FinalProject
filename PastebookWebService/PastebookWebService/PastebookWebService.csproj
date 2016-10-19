@@ -114,8 +114,10 @@
     <Compile Include="Entities\PostEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Managers\CountryManager.cs" />
+    <Compile Include="Managers\NotificationManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\PasswordManager.cs" />
+    <Compile Include="Managers\ReactionManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="PastebookService.svc.cs">
@@ -123,19 +125,33 @@
     </Compile>
     <Compile Include="IPastebookService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\AddCommentRequest.cs" />
+    <Compile Include="Requests\AddLikeRequest.cs" />
+    <Compile Include="Requests\AddNotificationRequest.cs" />
+    <Compile Include="Requests\CreatePostRequest.cs" />
     <Compile Include="Requests\EncryptPasswordRequest.cs" />
-    <Compile Include="Requests\RetrieverUserRequest.cs" />
+    <Compile Include="Requests\RetrieveCommentRequest.cs" />
+    <Compile Include="Requests\RetrieverUserByEmailRequest.cs" />
     <Compile Include="Requests\PasswordMatchRequest.cs" />
     <Compile Include="Requests\RegisterUserRequest.cs" />
     <Compile Include="Requests\RetrievePostsRequest.cs" />
+    <Compile Include="Requests\RetrieveUserByIdRequest.cs" />
+    <Compile Include="Requests\RetrieveLikeRequest.cs" />
+    <Compile Include="Responses\AddCommentResponse.cs" />
+    <Compile Include="Responses\AddLikeResponse.cs" />
+    <Compile Include="Responses\AddNotificationResponse.cs" />
     <Compile Include="Responses\BaseResponse.cs" />
+    <Compile Include="Responses\CreatePostResponse.cs" />
     <Compile Include="Responses\EncryptPasswordResponse.cs" />
     <Compile Include="Responses\RetrieveAllCountriesResponse.cs" />
     <Compile Include="Responses\RetrieveAllUserResponse.cs" />
+    <Compile Include="Responses\RetrieveCommentResponse.cs" />
+    <Compile Include="Responses\RetrieveLikeResponse.cs" />
     <Compile Include="Responses\RetrievePostsResponse.cs" />
-    <Compile Include="Responses\RetrieveUserResponse.cs" />
+    <Compile Include="Responses\RetrieveUserByEmailResponse.cs" />
     <Compile Include="Responses\PasswordMatchResponse.cs" />
     <Compile Include="Responses\RegisterUserResponse.cs" />
+    <Compile Include="Responses\RetrieveUserByIdResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

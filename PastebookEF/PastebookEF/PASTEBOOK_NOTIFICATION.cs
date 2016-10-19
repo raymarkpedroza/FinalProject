@@ -15,7 +15,7 @@ namespace PastebookEF
     public partial class PASTEBOOK_NOTIFICATION
     {
         public int ID { get; set; }
-        public int NOTIF_TYPE { get; set; }
+        public string NOTIF_TYPE { get; set; }
         public int RECEIVER_ID { get; set; }
         public int SENDER_ID { get; set; }
         public System.DateTime CREATED_DATE { get; set; }

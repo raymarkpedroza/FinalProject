@@ -9,7 +9,7 @@ namespace PastebookWebService.Entities
     public class NotificationEntity
     {
         public int Id { get; set; }
-        public int NotificationType { get; set; }
+        public string NotificationType { get; set; }
         public int ReceiverId { get; set; }
         public int SenderId { get; set; }
         public DateTime CreatedDate { get; set; }

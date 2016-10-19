@@ -12,18 +12,20 @@ namespace Pastebook.Controllers
     {
         UserManager userManger = new UserManager();
         CountryManager countryManager = new CountryManager();
-        // GET: User
+        PostManager postManager = new PostManager();
 
         [HttpGet]
         public ActionResult Index()
         {
-            if (Session["User"] != null)
-                return View(userManger.RetrieveAllUser());
-
+            if (Session["Username"] != null)
+            {
+                UserModel model = new UserModel();
+                model = userManger.RetrieveUserById((int)Session["UserId"]);
+                return View(model);
+            }
             else
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
         }
-
 
         [HttpGet]
         public ActionResult Register()
@@ -50,9 +52,11 @@ namespace Pastebook.Controllers
         [HttpPost]
         public ActionResult Login(UserModel user)
         {
-            if (userManger.LoginUser(user.EmailAddress, user.Password))
+            if (userManger.LoginUser(user.EmailAddress, user.Password, out user))
             {
-                Session["User"] = user.EmailAddress;
+                Session["UserId"] = user.Id;
+                Session["Username"] = user.Username;
+                Session["Email"] = user.EmailAddress;
                 return RedirectToAction("Index");
             }
 
@@ -64,7 +68,7 @@ namespace Pastebook.Controllers
 
         public ActionResult Logout()
         {
-            Session["User"] = null;
+            Session["Username"] = null;
             return RedirectToAction("Index","Home");
         }
     }

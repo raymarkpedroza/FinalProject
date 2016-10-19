@@ -37,7 +37,7 @@ namespace PastebookWebService.Managers
             return result;
         }
 
-        public UserEntity RetrieveUser(string emailaddress)
+        public UserEntity RetrieveUserByEmail(string emailaddress)
         {
             UserEntity user = new UserEntity();
 
@@ -46,6 +46,25 @@ namespace PastebookWebService.Managers
                 using (var context = new PASTEBOOKEntities())
                 {
                     var result = context.PASTEBOOK_USER.Where(x => x.EMAIL_ADDRESS == emailaddress).SingleOrDefault();
+                    user = Mapper.MapDBUserTableToWCFUserEntity(result);
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return user;
+        }
+
+        public UserEntity RetrieveUserById(int id)
+        {
+            UserEntity user = new UserEntity();
+
+            try
+            {
+                using (var context = new PASTEBOOKEntities())
+                {
+                    var result = context.PASTEBOOK_USER.Where(x => x.ID == id).SingleOrDefault();
                     user = Mapper.MapDBUserTableToWCFUserEntity(result);
                 }
             }

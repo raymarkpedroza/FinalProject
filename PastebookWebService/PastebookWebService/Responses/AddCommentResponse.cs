@@ -4,12 +4,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace PastebookWebService.Requests
+namespace PastebookWebService.Responses
 {
     [DataContract]
-    public class RetrieverUserRequest
+    public class AddCommentResponse
     {
         [DataMember]
-        public string EmailAddress { get; set; }
+        public int Result { get; set; }
     }
 }

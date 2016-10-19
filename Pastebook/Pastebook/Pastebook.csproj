@@ -154,21 +154,30 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ReactionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Managers\CountryManager.cs" />
+    <Compile Include="Managers\NotificationManager.cs" />
+    <Compile Include="Managers\PostManager.cs" />
+    <Compile Include="Managers\ReactionManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\FriendModel.cs" />
     <Compile Include="Models\LikeModel.cs" />
+    <Compile Include="Models\NewsfeedViewModel.cs" />
     <Compile Include="Models\NotificationModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\UserCommentModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserPostModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\PastebookServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -179,11 +188,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\logo-black.png" />
+    <Content Include="Content\Images\logo-blue.png" />
+    <Content Include="Content\Images\pastebook-default.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Content\Images\logo.png" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -212,9 +223,6 @@
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrievePostsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.CommentEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -237,6 +245,30 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.EncryptPasswordResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.CreatePostResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveUserByEmailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveUserByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddCommentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddLikeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddNotificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveCommentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveLikeResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\PastebookServiceReference\PastebookService.disco" />
@@ -287,9 +319,12 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\_NewsfeedPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Notification\" />
+    <Folder Include="Views\Reaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -19,6 +19,8 @@ namespace PastebookWebService
         UserManager userManager = new UserManager();
         PasswordManager passwordManager = new PasswordManager();
         PostManager postManager = new PostManager();
+        ReactionManager reactionManager = new ReactionManager();
+        NotificationManager notificationManager = new NotificationManager();
 
         public RegisterUserResponse RegisterUser(RegisterUserRequest request)
         {
@@ -36,10 +38,10 @@ namespace PastebookWebService
             return response;
         }
 
-        public RetrieveUserResponse RetrieveUser(RetrieverUserRequest request)
+        public RetrieveUserByEmailResponse RetrieveUserByEmail(RetrieverUserByEmailRequest request)
         {
-            RetrieveUserResponse response = new RetrieveUserResponse();
-            response.User = userManager.RetrieveUser(request.EmailAddress);
+            RetrieveUserByEmailResponse response = new RetrieveUserByEmailResponse();
+            response.User = userManager.RetrieveUserByEmail(request.EmailAddress);
 
             return response;
         }
@@ -102,6 +104,70 @@ namespace PastebookWebService
 
             response.HashPassword = passwordManager.GeneratePasswordHash(request.Password, out salt);
             response.Salt = salt;
+
+            return response;
+        }
+
+        public CreatePostResponse CreatePost(CreatePostRequest request)
+        {
+            CreatePostResponse response = new CreatePostResponse();
+            response.Result = postManager.CreatePost(request.Post);
+
+            return response;
+        }
+
+        public RetrieveUserByIdResponse RetrieveUserById(RetrieveUserByIdRequest request)
+        {
+            RetrieveUserByIdResponse response = new RetrieveUserByIdResponse();
+            response.User = userManager.RetrieveUserById(request.Id);
+
+            return response;
+        }
+
+        public RetrievePostsResponse RetrievePosts(RetrievePostsRequest request)
+        {
+            RetrievePostsResponse response = new RetrievePostsResponse();
+            response.ListOfPosts = postManager.RetrieveNewsfeed(request.UserId, request.ListOfFriendsId);
+
+            return response;
+        }
+
+        public AddCommentResponse AddComment(AddCommentRequest request)
+        {
+            AddCommentResponse response = new AddCommentResponse();
+            response.Result = reactionManager.AddComment(request.Comment);
+
+            return response;
+        }
+
+        public AddNotificationResponse AddNotification(AddNotificationRequest request)
+        {
+            AddNotificationResponse response = new AddNotificationResponse();
+            response.Result = notificationManager.AddNotification(request.Notification);
+
+            return response;
+        }
+
+        public AddLikeResponse AddLike(AddLikeRequest request)
+        {
+            AddLikeResponse response = new AddLikeResponse();
+            response.Result = reactionManager.AddLike(request.Like);
+
+            return response;
+        }
+
+        public RetrieveCommentResponse RetrieveComment(RetrieveCommentRequest request)
+        {
+            RetrieveCommentResponse response = new RetrieveCommentResponse();
+            response.ListOfComments = reactionManager.RetrieveComment(request.PostId);
+
+            return response;
+        }
+
+        public RetrieveLikeResponse RetrieveLike(RetrieveLikeRequest request)
+        {
+            RetrieveLikeResponse response = new RetrieveLikeResponse();
+            response.ListOfLikes = reactionManager.RetrieveLike(request.PostId);
 
             return response;
         }
