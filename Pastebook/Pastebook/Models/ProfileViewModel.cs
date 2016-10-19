@@ -5,4 +5,9 @@ using System.Web;
 
 namespace Pastebook.Models
 {
+    public class ProfileViewModel
+    {
+        public UserModel User = new UserModel();
+        public List<FriendModel> ListOfFriends = new List<FriendModel>();
+    }
 }

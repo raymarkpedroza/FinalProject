@@ -209,51 +209,73 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Comment">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CommentResponse">
+  <xs:element name="AddFriend">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CommentResult" nillable="true" type="q29:CommentEntity" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q29:AddFriendRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Country">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CountryResponse">
+  <xs:element name="AddFriendResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="CountryResult" nillable="true" type="q30:CountryEntity" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="AddFriendResult" nillable="true" type="q30:AddFriendResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Friend">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="FriendResponse">
+  <xs:element name="AcceptFriendRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="FriendResult" nillable="true" type="q31:FriendEntity" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q31:AcceptFriendRequestRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Like">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="LikeResponse">
+  <xs:element name="AcceptFriendRequestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="LikeResult" nillable="true" type="q32:LikeEntity" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="AcceptFriendRequestResult" nillable="true" type="q32:AcceptFriendRequestResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RejectFriendRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q33:RejectFriendRequestRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RejectFriendRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RejectFriendRequestResult" nillable="true" type="q34:RejectFriendRequestResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCountryById">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q35:RetrieveCountryByIdRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCountryByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveCountryByIdResult" nillable="true" type="q36:RetrieveCountryByIdResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFriends">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/PastebookWebService.Requests" minOccurs="0" name="request" nillable="true" type="q37:RetrieveFriendsRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFriendsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/PastebookWebService.Responses" minOccurs="0" name="RetrieveFriendsResult" nillable="true" type="q38:RetrieveFriendsResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -265,7 +287,7 @@
   <xs:element name="NotifyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="NotifyResult" nillable="true" type="q33:NotificationEntity" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="NotifyResult" nillable="true" type="q39:NotificationEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

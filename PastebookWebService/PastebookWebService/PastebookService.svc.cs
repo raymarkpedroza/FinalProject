@@ -20,7 +20,9 @@ namespace PastebookWebService
         PasswordManager passwordManager = new PasswordManager();
         PostManager postManager = new PostManager();
         ReactionManager reactionManager = new ReactionManager();
+        FriendManager friendManager = new FriendManager();
         NotificationManager notificationManager = new NotificationManager();
+        CountryManager countryManager = new CountryManager();
 
         public RegisterUserResponse RegisterUser(RegisterUserRequest request)
         {
@@ -54,26 +56,6 @@ namespace PastebookWebService
             return response;
         }
 
-        public CommentEntity Comment()
-        {
-            throw new NotImplementedException();
-        }
-
-        public CountryEntity Country()
-        {
-            throw new NotImplementedException();
-        }
-
-        public FriendEntity Friend()
-        {
-            throw new NotImplementedException();
-        }
-
-        public LikeEntity Like()
-        {
-            throw new NotImplementedException();
-        }
-
         public NotificationEntity Notify()
         {
             throw new NotImplementedException();
@@ -89,7 +71,6 @@ namespace PastebookWebService
 
         public RetrieveAllCountriesResponse RetrieveAllCountries()
         {
-            CountryManager countryManager = new CountryManager();
             RetrieveAllCountriesResponse response = new RetrieveAllCountriesResponse();
 
             response.ListOfCountries = countryManager.RetrieveAllCountry();
@@ -168,6 +149,46 @@ namespace PastebookWebService
         {
             RetrieveLikeResponse response = new RetrieveLikeResponse();
             response.ListOfLikes = reactionManager.RetrieveLike(request.PostId);
+
+            return response;
+        }
+
+        public AddFriendResponse AddFriend(AddFriendRequest request)
+        {
+            AddFriendResponse response = new AddFriendResponse();
+            response.Result = friendManager.AddFriend(request.Friend);
+
+            return response;
+        }
+
+        public AcceptFriendRequestResponse AcceptFriendRequest(AcceptFriendRequestRequest request)
+        {
+            AcceptFriendRequestResponse response = new AcceptFriendRequestResponse();
+            response.Result = friendManager.AcceptFriendRequest(request.FriendId, request.Request);
+
+            return response;
+        }
+
+        public RejectFriendRequestResponse RejectFriendRequest(RejectFriendRequestRequest request)
+        {
+            RejectFriendRequestResponse response = new RejectFriendRequestResponse();
+            response.Result = friendManager.RejectFriendRequest(request.FriendId);
+
+            return response;
+        }
+
+        public RetrieveCountryByIdResponse RetrieveCountryById(RetrieveCountryByIdRequest request)
+        {
+            RetrieveCountryByIdResponse response = new RetrieveCountryByIdResponse();
+            response.Country = countryManager.RetrieveCountry(request.CountryId);
+
+            return response;
+        }
+
+        public RetrieveFriendsResponse RetrieveFriends(RetrieveFriendsRequest request)
+        {
+            RetrieveFriendsResponse response = new RetrieveFriendsResponse();
+            response.listOfFriends = friendManager.RetrieveFriends(request.UserId);
 
             return response;
         }

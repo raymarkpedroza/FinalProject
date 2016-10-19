@@ -10,9 +10,10 @@ namespace Pastebook.Controllers
 {
     public class UserController : Controller
     {
-        UserManager userManger = new UserManager();
+        UserManager userManager = new UserManager();
         CountryManager countryManager = new CountryManager();
         PostManager postManager = new PostManager();
+        FriendManager friendManager = new FriendManager();
 
         [HttpGet]
         public ActionResult Index()
@@ -20,7 +21,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 UserModel model = new UserModel();
-                model = userManger.RetrieveUserById((int)Session["UserId"]);
+                model = userManager.RetrieveUserById((int)Session["UserId"]);
                 return View(model);
             }
             else
@@ -32,9 +33,12 @@ namespace Pastebook.Controllers
         {
             if (Session["Username"] != null)
             {
-                UserModel model = new UserModel();
-                model = userManger.RetrieveUserById(id);
-                return View(model);
+                ProfileViewModel profileViewModel = new ProfileViewModel();
+                profileViewModel.User = userManager.RetrieveUserById(id);
+                profileViewModel.User.CountryName = countryManager.RetrieveCountry(profileViewModel.User.CountryId).Country;
+
+                profileViewModel.ListOfFriends = friendManager.RetrieveFriends(id);
+                return View(profileViewModel);
             }
             else
                 return RedirectToAction("Index", "Home");
@@ -52,7 +56,7 @@ namespace Pastebook.Controllers
         public ActionResult Register(UserModel user)
         {
             user.DateCreated = DateTime.Now;
-            userManger.RegisterUser(user);
+            userManager.RegisterUser(user);
             return RedirectToAction("Index");
         }
 
@@ -65,7 +69,7 @@ namespace Pastebook.Controllers
         [HttpPost]
         public ActionResult Login(UserModel user)
         {
-            if (userManger.LoginUser(user.EmailAddress, user.Password, out user))
+            if (userManager.LoginUser(user.EmailAddress, user.Password, out user))
             {
                 Session["UserId"] = user.Id;
                 Session["Username"] = user.Username;
@@ -85,6 +89,22 @@ namespace Pastebook.Controllers
             Session.RemoveAll();
 
             return RedirectToAction("Index","Home");
+        }
+
+        public JsonResult AddFriend(int friendId)
+        {
+            FriendModel friend = new FriendModel();
+            friend.UserId = (int)Session["UserId"];
+            friend.FriendId = friendId;
+            friend.CreatedDate = DateTime.Now;
+            friend.IsBlocked = 'N';
+            friend.Request = 'N';
+
+            int result = 0;
+
+            result = friendManager.AddFriend(friend);
+
+            return Json(new { result = result });
         }
     }
 }

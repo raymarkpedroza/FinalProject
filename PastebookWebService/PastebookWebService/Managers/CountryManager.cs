@@ -29,5 +29,22 @@ namespace PastebookWebService.Managers
 
             return listOfCountries;
         }
+
+        public CountryEntity RetrieveCountry(int id)
+        {
+            CountryEntity country = new CountryEntity();
+            try
+            {
+                using (var context = new PASTEBOOKEntities())
+                {
+                    country = Mapper.MapDBCountryTableToWCFCountryEntity(context.REF_COUNTRY.Where(x=>x.ID == id).SingleOrDefault());
+                }
+            }
+            catch 
+            {
+            }
+
+            return country;
+        }
     }
 }

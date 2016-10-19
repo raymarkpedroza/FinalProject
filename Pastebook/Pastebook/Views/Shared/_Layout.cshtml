@@ -36,7 +36,7 @@
                     {
                         <div class="btn-group" id="profile-link">
                         <span>
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "User")
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "User", new { id=(int)Session["UserId"] }, null)
                         </span>
                         </div>
                     }

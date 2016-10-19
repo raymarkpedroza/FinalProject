@@ -162,6 +162,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Managers\CountryManager.cs" />
+    <Compile Include="Managers\FriendManager.cs" />
     <Compile Include="Managers\NotificationManager.cs" />
     <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Managers\ReactionManager.cs" />
@@ -224,18 +225,6 @@
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrievePostsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.CommentEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.CountryEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.FriendEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.LikeEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.NotificationEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -270,6 +259,21 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveLikeResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AcceptFriendRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddFriendResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RejectFriendRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveCountryByIdResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveFriendsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\PastebookServiceReference\PastebookService.disco" />

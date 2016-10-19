@@ -6,7 +6,7 @@
             <img src="~/Content/Images/pastebook-default.png" id ="prof-pic" class="img-circle" alt="Profile Picture">
             <div class="text-center">
                 <div class="user-fullname">
-                    @Html.ActionLink(Model.Firstname +" "+ Model.Lastname, "Profile", "User")
+                    @Html.ActionLink(Model.Firstname +" "+ Model.Lastname, "Profile", "User", new { id = (int)Session["UserId"] }, null)
                 </div>
 
                 <div>
@@ -25,10 +25,10 @@
                 </div>
 
                 <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
-                    <div class="clearfix"><input type="button" value="Post" class="btn pull-right" id="btnPost"/></div>
+                    <div class="clearfix"><button type="button" value=@Model.Id class="btn pull-right" id="btnPost"/>Post</div>
                 </div>
             <div id="newsfeedPost">
-                @{Html.RenderAction("GetUserPosts", "Post");}
+                @{Html.RenderAction("GetNewsfeedPosts", "Post", new { id = Model.Id });}
             </div>
         </div>
     </div>
@@ -37,9 +37,9 @@
 @section scripts{
     
     <script>
-        var createPostURL = '@Url.Action("CreatePost","Post")'
-        var addLikeURL = '@Url.Action("AddLike","Reaction")'
-        var addCommentURL = '@Url.Action("AddComment","Reaction")'
+        var createPostURL = '@Url.Action("CreatePost", "Post")'
+        var addLikeURL = '@Url.Action("AddLike", "Reaction")'
+        var addCommentURL = '@Url.Action("AddComment", "Reaction")'
         var addNotificationURL = '@Url.Action("AddNotification", "Notification")'
 
         $(document).ready(function () {
@@ -48,6 +48,7 @@
             $(document).delegate("#btnPost","click", function () {
                 var data = {
                     content: $('#textAreaPost').val(),
+                    profileOwner: this.value
                 }
 
                 $.ajax({
@@ -56,7 +57,7 @@
                     type: 'POST',
                     success: function (data) {
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.Id })',
                             dataType: "html",
                             success: function (result)
                             {
@@ -85,7 +86,7 @@
                     type: 'POST',
                     success: function (data) {
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.Id })',
                             dataType: "html",
                             success: function (result) {
                                 $("#newsfeedPost").html(result);
@@ -104,7 +105,7 @@
             $(document).delegate("#btnComment", "click", function () {
                 var data = {
                     postId: this.value,
-                    content: $(".textArea-comment[value="+this.value+"]").val()
+                    content: $(".textArea-comment[value=" + this.value + "]").val()
                 }
                 $.ajax({
                     url: addCommentURL,
@@ -113,7 +114,7 @@
                     success: function (data) {
 
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.Id })',
                             dataType: "html",
                             success: function (result) {
                                 $("#newsfeedPost").html(result);

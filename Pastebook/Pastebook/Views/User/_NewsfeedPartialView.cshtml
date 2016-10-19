@@ -5,7 +5,15 @@
     <div class="col-md-12">
         <div class="pastebookPost">
             <div class="post-header">
-                <div><label>@postWithPoster.User.Firstname @postWithPoster.User.Lastname</label></div>
+                @if (postWithPoster.Poster.Id == postWithPoster.ProfileOwner.Id)
+                {
+                <div><label>@postWithPoster.Poster.Firstname @postWithPoster.Poster.Lastname</label></div>
+                }
+
+                else
+                {
+               <div><label>@postWithPoster.Poster.Firstname @postWithPoster.Poster.Lastname <span class="glyphicon glyphicon-play"></span> @postWithPoster.ProfileOwner.Firstname @postWithPoster.ProfileOwner.Lastname</label></div>
+                }
                 <p class="date">@postWithPoster.Post.CreatedDate.ToString("MMMM dd, yyyy") at @postWithPoster.Post.CreatedDate.ToShortTimeString()</p>
             </div>
             <div class="post-content">
@@ -13,7 +21,6 @@
             </div>
 
             <div class="post-reaction-count">
-                <span>
                     @if (postWithPoster.ListOfLikes.Count > 0)
                     {
                         <span class="glyphicon glyphicon-heart like"></span>@postWithPoster.ListOfLikes.Count
@@ -21,9 +28,10 @@
 
                     @if (postWithPoster.ListOfCommentsWithCommenters.Count > 0)
                     {
+                        <div class="clearfix">
                         <span class="pull-right"><a class="comment-count" data-value=@postWithPoster.Post.Id>@postWithPoster.ListOfCommentsWithCommenters.Count Comments</a></span>
+                        </div>
                     }
-                </span>
             </div>
 
             <hr>

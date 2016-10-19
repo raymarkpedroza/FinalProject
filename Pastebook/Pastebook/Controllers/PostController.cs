@@ -11,12 +11,12 @@ namespace Pastebook.Controllers
     public class PostController : Controller
     {
         PostManager postManager = new PostManager();
-        public JsonResult CreatePost(string content)
+        public JsonResult CreatePost(string content, int profileOwner)
         {
             PostModel post = new PostModel();
             post.Content = content;
             post.PosterId = (int)Session["UserId"];
-            post.ProfileOwnerId = (int)Session["UserId"];
+            post.ProfileOwnerId = profileOwner;
             post.CreatedDate = DateTime.Now;
 
             int result = 0;
@@ -25,10 +25,18 @@ namespace Pastebook.Controllers
             return Json( new {result = result });
         }
 
-        public PartialViewResult GetUserPosts()
+        public PartialViewResult GetTimelinePosts(int id)
         {
             NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
-            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveUserPosts((int)Session["UserId"]);
+            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveUserPosts(id);
+
+            return PartialView("~/Views/User/_NewsfeedPartialView.cshtml", newsfeedViewModel);
+        }
+
+        public PartialViewResult GetNewsfeedPosts(int id)
+        {
+            NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
+            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveNewsfeedPosts(id);
 
             return PartialView("~/Views/User/_NewsfeedPartialView.cshtml", newsfeedViewModel);
         }

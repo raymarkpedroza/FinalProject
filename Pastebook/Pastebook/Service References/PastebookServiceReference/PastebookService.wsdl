@@ -101,29 +101,35 @@
   <wsdl:message name="IPastebookService_RetrieveLike_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveLikeResponse" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Comment_InputMessage">
-    <wsdl:part name="parameters" element="tns:Comment" />
+  <wsdl:message name="IPastebookService_AddFriend_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddFriend" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Comment_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CommentResponse" />
+  <wsdl:message name="IPastebookService_AddFriend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddFriendResponse" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Country_InputMessage">
-    <wsdl:part name="parameters" element="tns:Country" />
+  <wsdl:message name="IPastebookService_AcceptFriendRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:AcceptFriendRequest" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Country_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CountryResponse" />
+  <wsdl:message name="IPastebookService_AcceptFriendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AcceptFriendRequestResponse" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Friend_InputMessage">
-    <wsdl:part name="parameters" element="tns:Friend" />
+  <wsdl:message name="IPastebookService_RejectFriendRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:RejectFriendRequest" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Friend_OutputMessage">
-    <wsdl:part name="parameters" element="tns:FriendResponse" />
+  <wsdl:message name="IPastebookService_RejectFriendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RejectFriendRequestResponse" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Like_InputMessage">
-    <wsdl:part name="parameters" element="tns:Like" />
+  <wsdl:message name="IPastebookService_RetrieveCountryById_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCountryById" />
   </wsdl:message>
-  <wsdl:message name="IPastebookService_Like_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LikeResponse" />
+  <wsdl:message name="IPastebookService_RetrieveCountryById_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCountryByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveFriends_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFriends" />
+  </wsdl:message>
+  <wsdl:message name="IPastebookService_RetrieveFriends_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFriendsResponse" />
   </wsdl:message>
   <wsdl:message name="IPastebookService_Notify_InputMessage">
     <wsdl:part name="parameters" element="tns:Notify" />
@@ -192,21 +198,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveLike" message="tns:IPastebookService_RetrieveLike_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveLikeResponse" message="tns:IPastebookService_RetrieveLike_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Comment">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Comment" message="tns:IPastebookService_Comment_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/CommentResponse" message="tns:IPastebookService_Comment_OutputMessage" />
+    <wsdl:operation name="AddFriend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/AddFriend" message="tns:IPastebookService_AddFriend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/AddFriendResponse" message="tns:IPastebookService_AddFriend_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Country">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Country" message="tns:IPastebookService_Country_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/CountryResponse" message="tns:IPastebookService_Country_OutputMessage" />
+    <wsdl:operation name="AcceptFriendRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/AcceptFriendRequest" message="tns:IPastebookService_AcceptFriendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/AcceptFriendRequestResponse" message="tns:IPastebookService_AcceptFriendRequest_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Friend">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Friend" message="tns:IPastebookService_Friend_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/FriendResponse" message="tns:IPastebookService_Friend_OutputMessage" />
+    <wsdl:operation name="RejectFriendRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RejectFriendRequest" message="tns:IPastebookService_RejectFriendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RejectFriendRequestResponse" message="tns:IPastebookService_RejectFriendRequest_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Like">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Like" message="tns:IPastebookService_Like_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/LikeResponse" message="tns:IPastebookService_Like_OutputMessage" />
+    <wsdl:operation name="RetrieveCountryById">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveCountryById" message="tns:IPastebookService_RetrieveCountryById_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveCountryByIdResponse" message="tns:IPastebookService_RetrieveCountryById_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFriends">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/RetrieveFriends" message="tns:IPastebookService_RetrieveFriends_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPastebookService/RetrieveFriendsResponse" message="tns:IPastebookService_RetrieveFriends_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Notify">
       <wsdl:input wsaw:Action="http://tempuri.org/IPastebookService/Notify" message="tns:IPastebookService_Notify_InputMessage" />
@@ -350,8 +360,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Comment">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/Comment" style="document" />
+    <wsdl:operation name="AddFriend">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/AddFriend" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -359,8 +369,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Country">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/Country" style="document" />
+    <wsdl:operation name="AcceptFriendRequest">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/AcceptFriendRequest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -368,8 +378,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Friend">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/Friend" style="document" />
+    <wsdl:operation name="RejectFriendRequest">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RejectFriendRequest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -377,8 +387,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Like">
-      <soap:operation soapAction="http://tempuri.org/IPastebookService/Like" style="document" />
+    <wsdl:operation name="RetrieveCountryById">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveCountryById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFriends">
+      <soap:operation soapAction="http://tempuri.org/IPastebookService/RetrieveFriends" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

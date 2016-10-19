@@ -25,5 +25,18 @@ namespace Pastebook.Managers
 
             return listOfCountries;
         }
+
+        public CountryModel RetrieveCountry(int countryId)
+        {
+            CountryModel country = new CountryModel();
+            RetrieveCountryByIdRequest request = new RetrieveCountryByIdRequest();
+            request.CountryId = countryId;
+
+            RetrieveCountryByIdResponse response = new RetrieveCountryByIdResponse();
+            response = pastebookServiceClient.RetrieveCountryById(request);
+            country = Mapper.MapWCFCountryEntityToMVCCountryModel(response.Country);
+
+            return country;
+        }
     }
 }

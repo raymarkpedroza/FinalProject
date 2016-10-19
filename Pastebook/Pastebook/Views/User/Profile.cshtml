@@ -1,4 +1,4 @@
-﻿@model Pastebook.Models.UserModel
+﻿@model Pastebook.Models.ProfileViewModel
 
 <div id="profile">
     <div class="container">
@@ -10,18 +10,40 @@
 
                 <div>
                     <div id="profile-fullname">
-                        @Html.ActionLink(Model.Firstname + " " + Model.Lastname, "Profile", "User")
+                        @Html.ActionLink(Model.User.Firstname + " " + Model.User.Lastname, "Profile", "User", new { id = (int)Session["UserId"] }, null)
                     </div>
                     <div id="profile-username">
-                        (@Model.Username)
+                        (@Model.User.Username)
                     </div>
 
                     <div id="interactButtons">
-                        @if (!(Model.Id == (int)Session["UserId"]))
+                        @if (!(Model.User.Id == (int)Session["UserId"]))
                         {
-                            <button id="btnAddFriend" class="btn"><span class="glyphicon glyphicon-plus"></span>Add Friend</button>
-                            <button id="btnBlock" class="btn"><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            if (Model.ListOfFriends.Any(x => x.FriendId == Model.User.Id) && Model.ListOfFriends.Any(x => x.UserId == (int)Session["UserId"]))
+                            {
+                                if (Model.ListOfFriends.Where(x => x.UserId == (int)Session["UserId"]).Where(x=>x.FriendId == Model.User.Id).SingleOrDefault().Request == 'N')
+                                {
+                                <button id="btnAddFriend" class="btn" value=@Model.User.Id disabled>Friend Request Sent</button>
+                                <button id="btnBlock" class="btn" value=@Model.User.Id><span class="glyphicon glyphicon-remove"></span>Block</button>
+                                }
+                            }
+
+                            else if (Model.ListOfFriends.Any(x => x.UserId == Model.User.Id) && Model.ListOfFriends.Any(x => x.FriendId == (int)Session["UserId"]))
+                            {
+                                if (Model.ListOfFriends.Where(x => x.UserId == Model.User.Id).Where(x=>x.FriendId == (int)Session["UserId"]).SingleOrDefault().Request == 'N')
+                                {
+                                    <button id="btnAcceptFriend" class="btn" value=@Model.User.Id><span id="plus" class="glyphicon glyphicon-plus"></span>Accept Friend Request</button>
+                                    <button id="btnBlock" class="btn" value=@Model.User.Id><span class="glyphicon glyphicon-remove"></span>Block</button>
+                                }
+                            }
+
+                            else
+                            {
+                            <button id="btnAddFriend" class="btn" value=@Model.User.Id><span id="plus" class="glyphicon glyphicon-plus"></span>Add Friend</button>
+                            <button id="btnBlock" class="btn" value=@Model.User.Id><span class="glyphicon glyphicon-remove"></span>Block</button>
+                            }
                         }
+
                     </div>
                 </div>
             </div>
@@ -33,14 +55,14 @@
                     <h3>
                         Introduction
                     </h3>
-                    @if (Model.AboutMe != null)
+                    @if (Model.User.AboutMe != null)
                     {
-                    @Html.DisplayFor(model => model.AboutMe, Model.AboutMe)
+                    @Html.DisplayFor(model => model.User.AboutMe, Model.User.AboutMe)
                     }
 
                     else
                     {
-                        <a data-value=@Model.Id>+ Describe who you are</a>
+                        <a data-value=@Model.User.Id>+ Describe who you are</a>
                     }
 
                     <hr>
@@ -50,18 +72,31 @@
                     </h3>
 
                     <div id="profile-user-gender">
-                        @Html.LabelFor(model=>model.Gender):
-                        @Html.DisplayFor(model => model.Gender, Model.Gender)
+                        @Html.LabelFor(model=>model.User.Gender):
+                        @if (Model.User.Gender == "M")
+                        {
+                            <span>Male</span>
+                        }
+
+                        else if (Model.User.Gender == "F")
+                        {
+                            <span>Female</span>
+                        }
+
+                        else
+                        {
+                            <span>Unspecified</span>
+                        }
                     </div>
 
                     <div id="profile-user-country">
-                        @Html.LabelFor(model => model.CountryId):
-                        @Html.DisplayFor(model => model.CountryId, Model.CountryId)
+                        @Html.LabelFor(model => model.User.CountryId):
+                        @Html.DisplayFor(model => model.User.CountryName, Model.User.CountryName)
                     </div>
 
                     <div id="profile-user-birthday">
-                        @Html.LabelFor(model => model.Birthday):
-                        @Model.Birthday.ToString("MMMM dd, yyyy")
+                        @Html.LabelFor(model => model.User.Birthday):
+                        @Model.User.Birthday.ToString("MMMM dd, yyyy")
                     </div>
 
                     <hr>
@@ -71,13 +106,13 @@
                     </h3>
 
                     <div id="profile-user-contactnumber">
-                        @Html.LabelFor(model=>model.MobileNumber):
-                        @Html.DisplayFor(model => model.MobileNumber, Model.MobileNumber)
+                        @Html.LabelFor(model=>model.User.MobileNumber):
+                        @Html.DisplayFor(model => model.User.MobileNumber, Model.User.MobileNumber)
                     </div>
 
                     <div id="profile-user-email">
-                        @Html.LabelFor(model => model.EmailAddress):
-                        @Html.DisplayFor(model => model.EmailAddress, Model.EmailAddress)
+                        @Html.LabelFor(model => model.User.EmailAddress):
+                        @Html.DisplayFor(model => model.User.EmailAddress, Model.User.EmailAddress)
                     </div>
 
                     <hr>
@@ -87,8 +122,8 @@
                     </h3>
 
                     <div id="profile-user-contactnumber">
-                        @Html.LabelFor(model => model.DateCreated):
-                        @Model.DateCreated.ToString("MMMM dd, yyyy")
+                        @Html.LabelFor(model => model.User.DateCreated):
+                        @Model.User.DateCreated.ToString("MMMM dd, yyyy")
                     </div>
 
                 </div>
@@ -96,15 +131,30 @@
             <div class="col-md-8">
                 <div id="writePost" class="col-md-12">
                     <div id="writePost-header">
-                        <span class="glyphicon glyphicon-pencil"></span>Status
-                    </div>
+                        @if ((int)Session["UserId"] == Model.User.Id)
+                        {
+                        <span class="glyphicon glyphicon-pencil"></span><span>Status</span>
+                        }
 
+                        else
+                        {
+                        <span class="glyphicon glyphicon-pencil"></span><span>Write something on @Model.User.Firstname's wall</span>
+                        }
+                    </div>
+                    @if ((int)Session["UserId"] == Model.User.Id)
+                    {
                         <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
-                        <div class="clearfix"><input type="button" value="Post" class="btn pull-right" id="btnPost" /></div>
+                    }
+
+                    else
+                    {
+                        <textarea rows="5" cols="70" id="textAreaPost" placeholder="Write something..." class="col-md-12"></textarea>
+                    }
+                      <div class="clearfix"><button type="button" value=@Model.User.Id class="btn pull-right" id="btnPost" />Post</div>
                 </div>
 
                 <div id="timelinePost">
-                    @{Html.RenderAction("GetUserPosts", "Post");}
+                    @{Html.RenderAction("GetTimelinePosts", "Post", new { id = Model.User.Id });}
                 </div>
             </div>
         </div>
@@ -118,13 +168,37 @@
         var addLikeURL = '@Url.Action("AddLike","Reaction")'
         var addCommentURL = '@Url.Action("AddComment","Reaction")'
         var addNotificationURL = '@Url.Action("AddNotification", "Notification")'
+        var addFriendURL = '@Url.Action("AddFriend", "User")'
 
         $(document).ready(function () {
             $('.post-comments').hide();
 
+            $(document).delegate("#btnAddFriend", "click", function () {
+                var data = {
+                    friendId: this.value
+                }
+
+                $.ajax({
+                    url: addFriendURL,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        $("#btnAddFriend").text("Friend Request Sent")
+                        $("#btnAddFriend").prop("disabled", true)
+                        $("#plus").hide()
+                        },
+
+                    error: function () {
+                        alert('Something went wrong.')
+                    }
+                })
+
+            });
+
             $(document).delegate("#btnPost","click", function () {
                 var data = {
                     content: $('#textAreaPost').val(),
+                    profileOwner: this.value
                 }
 
                 $.ajax({
@@ -133,7 +207,7 @@
                     type: 'POST',
                     success: function (data) {
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts","Post")',
+                            url: '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.Id })',
                             dataType: "html",
                             success: function (result)
                             {
@@ -162,7 +236,7 @@
                     type: 'POST',
                     success: function (data) {
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.Id })',
                             dataType: "html",
                             success: function (result) {
                                 $("#timelinePost").html(result);
@@ -181,7 +255,7 @@
             $(document).delegate("#btnComment", "click", function () {
                 var data = {
                     postId: this.value,
-                    content: $(".textArea-comment[value="+this.value+"]").val()
+                    content: $(".textArea-comment[value=" + this.value + "]").val()
                 }
                 $.ajax({
                     url: addCommentURL,
@@ -190,7 +264,7 @@
                     success: function (data) {
 
                         $.ajax({
-                            url: '@Url.Action("GetUserPosts", "Post")',
+                            url: '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.Id })',
                             dataType: "html",
                             success: function (result) {
                                 $("#timelinePost").html(result);

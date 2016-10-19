@@ -109,4 +109,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FriendEntity" nillable="true" type="tns:FriendEntity" />
+  <xs:complexType name="ArrayOfFriendEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FriendEntity" nillable="true" type="tns:FriendEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFriendEntity" nillable="true" type="tns:ArrayOfFriendEntity" />
 </xs:schema>

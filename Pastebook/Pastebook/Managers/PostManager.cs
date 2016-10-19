@@ -38,10 +38,15 @@ namespace Pastebook.Managers
 
             foreach (var post in retrievePostsResponse.ListOfPosts)
             {
-                RetrieveUserByIdRequest retrieveUserRequest = new RetrieveUserByIdRequest();
-                retrieveUserRequest.Id = post.PosterId;
-                RetrieveUserByIdResponse retrieveUserResponse = new RetrieveUserByIdResponse();
-                retrieveUserResponse = pastebookServiceClient.RetrieveUserById(retrieveUserRequest);
+                RetrieveUserByIdRequest retrievePosterRequest = new RetrieveUserByIdRequest();
+                retrievePosterRequest.Id = post.PosterId;
+                RetrieveUserByIdResponse retrievePosterResponse = new RetrieveUserByIdResponse();
+                retrievePosterResponse = pastebookServiceClient.RetrieveUserById(retrievePosterRequest);
+
+                RetrieveUserByIdRequest retrieveProfileOwnerRequest = new RetrieveUserByIdRequest();
+                retrieveProfileOwnerRequest.Id = post.ProfileOwnerId;
+                RetrieveUserByIdResponse retrieveProfileOwnerResponse = new RetrieveUserByIdResponse();
+                retrieveProfileOwnerResponse = pastebookServiceClient.RetrieveUserById(retrieveProfileOwnerRequest);
 
                 RetrieveCommentRequest retrieveCommentRequest = new RetrieveCommentRequest();
                 retrieveCommentRequest.PostId = post.Id;
@@ -75,24 +80,43 @@ namespace Pastebook.Managers
                     listOfLikes.Add(Mapper.MapWCFLikeEntityToMVCLikeModel(like));
                 }
 
-                listOfPostsWithPoster.Add(new UserPostModel() { User = Mapper.MapWCFUserEntityToMVCUserModel(retrieveUserResponse.User), Post = Mapper.MapWCFPostEntityToMVCPostModel(post), ListOfCommentsWithCommenters = listOfCommentsWithCommenters, ListOfLikes = listOfLikes });
+                listOfPostsWithPoster.Add(new UserPostModel() { Poster = Mapper.MapWCFUserEntityToMVCUserModel(retrievePosterResponse.User), ProfileOwner = Mapper.MapWCFUserEntityToMVCUserModel(retrieveProfileOwnerResponse.User), Post = Mapper.MapWCFPostEntityToMVCPostModel(post), ListOfCommentsWithCommenters = listOfCommentsWithCommenters, ListOfLikes = listOfLikes });
             }
 
             return listOfPostsWithPoster.OrderByDescending(x=>x.Post.CreatedDate).ToList();
         }
 
-        public List<UserPostModel> RetrieveNewsfeedPosts(int id, List<FriendModel> listOfFriends)
+        public List<UserPostModel> RetrieveNewsfeedPosts(int id)
         {
             List<UserPostModel> listOfPostsWithPoster = new List<UserPostModel>();
             List<UserCommentModel> listOfCommentsWithCommenters;
             List<LikeModel> listOfLikes;
 
+            RetrieveFriendsRequest retrieveFriendsRequest = new RetrieveFriendsRequest();
+            retrieveFriendsRequest.UserId = id;
+
+            RetrieveFriendsResponse retrieveFriendsResponse = new RetrieveFriendsResponse();
+            retrieveFriendsResponse = pastebookServiceClient.RetrieveFriends(retrieveFriendsRequest);
+
             RetrievePostsRequest retrievePostsRequest = new RetrievePostsRequest();
             retrievePostsRequest.UserId = id;
 
-            foreach (var friend in listOfFriends)
+            retrievePostsRequest.ListOfFriendsId = new List<int>();
+
+            foreach (var friend in retrieveFriendsResponse.listOfFriends)
             {
-                retrievePostsRequest.ListOfFriendsId.ToList().Add(friend.Id);
+                if ((retrievePostsRequest.ListOfFriendsId.Any(x => x == friend.UserId) || retrievePostsRequest.ListOfFriendsId.Any(x => x == friend.FriendId)) == true)
+                {
+                    if (friend.UserId == id && friend.Request == 'Y')
+                    {
+                        retrievePostsRequest.ListOfFriendsId.Add(friend.FriendId);
+                    }
+
+                    if (friend.FriendId == id && friend.Request == 'Y')
+                    {
+                        retrievePostsRequest.ListOfFriendsId.Add(friend.UserId);
+                    }
+                }
             }
 
             RetrievePostsResponse retrievePostsResponse = new RetrievePostsResponse();
@@ -101,10 +125,15 @@ namespace Pastebook.Managers
 
             foreach (var post in retrievePostsResponse.ListOfPosts)
             {
-                RetrieveUserByIdRequest retrieveUserRequest = new RetrieveUserByIdRequest();
-                retrieveUserRequest.Id = post.PosterId;
-                RetrieveUserByIdResponse retrieveUserResponse = new RetrieveUserByIdResponse();
-                retrieveUserResponse = pastebookServiceClient.RetrieveUserById(retrieveUserRequest);
+                RetrieveUserByIdRequest retrievePosterRequest = new RetrieveUserByIdRequest();
+                retrievePosterRequest.Id = post.PosterId;
+                RetrieveUserByIdResponse retrievePosterResponse = new RetrieveUserByIdResponse();
+                retrievePosterResponse = pastebookServiceClient.RetrieveUserById(retrievePosterRequest);
+
+                RetrieveUserByIdRequest retrieveProfileOwnerRequest = new RetrieveUserByIdRequest();
+                retrieveProfileOwnerRequest.Id = post.ProfileOwnerId;
+                RetrieveUserByIdResponse retrieveProfileOwnerResponse = new RetrieveUserByIdResponse();
+                retrieveProfileOwnerResponse = pastebookServiceClient.RetrieveUserById(retrieveProfileOwnerRequest);
 
                 RetrieveCommentRequest retrieveCommentRequest = new RetrieveCommentRequest();
                 retrieveCommentRequest.PostId = post.Id;
@@ -116,7 +145,7 @@ namespace Pastebook.Managers
                 foreach (var comment in retrieveCommentResponse.ListOfComments)
                 {
                     RetrieveUserByIdRequest retrieveCommenterRequest = new RetrieveUserByIdRequest();
-                    retrieveCommenterRequest.Id = post.PosterId;
+                    retrieveCommenterRequest.Id = comment.PosterId;
                     RetrieveUserByIdResponse retrieveCommenterResponse = new RetrieveUserByIdResponse();
                     retrieveCommenterResponse = pastebookServiceClient.RetrieveUserById(retrieveCommenterRequest);
 
@@ -138,7 +167,7 @@ namespace Pastebook.Managers
                     listOfLikes.Add(Mapper.MapWCFLikeEntityToMVCLikeModel(like));
                 }
 
-                listOfPostsWithPoster.Add(new UserPostModel() { User = Mapper.MapWCFUserEntityToMVCUserModel(retrieveUserResponse.User), Post = Mapper.MapWCFPostEntityToMVCPostModel(post), ListOfCommentsWithCommenters = listOfCommentsWithCommenters, ListOfLikes = listOfLikes });
+                listOfPostsWithPoster.Add(new UserPostModel() { Poster = Mapper.MapWCFUserEntityToMVCUserModel(retrievePosterResponse.User), ProfileOwner = Mapper.MapWCFUserEntityToMVCUserModel(retrieveProfileOwnerResponse.User), Post = Mapper.MapWCFPostEntityToMVCPostModel(post), ListOfCommentsWithCommenters = listOfCommentsWithCommenters, ListOfLikes = listOfLikes });
             }
 
             return listOfPostsWithPoster.OrderByDescending(x => x.Post.CreatedDate).ToList();

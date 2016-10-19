@@ -99,4 +99,34 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RetrieveLikeResponse" nillable="true" type="tns:RetrieveLikeResponse" />
+  <xs:complexType name="AddFriendResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AddFriendResponse" nillable="true" type="tns:AddFriendResponse" />
+  <xs:complexType name="AcceptFriendRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AcceptFriendRequestResponse" nillable="true" type="tns:AcceptFriendRequestResponse" />
+  <xs:complexType name="RejectFriendRequestResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Result" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RejectFriendRequestResponse" nillable="true" type="tns:RejectFriendRequestResponse" />
+  <xs:complexType name="RetrieveCountryByIdResponse">
+    <xs:sequence>
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="Country" nillable="true" type="q10:CountryEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveCountryByIdResponse" nillable="true" type="tns:RetrieveCountryByIdResponse" />
+  <xs:complexType name="RetrieveFriendsResponse">
+    <xs:sequence>
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PastebookWebService.Entities" minOccurs="0" name="listOfFriends" nillable="true" type="q11:ArrayOfFriendEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RetrieveFriendsResponse" nillable="true" type="tns:RetrieveFriendsResponse" />
 </xs:schema>

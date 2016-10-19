@@ -8,7 +8,8 @@ namespace Pastebook.Models
     public class UserPostModel
     {
         public PostModel Post = new PostModel();
-        public UserModel User = new UserModel();
+        public UserModel Poster = new UserModel();
+        public UserModel ProfileOwner = new UserModel();
         public List<UserCommentModel> ListOfCommentsWithCommenters = new List<UserCommentModel>();
         public List<LikeModel> ListOfLikes = new List<LikeModel>();
     }

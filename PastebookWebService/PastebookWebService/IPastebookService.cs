@@ -60,16 +60,19 @@ namespace PastebookWebService
         RetrieveLikeResponse RetrieveLike(RetrieveLikeRequest request);
 
         [OperationContract]
-        CommentEntity Comment();
+        AddFriendResponse AddFriend(AddFriendRequest request);
 
         [OperationContract]
-        CountryEntity Country();
+        AcceptFriendRequestResponse AcceptFriendRequest(AcceptFriendRequestRequest request);
 
         [OperationContract]
-        FriendEntity Friend();
+        RejectFriendRequestResponse RejectFriendRequest(RejectFriendRequestRequest request);
 
         [OperationContract]
-        LikeEntity Like();
+        RetrieveCountryByIdResponse RetrieveCountryById(RetrieveCountryByIdRequest request);
+
+        [OperationContract]
+        RetrieveFriendsResponse RetrieveFriends(RetrieveFriendsRequest request);
 
         [OperationContract]
         NotificationEntity Notify();
