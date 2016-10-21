@@ -1,5 +1,7 @@
 ﻿using Pastebook.Managers;
 using Pastebook.Models;
+using PastebookDataAccess.Managers;
+using PastebookEF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,33 +12,33 @@ namespace Pastebook.Controllers
 {
     public class NotificationController : Controller
     {
-        NotificationManager notificationManager = new NotificationManager(); 
+        DataAccessNotificationManager daNotificationManager = new DataAccessNotificationManager();
         public JsonResult AddNotification(int id, string notificationType, int receiverId)
         {
-            NotificationModel notification = new NotificationModel();
+            PASTEBOOK_NOTIFICATION notification = new PASTEBOOK_NOTIFICATION();
 
             if (!string.IsNullOrEmpty(notificationType))
             {
-                notification.NotificationType = notificationType;
+                notification.NOTIF_TYPE = notificationType;
 
                 if (notificationType == "L")
                 {
-                    notification.PostId = id;
+                    notification.POST_ID = id;
                 }
 
                 else if (notificationType == "C")
                 {
-                    notification.CommentId = id;
+                    notification.COMMENT_ID = id;
                 }
             }
 
-            notification.ReceiverId = receiverId;
-            notification.Seen = 'N';
-            notification.SenderId = (int)Session["UserId"];
-            notification.CreatedDate = DateTime.Now;
+            notification.RECEIVER_ID = receiverId;
+            notification.SEEN = "N";
+            notification.SENDER_ID = (int)Session["UserId"];
+            notification.CREATED_DATE = DateTime.Now;
 
             int result = 0;
-            result = notificationManager.AddNotification(notification);
+            result = daNotificationManager.AddNotification(notification);
 
             return Json(new { result = result });
         }

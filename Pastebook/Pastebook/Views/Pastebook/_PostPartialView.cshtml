@@ -1,0 +1,82 @@
+﻿@model Pastebook.Models.NewsfeedViewModel
+
+@foreach (var postWithPoster in Model.listOfPostsWithPoster)
+{
+    <div class="col-md-12">
+        <div class="pastebookPost">
+            <div class="post-header">
+                @if (postWithPoster.Poster.ID == postWithPoster.ProfileOwner.ID)
+                {
+                    <div>
+                        <label>
+                            @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.Poster.ID }, null)
+                        </label>
+                    </div>
+                }
+
+                else
+                {
+                    <div>
+                        <label>
+                             @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.Poster.ID }, null)
+                             <span class="glyphicon glyphicon-play"></span>
+                            @Html.ActionLink(postWithPoster.ProfileOwner.FIRST_NAME + " " + postWithPoster.ProfileOwner.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.ProfileOwner.ID }, null)
+                        </label>
+                    </div>
+                }
+                <p class="date">@postWithPoster.Post.CREATED_DATE.ToString("MMMM dd, yyyy") at @postWithPoster.Post.CREATED_DATE.ToShortTimeString()</p>
+            </div>
+            <div class="post-content">
+                @postWithPoster.Post.CONTENT
+            </div>
+
+            <div class="post-reaction-count clearfix">
+                    @if (postWithPoster.ListOfLikesWithLiker.Count > 0)
+                    {
+                        <span class="glyphicon glyphicon-heart like"></span>@postWithPoster.ListOfLikesWithLiker.Count
+                    }
+
+                    @if (postWithPoster.ListOfCommentsWithCommenters.Count > 0)
+                    {
+                        <span class="pull-right"><a class="comment-count" data-value=@postWithPoster.Post.ID>@postWithPoster.ListOfCommentsWithCommenters.Count Comments</a></span>
+                    }
+            </div>
+
+            <hr>
+            <div class="post-reaction">
+                @if (postWithPoster.ListOfLikesWithLiker.Any(x => x.Like.LIKED_BY == (int)Session["UserId"]))
+                {
+                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.ID disabled><span class="glyphicon glyphicon-heart"></span></button>
+                }
+
+                else
+                {
+                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@postWithPoster.Post.ID><span class="glyphicon glyphicon-heart"></span></button>
+                }
+
+                <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@postWithPoster.Post.ID><span class="glyphicon glyphicon-comment"></span></button>
+            </div>
+
+            <div class="post-comments" value=@postWithPoster.Post.ID>
+                @foreach (var commentersComment in postWithPoster.ListOfCommentsWithCommenters)
+                {
+                    <hr>
+                    <div class="post-comment">
+                        <div class="post-comment-header">
+                            <span><label>@commentersComment.Commenter.FIRST_NAME @commentersComment.Commenter.LAST_NAME</label></span> @commentersComment.Comment.CONTENT
+                        </div>
+                        <div class="post-comment-content">
+                        </div>
+                        <p class="date">@commentersComment.Comment.DATE_CREATED.ToString("MMMM dd, yyyy") at @commentersComment.Comment.DATE_CREATED.ToShortTimeString()</p>
+                    </div>
+                }
+                <hr>
+                <div class="write-comment clearfix">
+                    <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@postWithPoster.Post.ID placeholder="Write comment.."></textarea>
+                    <button type="button" class="btn pull-right" id="btnComment" value=@postWithPoster.Post.ID>Add Comment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -77,8 +85,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PastebookBusinessLogic">
-      <HintPath>..\..\PastebookBusinessLogic\PastebookBusinessLogic\bin\Debug\PastebookBusinessLogic.dll</HintPath>
+    <Reference Include="PastebookDataAccess">
+      <HintPath>..\..\PastebookDataAccess\PastebookDataAccess\bin\Debug\PastebookDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PastebookEF">
+      <HintPath>..\..\PastebookEF\PastebookEF\bin\Debug\PastebookEF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -157,35 +168,21 @@
     <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ReactionController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\PastebookController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Managers\CountryManager.cs" />
-    <Compile Include="Managers\FriendManager.cs" />
-    <Compile Include="Managers\NotificationManager.cs" />
-    <Compile Include="Managers\PostManager.cs" />
-    <Compile Include="Managers\ReactionManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
-    <Compile Include="Mappers\Mapper.cs" />
-    <Compile Include="Models\CommentModel.cs" />
-    <Compile Include="Models\CountryModel.cs" />
-    <Compile Include="Models\FriendModel.cs" />
-    <Compile Include="Models\LikeModel.cs" />
+    <Compile Include="Managers\_PostManager.cs" />
+    <Compile Include="Managers\_UserManager.cs" />
+    <Compile Include="Models\FriendRequestViewModel.cs" />
     <Compile Include="Models\NewsfeedViewModel.cs" />
-    <Compile Include="Models\NotificationModel.cs" />
-    <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UserCommentModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserLikeModel.cs" />
     <Compile Include="Models\UserPostModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\PastebookServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -213,79 +210,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PastebookScripts\newsfeedScript.js" />
+    <Content Include="Scripts\PastebookScripts\profileScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.PasswordMatchResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RegisterUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrievePostsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.NotificationEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveAllUserResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveAllCountriesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.EncryptPasswordResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.CreatePostResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveUserByEmailResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveUserByIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddCommentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddLikeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddNotificationResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveCommentResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveLikeResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AcceptFriendRequestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.AddFriendResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RejectFriendRequestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveCountryByIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\PastebookServiceReference\Pastebook.PastebookServiceReference.RetrieveFriendsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\PastebookServiceReference\PastebookService.disco" />
-    <None Include="Service References\PastebookServiceReference\configuration91.svcinfo" />
-    <None Include="Service References\PastebookServiceReference\configuration.svcinfo" />
-    <None Include="Service References\PastebookServiceReference\PastebookService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -302,35 +231,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <None Include="Service References\PastebookServiceReference\PastebookService.wsdl" />
-    <None Include="Service References\PastebookServiceReference\PastebookService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\PastebookService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\PastebookService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\PastebookService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\PastebookService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PastebookServiceReference\PastebookService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\User\_NewsfeedPartialView.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Pastebook\Newsfeed.cshtml" />
+    <Content Include="Views\Pastebook\_PostPartialView.cshtml" />
+    <Content Include="Views\Pastebook\Profile.cshtml" />
+    <Content Include="Views\Pastebook\_InteractButtonsPartialView.cshtml" />
+    <Content Include="Views\Pastebook\_PastebookNavbarPartialView.cshtml" />
+    <Content Include="Views\Pastebook\_NotificationPartialView.cshtml" />
+    <Content Include="Views\Pastebook\_FriendRequestPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Notification\" />
-    <Folder Include="Views\Reaction\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -342,9 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\PastebookServiceReference\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -10,6 +10,38 @@
     margin-bottom: 10px;
 }
 
+.dropdown-menu {
+    position:absolute;
+}
+
+#friend-request-notification {
+    margin-left: 5px;
+    margin-top: -20px;
+    color: #fff;
+    background-color: #f00;
+    position: absolute;
+    font-size: 8px;
+}
+
+.friend-request-listitem {
+    padding:0px 5px;
+    font-size:11px;
+}
+
+#other-notification {
+    margin-left: 5px;
+    margin-top: -18px;
+    color: #fff;
+    background-color: #f00;
+    position: absolute;
+    font-size: 8px;
+}
+
+.notification-listitem {
+    padding:0px 5px;
+    font-size:11px;
+}
+
 #prof-pic {
     height: 100px;
     width: 100px;
@@ -87,6 +119,8 @@
 
 .post-comments {
     margin-top:10px;
+    margin-left:-13px;
+    margin-right:-13px;
     padding: 10px 10px;
 }
 

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Pastebook.Models.FriendRequestViewModel>
+
+
+<span class="glyphicon glyphicon-user icon" id="friendRequests" data-toggle="dropdown">
+</span>
+@if (Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() > 0)
+{
+    <span class="badge badge-notify" id="friend-request-notification" data-toggle="dropdown"> @Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() </span>
+}
+
+<div class="dropdown-menu" aria-labelledby="friendRequests">
+
+    @if (Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() == 0)
+    {
+            <div class="friend-request-listitem">No friend request.</div>
+    }
+    else
+    {
+        foreach (var friendRequest in Model)
+        {
+            if (friendRequest.FriendRequest.USER_ID != (int)Session["UserId"] && friendRequest.FriendRequest.REQUEST != "Y")
+            {
+            <div class="friend-request-listitem">@Html.ActionLink(friendRequest.Requester.FIRST_NAME + " " + friendRequest.Requester.LAST_NAME, "Profile", "Pastebook", new { id = friendRequest.Requester.ID }, null)  has requested to add you.
+            <div>
+                <button type="button" class="btnAcceptRequest btn-primary" value=@friendRequest.FriendRequest.ID>Accept</button> 
+                <button type="button" class="btnIgnoreRequest  btn-warning" value=@friendRequest.FriendRequest.ID>Ignore</button>
+            </div>
+            </div>
+            <div class="divider"></div>
+            }
+        }
+    }
+</div>
+
+
+
+
+

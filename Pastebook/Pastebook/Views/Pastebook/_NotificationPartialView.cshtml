@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Pastebook.Models.NotificationViewModel>
+
+
+<span class="glyphicon glyphicon-bell icon" id="notifications" data-toggle="dropdown">
+</span>
+
+@if (Model.Where(x => x.Notification.SEEN == "N").Count() > 0 && !Model.Any(x=>x.Sender.ID == (int)Session["UserId"]))
+{
+    <span class="badge badge-notify" id="other-notification" data-toggle="dropdown"> @Model.Where(x => x.Notification.SEEN == "N").Count() </span>
+}
+
+<div class="dropdown-menu" aria-labelledby="notifications">
+
+    @if (Model.Where(x => x.Notification.SEEN != "N").Count() < 0 && !Model.Any(x => x.Sender.ID == (int)Session["UserId"]))
+    {
+        <div class="notification-listitem">No notification.</div>
+    }
+
+    else
+    {
+        foreach (var notification in Model)
+        {
+            if (notification.Notification.SEEN == "N" && notification.Notification.NOTIF_TYPE == "L" && notification.ListOfPosts.Any(x => x.PROFILE_OWNER_ID == (int)Session["UserId"]) && notification.Notification.SENDER_ID != (int)Session["UserId"])
+            {
+                <div class="notification-listitem">
+                    @Html.ActionLink(notification.Sender.FIRST_NAME + " " + notification.Sender.LAST_NAME, "Profile", "Pastebook", new { id = notification.Sender.ID }, null) liked a post in your timeline.
+                </div>
+                <div class="divider"></div>
+            }
+
+            else if (notification.Notification.SEEN == "N" && notification.Notification.NOTIF_TYPE == "L" && notification.ListOfPosts.Any(x => x.POSTER_ID == (int)Session["UserId"]) && notification.Notification.SENDER_ID != (int)Session["UserId"])
+            {
+                <div class="notification-listitem">
+                    @Html.ActionLink(notification.Sender.FIRST_NAME + " " + notification.Sender.LAST_NAME, "Profile", "Pastebook", new { id = notification.Sender.ID }, null) liked a post you posted.
+                </div>
+                <div class="divider"></div>
+            }
+
+            if (notification.Notification.SEEN == "N" && notification.Notification.NOTIF_TYPE == "C" && notification.ListOfPosts.Any(x => x.PROFILE_OWNER_ID == (int)Session["UserId"]) && notification.Notification.SENDER_ID != (int)Session["UserId"])
+            {
+                <div class="notification-listitem">
+                    @Html.ActionLink(notification.Sender.FIRST_NAME + " " + notification.Sender.LAST_NAME, "Profile", "Pastebook", new { id = notification.Sender.ID }, null) commented on a post in your timeline.
+                </div>
+                <div class="divider"></div>
+            }
+
+
+            else if (notification.Notification.SEEN == "N" && notification.Notification.NOTIF_TYPE == "C" && notification.ListOfPosts.Any(x => x.POSTER_ID == (int)Session["UserId"]) && notification.Notification.SENDER_ID != (int)Session["UserId"])
+            {
+                <div class="notification-listitem">
+                    @Html.ActionLink(notification.Sender.FIRST_NAME + " " + notification.Sender.LAST_NAME, "Profile", "Pastebook", new { id = notification.Sender.ID }, null) commented on a post you posted.
+                </div>
+                <div class="divider"></div>
+            }
+
+            if (notification.Notification.SEEN == "N" && notification.Notification.NOTIF_TYPE == "F" && notification.Notification.SENDER_ID != (int)Session["UserId"])
+            {
+                <div class="notification-listitem">
+                    @Html.ActionLink(notification.Sender.FIRST_NAME + " " + notification.Sender.LAST_NAME, "Profile", "Pastebook", new { id = notification.Sender.ID }, null) accepted your friend request.
+                </div>
+                <div class="divider"></div>
+            }
+
+        }
+    }
+</div>
+

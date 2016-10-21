@@ -10,75 +10,8 @@
     <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div>
-                <span id="searchBar">
-                    @if (Session["UserFullname"] != null)
-                    {
-                        <input type="text" placeholder="search" id="textboxSearch" />
-                        <button type="button">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    }
-                </span>
-
-                <div class="pull-right">
-                    
-                    @if (Session["UserFullname"] != null)
-                    {
-                        <div class="btn-group" id="profile-link">
-                        <span>
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "User", new { id=(int)Session["UserId"] }, null)
-                        </span>
-                        </div>
-                    }
-                    
-
-                    <div class="btn-group">
-                    <a href="@Url.Action("Index", "Home")">
-                        <span class="glyphicon glyphicon-home icon"></span>
-                    </a>
-                    </div>
-                    @if (Session["UserFullname"] != null)
-                    {
-                        <div class="btn-group">
-                        <span class="glyphicon glyphicon-user icon" id="friendRequests" data-toggle="dropdown"><span class="caret"></span></span>
-                        <ul class="dropdown-menu" aria-labelledby="friendRequests">
-                            <li><a href="#">Mamark added you</a></li>
-                        </ul>
-                        </div>
-
-                        <div class="btn-group">
-                            <span class="glyphicon glyphicon-bell icon" id="notifications" data-toggle="dropdown"><span class="caret"></span></span>
-                            <ul class="dropdown-menu" aria-labelledby="notifications">
-                                <li><a href="#">Posted on your timeline</a></li>
-                            </ul>
-                        </div>
-
-                        <div class="btn-group" id="logout-link">
-                            @Html.ActionLink("Logout", "Logout", "User", null, new { @class = "link" })
-                        </div>
-                    }
-                        </div>
-            </div>
-
-            @*<div class="navbar-collapse collapse">
-               
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>*@
-           
-        </div>
+    <div id="pastebook-nav-bar">
+        @{Html.RenderAction("GetPastebookNavBar", "Home");}
     </div>
     
     <div class="container body-content">

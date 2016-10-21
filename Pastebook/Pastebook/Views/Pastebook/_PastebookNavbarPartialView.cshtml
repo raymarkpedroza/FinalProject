@@ -1,0 +1,57 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div>
+            <span id="searchBar">
+                @if (Session["UserFullname"] != null)
+                {
+                    <input type="text" placeholder="search" id="textboxSearch" />
+                        <button type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                }
+            </span>
+
+            <div class="pull-right">
+
+                @if (Session["UserFullname"] != null)
+                {
+                    <div class="btn-group" id="profile-link">
+                        <span>
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "Pastebook", new { id = (int)Session["UserId"] }, null)
+                        </span>
+                    </div>
+                }
+
+
+                <div class="btn-group">
+                    <a href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-home icon"></span>
+                    </a>
+                </div>
+                @if (Session["UserFullname"] != null)
+                {
+                    <div class="btn-group" id="pastebook-nav-bar-friendRequests">
+                        @{Html.RenderAction("GetFriendRequests", "Reaction");}
+                    </div>
+
+                    <div class="btn-group" id="pastebook-nav-bar-notification">
+                        @{Html.RenderAction("GetNotifications", "Reaction");}
+                    </div>
+
+                    <div class="btn-group" id="logout-link">
+                        @Html.ActionLink("Logout", "Logout", "Home", null, new { @class = "link" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
