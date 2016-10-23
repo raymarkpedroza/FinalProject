@@ -15,7 +15,7 @@ namespace Pastebook.Controllers
         _PostManager postManager = new _PostManager();
         DataAccessPostManager daPostManager = new DataAccessPostManager();
         DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
-
+        DataAccessNotificationManager daNotifactionManager = new DataAccessNotificationManager();
         public JsonResult CreatePost(string content, int profileOwner)
         {
             PASTEBOOK_POST post = new PASTEBOOK_POST();
@@ -26,6 +26,16 @@ namespace Pastebook.Controllers
 
             int result = 0;
             result = daPostManager.CreatePost(post);
+
+            PASTEBOOK_NOTIFICATION postedOnTimelineNotification = new PASTEBOOK_NOTIFICATION();
+            postedOnTimelineNotification.NOTIF_TYPE = "P";
+            postedOnTimelineNotification.SEEN = "N";
+            postedOnTimelineNotification.POST_ID = result;
+            postedOnTimelineNotification.CREATED_DATE = DateTime.Now;
+            postedOnTimelineNotification.RECEIVER_ID = profileOwner;
+            postedOnTimelineNotification.SENDER_ID = (int)Session["UserId"];
+            postedOnTimelineNotification.COMMENT_ID = null;
+            daNotifactionManager.AddNotification(postedOnTimelineNotification);
 
             return Json(new { result = result });
         }
@@ -41,10 +51,11 @@ namespace Pastebook.Controllers
         public PartialViewResult GetNewsfeedPosts(int id)
         {
             NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
-
             newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveNewsfeedPosts(id);
 
             return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", newsfeedViewModel);
         }
+
+       
     }
 }

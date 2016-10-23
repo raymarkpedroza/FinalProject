@@ -1,0 +1,144 @@
+﻿@model Pastebook.Models.ProfileViewModel
+
+@if (Model.User.ID == (int)Session["UserId"])
+{
+    <span class="pull-right" id="edit-icon"><span class="glyphicon glyphicon-edit"></span></span>
+}
+<h3>
+    Introduction
+</h3>
+<span class="viewmode">
+    @if (Model.User.ABOUT_ME != null)
+    {
+        <pre>@Html.DisplayFor(model => model.User.ABOUT_ME, Model.User.ABOUT_ME)</pre>
+    }
+
+    else
+    {
+        <a data-value=@Model.User.ID>+ Describe who you are</a>
+    }
+</span>
+
+<hr>
+<span class="editmode">
+    @Html.TextAreaFor(model => model.User.ABOUT_ME, new { @id = "about-me", rows = "10", cols = "47", placeholder = "Describe who you are" })
+</span>
+
+<h3>
+    Personal Information
+</h3>
+
+<div id="profile-user-gender">
+    @Html.LabelFor(model => model.User.GENDER):
+    <span class="viewmode">
+        @if (Model.User.GENDER == "M")
+        {
+            <span>Male</span>
+        }
+
+        else if (Model.User.GENDER == "F")
+        {
+            <span>Female</span>
+        }
+
+        else
+        {
+            <span>Unspecified</span>
+        }
+    </span>
+
+    <span class="editmode">
+
+        @{
+            List<SelectListItem> listOfGenders = new List<SelectListItem>();
+
+            listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
+            listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
+
+            if (string.IsNullOrEmpty(Model.User.GENDER))
+            {
+                listOfGenders.Where(x => x.Value == Model.User.GENDER).SingleOrDefault().Selected = true;
+            }
+        }
+
+        @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "-- Select Gender --", new { @class = "form-control input-sm", id="selectGender" })
+    </span>
+</div>
+
+<div id="profile-user-country">
+
+    @Html.LabelFor(model => model.User.COUNTRY_ID):
+    <span class="viewmode">
+        @Html.DisplayFor(model => model.CountryName, Model.CountryName)
+    </span>
+
+    <span class="editmode">
+        @if (Model.ListOfCountryModel != null)
+        {
+            List<SelectListItem> listOfCountries = new List<SelectListItem>();
+
+            foreach (var country in Model.ListOfCountryModel)
+            {
+                listOfCountries.Add(new SelectListItem
+                {
+                    Text = country.COUNTRY,
+                    Value = country.ID.ToString()
+                });
+            }
+            listOfCountries.Where(x => x.Value == Model.User.COUNTRY_ID.ToString()).FirstOrDefault().Selected = true;
+
+            @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "-- Select Country --", new { @class = "form-control input-sm",id="selectCountry" })
+        }
+    </span>
+</div>
+
+<div id="profile-user-birthday">
+    @Html.LabelFor(model => model.User.BIRTHDAY):
+    <span class="viewmode">
+        @Model.User.BIRTHDAY.ToString("MMMM dd, yyyy")
+    </span>
+
+    <span class="editmode">
+        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "form-control input-sm", id = "dtpBirthday" } })
+    </span>
+</div>
+
+<hr>
+
+<h3>
+    Contact Information
+</h3>
+
+<div id="profile-user-contactnumber">
+    @Html.LabelFor(model => model.User.MOBILE_NO):
+    <span class="viewmode">
+        @Html.DisplayFor(model => model.User.MOBILE_NO, Model.User.MOBILE_NO)
+    </span>
+
+    <span class="editmode">
+        @Html.EditorFor(model => model.User.MOBILE_NO, new { htmlAttributes = new { @class = "form-control input-sm" , id="txtMobileNumber"} })
+    </span>
+</div>
+
+<div id="profile-user-email">
+    @Html.LabelFor(model => model.User.EMAIL_ADDRESS):
+    <span class="viewmode">
+        @Html.DisplayFor(model => model.User.EMAIL_ADDRESS, Model.User.EMAIL_ADDRESS)
+    </span>
+
+    <span class="editmode">
+        @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control input-sm", id="txtEmailAddress" } })
+    </span>
+</div>
+
+<hr>
+
+<h3>
+    Pastebook Information
+</h3>
+
+<div id="profile-user-contactnumber">
+    @Html.LabelFor(model => model.User.DATE_CREATED):
+    @Model.User.DATE_CREATED.ToString("MMMM dd, yyyy")
+</div>
+

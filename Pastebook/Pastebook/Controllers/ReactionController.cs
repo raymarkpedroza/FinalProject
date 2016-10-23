@@ -32,7 +32,7 @@ namespace Pastebook.Controllers
             posterLikeNotification.SEEN = "N";
             posterLikeNotification.POST_ID = postId;
             posterLikeNotification.CREATED_DATE = DateTime.Now;
-            posterLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).POSTER_ID;
+            posterLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().POSTER_ID;
             posterLikeNotification.SENDER_ID = (int)Session["UserId"];
             posterLikeNotification.COMMENT_ID = null;
 
@@ -41,7 +41,7 @@ namespace Pastebook.Controllers
             profileOwnerLikeNotification.SEEN = "N";
             profileOwnerLikeNotification.POST_ID = postId;
             profileOwnerLikeNotification.CREATED_DATE = DateTime.Now;
-            profileOwnerLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).PROFILE_OWNER_ID;
+            profileOwnerLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().PROFILE_OWNER_ID;
             profileOwnerLikeNotification.SENDER_ID = (int)Session["UserId"];
             profileOwnerLikeNotification.COMMENT_ID = null;
 
@@ -66,18 +66,18 @@ namespace Pastebook.Controllers
             posterCommentNotification.SEEN = "N";
             posterCommentNotification.POST_ID = postId;
             posterCommentNotification.CREATED_DATE = DateTime.Now;
-            posterCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).POSTER_ID;
+            posterCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().POSTER_ID;
             posterCommentNotification.SENDER_ID = (int)Session["UserId"];
-            //posterCommentNotification.COMMENT_ID = daReactionManager.RetrieveComment(postId).Select(x => x.ID).SingleOrDefault(); ;
+            posterCommentNotification.COMMENT_ID = result;
 
             PASTEBOOK_NOTIFICATION profileOwnerCommentNotification = new PASTEBOOK_NOTIFICATION();
             profileOwnerCommentNotification.NOTIF_TYPE = "C";
             profileOwnerCommentNotification.SEEN = "N";
             profileOwnerCommentNotification.POST_ID = postId;
             profileOwnerCommentNotification.CREATED_DATE = DateTime.Now;
-            profileOwnerCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).PROFILE_OWNER_ID;
+            profileOwnerCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().PROFILE_OWNER_ID;
             profileOwnerCommentNotification.SENDER_ID = (int)Session["UserId"];
-            //profileOwnerCommentNotification.COMMENT_ID = null;
+            profileOwnerCommentNotification.COMMENT_ID = result;
 
             daNotifactionManager.AddNotification(posterCommentNotification);
             daNotifactionManager.AddNotification(profileOwnerCommentNotification);
@@ -94,7 +94,7 @@ namespace Pastebook.Controllers
 
             foreach (var friendRequest in listOfFriendRequests)
             {
-                listOfFriendRequestsWithRequester.Add(new FriendRequestViewModel() { FriendRequest = friendRequest, Requester = daUserManager.RetrieveUserById(friendRequest.USER_ID) });
+                listOfFriendRequestsWithRequester.Add(new FriendRequestViewModel() { FriendRequest = friendRequest, Requester = friendRequest.PASTEBOOK_USER1 });
             }
 
             return PartialView("~/Views/Pastebook/_FriendRequestPartialView.cshtml", listOfFriendRequestsWithRequester);
@@ -109,10 +109,10 @@ namespace Pastebook.Controllers
 
             foreach (var notification in listOfNotification)
             {
-                listOfNotificationWithSender.Add(new NotificationViewModel() { Notification = notification, Sender = daUserManager.RetrieveUserById(notification.SENDER_ID), ListOfPosts=daPostManager.RetrievePosts(notification.RECEIVER_ID, new List<int>()) });
+                listOfNotificationWithSender.Add(new NotificationViewModel() { Notification = notification, Sender = notification.PASTEBOOK_USER1, ListOfPosts=daPostManager.RetrievePosts(notification.RECEIVER_ID, new List<int>()) });
             }
 
-            return PartialView("~/Views/Pastebook/_NotificationPartialView.cshtml",listOfNotificationWithSender);
+            return PartialView("~/Views/Pastebook/_NotificationPartialView.cshtml",listOfNotificationWithSender.OrderByDescending(x=>x.Notification.CREATED_DATE));
         }
 
         public ActionResult GetInteractButtons(int id)

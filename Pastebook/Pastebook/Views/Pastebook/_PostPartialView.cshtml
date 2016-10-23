@@ -9,7 +9,7 @@
                 {
                     <div>
                         <label>
-                            @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.Poster.ID }, null)
+                            @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Index", "Pastebook", new { username = postWithPoster.Poster.USER_NAME }, null)
                         </label>
                     </div>
                 }
@@ -18,9 +18,9 @@
                 {
                     <div>
                         <label>
-                             @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.Poster.ID }, null)
+                             @Html.ActionLink(postWithPoster.Poster.FIRST_NAME + " " + postWithPoster.Poster.LAST_NAME, "Index", "Pastebook", new { username = postWithPoster.Poster.USER_NAME }, null)
                              <span class="glyphicon glyphicon-play"></span>
-                            @Html.ActionLink(postWithPoster.ProfileOwner.FIRST_NAME + " " + postWithPoster.ProfileOwner.LAST_NAME, "Profile", "Pastebook", new { id = postWithPoster.ProfileOwner.ID }, null)
+                            @Html.ActionLink(postWithPoster.ProfileOwner.FIRST_NAME + " " + postWithPoster.ProfileOwner.LAST_NAME, "Index", "Pastebook", new { username = postWithPoster.ProfileOwner.USER_NAME }, null)
                         </label>
                     </div>
                 }
@@ -33,7 +33,27 @@
             <div class="post-reaction-count clearfix">
                     @if (postWithPoster.ListOfLikesWithLiker.Count > 0)
                     {
-                        <span class="glyphicon glyphicon-heart like"></span>@postWithPoster.ListOfLikesWithLiker.Count
+                        <span class="glyphicon glyphicon-heart like"></span>
+                        if (postWithPoster.ListOfLikesWithLiker.Count() > 3)
+                        {
+                            @postWithPoster.ListOfLikesWithLiker.Count()
+                        }
+
+                        else
+                        {
+                            foreach (var like in postWithPoster.ListOfLikesWithLiker)
+                            {
+                                if (like == postWithPoster.ListOfLikesWithLiker.Last())
+                                {
+                                    <span>@like.Liker.FIRST_NAME @like.Liker.LAST_NAME</span>
+                                }
+
+                                else
+                                {
+                                    <span>@like.Liker.FIRST_NAME @like.Liker.LAST_NAME,</span>
+                                }
+                            }
+                        }
                     }
 
                     @if (postWithPoster.ListOfCommentsWithCommenters.Count > 0)
@@ -63,7 +83,9 @@
                     <hr>
                     <div class="post-comment">
                         <div class="post-comment-header">
-                            <span><label>@commentersComment.Commenter.FIRST_NAME @commentersComment.Commenter.LAST_NAME</label></span> @commentersComment.Comment.CONTENT
+                            <span><label>
+                                      @Html.ActionLink(commentersComment.Commenter.FIRST_NAME + " " + commentersComment.Commenter.LAST_NAME, "Index", "Pastebook", new { username = commentersComment.Commenter.USER_NAME }, null)
+                            </label></span> @commentersComment.Comment.CONTENT
                         </div>
                         <div class="post-comment-content">
                         </div>

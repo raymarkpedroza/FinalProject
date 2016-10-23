@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 
 namespace PastebookDataAccess.Managers
@@ -17,7 +18,7 @@ namespace PastebookDataAccess.Managers
                 using (var context = new PASTEBOOKEntities())
                 {
                     //retrieve user post
-                    var retrieveUserPost = context.PASTEBOOK_POST.Where(x => x.POSTER_ID == userId);
+                    var retrieveUserPost = context.PASTEBOOK_POST.Include(poster=>poster.PASTEBOOK_USER).Include(profileOwner => profileOwner.PASTEBOOK_USER1).Include(comment=> comment.PASTEBOOK_COMMENT.Select(commenter=> commenter.PASTEBOOK_USER)).Include(like=>like.PASTEBOOK_LIKE.Select(liker=> liker.PASTEBOOK_USER)).Where(x=>x.POSTER_ID == userId);
 
                     //add to list
                     foreach (var post in retrieveUserPost)
@@ -26,7 +27,7 @@ namespace PastebookDataAccess.Managers
                     }
 
                     //retrieve posts posted on users page
-                    var retrievePostsPostedOnUserPage = context.PASTEBOOK_POST.Where(x => x.PROFILE_OWNER_ID == userId);
+                    var retrievePostsPostedOnUserPage = context.PASTEBOOK_POST.Include(poster => poster.PASTEBOOK_USER).Include(profileOwner => profileOwner.PASTEBOOK_USER1).Include(comment => comment.PASTEBOOK_COMMENT.Select(commenter => commenter.PASTEBOOK_USER)).Include(like => like.PASTEBOOK_LIKE.Select(liker => liker.PASTEBOOK_USER)).Where(x => x.PROFILE_OWNER_ID == userId);
                     foreach (var post in retrievePostsPostedOnUserPage)
                     {
                         if (!listOfPosts.Any(x=>x.ID == post.ID))
@@ -38,7 +39,7 @@ namespace PastebookDataAccess.Managers
                     {
                         foreach (int friendId in listOfFriendId)
                         {
-                            var retrieveFriendsPost = context.PASTEBOOK_POST.Where(x => x.POSTER_ID == friendId);
+                            var retrieveFriendsPost = context.PASTEBOOK_POST.Include(poster => poster.PASTEBOOK_USER).Include(profileOwner => profileOwner.PASTEBOOK_USER1).Include(comment => comment.PASTEBOOK_COMMENT.Select(commenter => commenter.PASTEBOOK_USER)).Include(like => like.PASTEBOOK_LIKE.Select(liker => liker.PASTEBOOK_USER)).Where(x => x.POSTER_ID == friendId);
 
                             foreach (var post in retrieveFriendsPost)
                             {
@@ -65,6 +66,7 @@ namespace PastebookDataAccess.Managers
                 {
                     context.PASTEBOOK_POST.Add(post);
                     result = context.SaveChanges();
+                    result = post.ID;
                 }
             }
             catch(Exception ex)
@@ -76,14 +78,14 @@ namespace PastebookDataAccess.Managers
         }
 
 
-        public PASTEBOOK_POST RetrievePost(int id)
+        public List<PASTEBOOK_POST> RetrievePost(int id)
         {
-            PASTEBOOK_POST post = new PASTEBOOK_POST();
+            List<PASTEBOOK_POST> post = new List<PASTEBOOK_POST>();
             try
             {
                 using (var context = new PASTEBOOKEntities())
                 {
-                    post = context.PASTEBOOK_POST.Where(x=>x.ID==id).SingleOrDefault();
+                    post = context.PASTEBOOK_POST.Include(poster => poster.PASTEBOOK_USER).Include(profileOwner => profileOwner.PASTEBOOK_USER1).Include(comment => comment.PASTEBOOK_COMMENT.Select(commenter => commenter.PASTEBOOK_USER)).Include(like => like.PASTEBOOK_LIKE.Select(liker => liker.PASTEBOOK_USER)).Where(x=>x.ID==id).ToList();
                 }
             }
             catch (Exception ex)
@@ -93,5 +95,6 @@ namespace PastebookDataAccess.Managers
 
             return post;
         }
+
     }
 }

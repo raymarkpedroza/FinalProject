@@ -36,8 +36,8 @@ namespace PastebookDataAccess.Managers
             {
                 using (var context = new PASTEBOOKEntities())
                 {
-                    var userFriends = context.PASTEBOOK_FRIEND.Where(x => x.FRIEND_ID == id);
-                    var friendUsers = context.PASTEBOOK_FRIEND.Where(x=>x.USER_ID == id);
+                    var userFriends = context.PASTEBOOK_FRIEND.Include(r=>r.PASTEBOOK_USER1).Include(s=>s.PASTEBOOK_USER).Where(x => x.FRIEND_ID == id);
+                    var friendUsers = context.PASTEBOOK_FRIEND.Include(r => r.PASTEBOOK_USER1).Include(s => s.PASTEBOOK_USER).Where(x=>x.USER_ID == id);
 
                     foreach (var friend in userFriends)
                     {
@@ -86,7 +86,7 @@ namespace PastebookDataAccess.Managers
             {
                 using (var context = new PASTEBOOKEntities())
                 {
-                    friendRequest = context.PASTEBOOK_FRIEND.Where(x => x.ID == friendRequestId).SingleOrDefault();
+                    friendRequest = context.PASTEBOOK_FRIEND.Include(r=>r.PASTEBOOK_USER1).Include(s=>s.PASTEBOOK_USER).Where(x => x.ID == friendRequestId).SingleOrDefault();
                 }
             }
             catch (Exception ex)

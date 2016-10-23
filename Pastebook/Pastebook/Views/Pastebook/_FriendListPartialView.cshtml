@@ -1,0 +1,24 @@
+﻿@model Pastebook.Models.FriendListViewModel
+
+<div id="friend-list-container">
+@foreach (var friendDetails in Model.ListOfFriendsWithDetails)
+{
+    <div class="friendlist-item col-md-3">
+        <div class="friendlist-item-header">
+            @if (friendDetails.FriendDetails.PROFILE_PIC == null)
+            {
+                <img src="~/Content/Images/pastebook-default.png" id="friend-prof-pic" class="img-circle" alt=@friendDetails.FriendDetails.FIRST_NAME @friendDetails.FriendDetails.LAST_NAME>
+            }
+
+            else
+            {
+                var base64 = Convert.ToBase64String(friendDetails.FriendDetails.PROFILE_PIC);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                <img src=@imgSrc id="friend-prof-pic" class="img-circle" alt=@friendDetails.FriendDetails.FIRST_NAME @friendDetails.FriendDetails.LAST_NAME>
+            }
+            @Html.ActionLink(friendDetails.FriendDetails.FIRST_NAME + " " + friendDetails.FriendDetails.LAST_NAME, "Index", "Pastebook", new { username = friendDetails.FriendDetails.USER_NAME }, null)
+        </div>
+    </div>
+}
+</div>

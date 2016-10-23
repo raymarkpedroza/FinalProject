@@ -1,0 +1,42 @@
+﻿@model Pastebook.Models.ResultsViewModel
+
+<div id="friend-friend-list-container" class="container">
+    <div id="friend-backToTimeline">
+        @Html.ActionLink("Back To Timeline", "Home", "Pastebook")
+    </div>
+    <div class="row" id="friend-row">
+        @if (Model.searchResults.Count() > 0)
+        {
+            foreach (var searchResults in Model.searchResults)
+            {
+                <div class="friend-friendlist-item col-md-2">
+                    <div class="friendlist-item-header">
+                        @if (searchResults.PROFILE_PIC == null)
+                        {
+                            <img src="~/Content/Images/pastebook-default.png" id="friend-prof-pic" class="img-circle" alt=@searchResults.FIRST_NAME @searchResults.LAST_NAME>
+                        }
+
+                        else
+                        {
+                            var base64 = Convert.ToBase64String(searchResults.PROFILE_PIC);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                            <img src=@imgSrc id="friend-prof-pic" class="img-circle" alt=@searchResults.FIRST_NAME @searchResults.LAST_NAME>
+                        }
+                        <div id="friend-name" class="text-center">
+                            @Html.ActionLink(searchResults.FIRST_NAME + " " + searchResults.LAST_NAME, "Index", "Pastebook", new { username = searchResults.USER_NAME }, null)
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        else
+        {
+            <div>
+                <h3 id="noResults">No results found!</h3>
+            </div>
+        }
+
+    </div>
+</div>

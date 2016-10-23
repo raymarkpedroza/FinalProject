@@ -29,13 +29,11 @@
 </body>
 </html>
 
-@section reload{
-    <script>
-        @*var session = @Session["Username"].ToString()
-        $(documents).ready(function (){
-            if (session == null) {
-                location.reload()
-            };
-        });*@
-    </script>
-}
+<script>
+    var getNavBarUrl = '@Url.Action("GetPastebookNavBar", "Home")';
+    var searchURL = '@Url.Action("Search", "Pastebook")';
+</script>
+
+<script src="~/Scripts/PastebookScripts/pastebookScript.js"> </script>
+
+

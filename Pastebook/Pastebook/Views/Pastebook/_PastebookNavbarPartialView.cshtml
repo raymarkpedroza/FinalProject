@@ -1,4 +1,6 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@model Pastebook.Models.SearchModel
+
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,12 +9,14 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div>
+        @using (Html.BeginForm("Search", "Pastebook", FormMethod.Post, new { @class = "form-inline" }))
+        { 
             <span id="searchBar">
                 @if (Session["UserFullname"] != null)
                 {
-                    <input type="text" placeholder="search" id="textboxSearch" />
-                        <button type="button">
+                        @Html.TextBoxFor(m => m.Name, new { id = "textboxSearch" })
+
+                        <button type="submit" id="btnSearch">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                 }
@@ -24,7 +28,7 @@
                 {
                     <div class="btn-group" id="profile-link">
                         <span>
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "Profile", "Pastebook", new { id = (int)Session["UserId"] }, null)
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "Index", "Pastebook", new { username = Session["Username"].ToString() }, null)
                         </span>
                     </div>
                 }
@@ -45,12 +49,21 @@
                         @{Html.RenderAction("GetNotifications", "Reaction");}
                     </div>
 
+                    <div class="btn-group" id="pastebook-nav-bar-settings">
+                        <span class="glyphicon glyphicon-cog icon" id="settings" data-toggle="dropdown">
+                        </span>
+
+                        <div class="dropdown-menu" aria-labelledby="settings">
+                            <div class="settings-listitem">Edit Profile</div>
+                        </div>
+                    </div>
+
                     <div class="btn-group" id="logout-link">
                         @Html.ActionLink("Logout", "Logout", "Home", null, new { @class = "link" })
                     </div>
                 }
             </div>
-        </div>
+        }
     </div>
 </div>
 

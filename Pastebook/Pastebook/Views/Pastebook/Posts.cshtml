@@ -1,0 +1,82 @@
+﻿@model Pastebook.Models.UserPostModel
+
+<div class="col-md-12">
+    <div class="pastebookPost">
+        <div class="post-header">
+            @if (Model.Poster.ID == Model.ProfileOwner.ID)
+            {
+                <div>
+                    <label>
+                        @Html.ActionLink(Model.Poster.FIRST_NAME + " " + Model.Poster.LAST_NAME, "Index", "Pastebook", new { username = Model.Poster.USER_NAME }, null)
+                    </label>
+                </div>
+            }
+
+            else
+            {
+                <div>
+                    <label>
+                        @Html.ActionLink(Model.Poster.FIRST_NAME + " " + Model.Poster.LAST_NAME, "Index", "Pastebook", new { username = Model.Poster.USER_NAME }, null)
+                        <span class="glyphicon glyphicon-play"></span>
+                        @Html.ActionLink(Model.ProfileOwner.FIRST_NAME + " " + Model.ProfileOwner.LAST_NAME, "Index", "Pastebook", new { username = Model.ProfileOwner.USER_NAME }, null)
+                    </label>
+                </div>
+            }
+            <p class="date">@Model.Post.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.Post.CREATED_DATE.ToShortTimeString()</p>
+        </div>
+        <div class="post-content">
+            @Model.Post.CONTENT
+        </div>
+
+        <div class="post-reaction-count clearfix">
+            @if (Model.ListOfLikesWithLiker.Count > 0)
+            {
+                <span class="glyphicon glyphicon-heart like"></span>@Model.ListOfLikesWithLiker.Count
+            }
+
+            @if (Model.ListOfCommentsWithCommenters.Count > 0)
+            {
+                <span class="pull-right"><a class="comment-count" data-value=@Model.Post.ID>@Model.ListOfCommentsWithCommenters.Count Comments</a></span>
+            }
+        </div>
+
+        <hr>
+        <div class="post-reaction">
+            @if (Model.ListOfLikesWithLiker.Any(x => x.Like.LIKED_BY == (int)Session["UserId"]))
+            {
+                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.Post.ID disabled><span class="glyphicon glyphicon-heart"></span></button>
+            }
+
+            else
+            {
+                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.Post.ID><span class="glyphicon glyphicon-heart"></span></button>
+            }
+
+            <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@Model.Post.ID><span class="glyphicon glyphicon-comment"></span></button>
+        </div>
+
+        <div class="post-comments" value=@Model.Post.ID>
+            @foreach (var commentersComment in Model.ListOfCommentsWithCommenters)
+            {
+                <hr>
+                <div class="post-comment">
+                    <div class="post-comment-header">
+                        <span>
+                            <label>
+                                @Html.ActionLink(commentersComment.Commenter.FIRST_NAME + " " + commentersComment.Commenter.LAST_NAME, "Index", "Pastebook", new { username = commentersComment.Commenter.USER_NAME }, null)
+                            </label>
+                        </span> @commentersComment.Comment.CONTENT
+                    </div>
+                    <div class="post-comment-content">
+                    </div>
+                    <p class="date">@commentersComment.Comment.DATE_CREATED.ToString("MMMM dd, yyyy") at @commentersComment.Comment.DATE_CREATED.ToShortTimeString()</p>
+                </div>
+            }
+            <hr>
+            <div class="write-comment clearfix">
+                <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@Model.Post.ID placeholder="Write comment.."></textarea>
+                <button type="button" class="btn pull-right" id="btnComment" value=@Model.Post.ID>Add Comment</button>
+            </div>
+        </div>
+    </div>
+</div>

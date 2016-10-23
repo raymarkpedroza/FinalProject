@@ -165,7 +165,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ReactionController.cs" />
     <Compile Include="Controllers\PastebookController.cs" />
@@ -174,11 +173,15 @@
     </Compile>
     <Compile Include="Managers\_PostManager.cs" />
     <Compile Include="Managers\_UserManager.cs" />
+    <Compile Include="Models\FriendListViewModel.cs" />
     <Compile Include="Models\FriendRequestViewModel.cs" />
+    <Compile Include="Models\FriendUserModel.cs" />
     <Compile Include="Models\NewsfeedViewModel.cs" />
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\ResultsViewModel.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\UserCommentModel.cs" />
     <Compile Include="Models\UserLikeModel.cs" />
     <Compile Include="Models\UserPostModel.cs" />
@@ -211,6 +214,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\PastebookScripts\newsfeedScript.js" />
+    <Content Include="Scripts\PastebookScripts\pastebookScript.js" />
     <Content Include="Scripts\PastebookScripts\profileScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -232,13 +236,18 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Pastebook\Newsfeed.cshtml" />
+    <Content Include="Views\Pastebook\Home.cshtml" />
     <Content Include="Views\Pastebook\_PostPartialView.cshtml" />
-    <Content Include="Views\Pastebook\Profile.cshtml" />
+    <Content Include="Views\Pastebook\Index.cshtml" />
     <Content Include="Views\Pastebook\_InteractButtonsPartialView.cshtml" />
     <Content Include="Views\Pastebook\_PastebookNavbarPartialView.cshtml" />
     <Content Include="Views\Pastebook\_NotificationPartialView.cshtml" />
     <Content Include="Views\Pastebook\_FriendRequestPartialView.cshtml" />
+    <Content Include="Views\Pastebook\_FriendListPartialView.cshtml" />
+    <Content Include="Views\Pastebook\Friends.cshtml" />
+    <Content Include="Views\Pastebook\Posts.cshtml" />
+    <Content Include="Views\Pastebook\_ProfileDetailsPartialView.cshtml" />
+    <Content Include="Views\Pastebook\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

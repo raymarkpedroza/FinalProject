@@ -1,0 +1,139 @@
+﻿@model Pastebook.Models.ProfileViewModel
+
+<div id="profile">
+    <div class="container">
+        <div class="row">
+            <div id="profile-header" class="text-center col-md-12">
+                <div id="profile-profile-picture">
+                    @if (Model.User.PROFILE_PIC == null)
+                    {
+                    <img src="~/Content/Images/pastebook-default.png" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
+                    }
+
+                    else
+                    {
+                        var base64 = Convert.ToBase64String(Model.User.PROFILE_PIC);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                        <img src=@imgSrc type="hidden" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
+                    }
+                    <span class="glyphicon glyphicon-camera" id="camera-icon" data-toggle="modal" data-target="#myModal" type = "hidden"></span>
+
+                </div>
+
+                <div>
+                    <div id="profile-fullname">
+                        @Html.ActionLink(Model.User.FIRST_NAME + " " + Model.User.LAST_NAME, "Index", new { username = Model.User.USER_NAME }, null)
+                    </div>
+                    <div id="profile-username">
+                        (@Model.User.USER_NAME)
+                    </div>                    
+                    <div id="interactButtons">
+                        @{Html.RenderAction("GetInteractButtons", "Reaction", new { id = Model.User.ID });}
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+        <div class="row">
+            <div id="profile-content">
+                <div class="col-md-4" id="profile-user-details">
+                    @{Html.RenderAction("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME });}
+                </div>
+            </div>
+
+            @if (Model.ListOfFriends.Where(x=>x.REQUEST == "Y").Any(x => x.FRIEND_ID == (int)Session["UserId"])  || Model.ListOfFriends.Where(x => x.REQUEST == "Y").Any(x => x.USER_ID == (int)Session["UserId"]))
+            {
+                <div class="col-md-8">
+                <div id="profile-options-header">
+                    <span id="profile-options-post" class="profile-options">Timeline</span>
+                    <span id="profile-options-friend" class="profile-options">Friends</span>
+
+                    <span class="pull-right" id="edit-profile-choice"><input type="button" id="saveButton" value="Save" class="btn btn-primary"/>  <input type="button" id="cancelEditButton" value="Cancel" class="btn btn-danger"></span>
+                </div>
+
+                <div id="writePost" class="container">
+                    <div id="writePost-header">
+                        @if ((int)Session["UserId"] == Model.User.ID)
+                        {
+                        <span class="glyphicon glyphicon-pencil"></span><span>Status</span>
+                        }
+
+                        else
+                        {
+                        <span class="glyphicon glyphicon-pencil"></span><span>Write something on @Model.User.FIRST_NAME's wall</span>
+                        }
+                    </div>
+                    @if ((int)Session["UserId"] == Model.User.ID)
+                    {
+                        <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
+                    }
+
+                    else
+                    {
+                        <textarea rows="5" cols="70" id="textAreaPost" placeholder="Write something..." class="col-md-12"></textarea>
+                    }
+                      <div class="clearfix"><button type="button" value=@Model.User.ID class="btn pull-right" id="btnPost" />Post</div>
+                </div>
+
+                <div id="timelinePost">
+                    @{Html.RenderAction("GetTimelinePosts", "Post", new { id = Model.User.ID });}
+                </div>
+
+                <div id="friend-list" class="container">
+                    <div id="profile-friend-list-header">@Model.User.FIRST_NAME's friends</div>
+                    @{Html.RenderAction("GetFriendList", "Pastebook", new { id = Model.User.ID });}
+                </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("FileUpload", "Pastebook", FormMethod.Post,
+                    new { enctype = "multipart/form-data" }))
+                {
+                    <label for="file">Upload Image:</label>
+                    <input type="file" name="file" id="file" style="width: 100%;" />
+                    <input type="submit" value="Upload" class="submit" />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        var createPostURL = '@Url.Action("CreatePost", "Post")'
+        var addLikeURL = '@Url.Action("AddLike", "Reaction")'
+        var addCommentURL = '@Url.Action("AddComment", "Reaction")'
+        var addNotificationURL = '@Url.Action("AddNotification", "Reaction")'
+        var addFriendURL = '@Url.Action("AddFriend", "Reaction")'
+        var acceptFriendURL = '@Url.Action("AcceptFriend", "Reaction")'
+        var interactButtonsUrl = '@Url.Action("GetInteractButtons", "Reaction", new { id = Model.User.ID })'
+        var getTimelinePostUrl = '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.ID })'
+        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Reaction")';
+        var updateProfileURL = '@Url.Action("UpdateProfile", "Pastebook")';
+        var getProfileDetails = '@Url.Action("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME })';
+
+    </script>
+    <script src="~/Scripts/PastebookScripts/profileScript.js"> </script>
+}
+
+

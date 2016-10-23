@@ -23,7 +23,7 @@ namespace Pastebook.Controllers
         {
             if (Session["Username"] != null)
             {
-                return RedirectToAction("Newsfeed", "Pastebook");
+                return RedirectToAction("Home", "Pastebook");
             }
 
             else
@@ -62,7 +62,7 @@ namespace Pastebook.Controllers
                 Session["Username"] = user.USER_NAME;
                 Session["Email"] = user.EMAIL_ADDRESS;
                 Session["UserFullname"] = user.FIRST_NAME + " " + user.LAST_NAME;
-                return RedirectToAction("Newsfeed","Pastebook");
+                return RedirectToAction("Home","Pastebook");
             }
 
             else

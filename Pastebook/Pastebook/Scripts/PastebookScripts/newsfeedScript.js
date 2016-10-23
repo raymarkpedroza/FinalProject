@@ -1,5 +1,18 @@
 ﻿$(document).ready(function () {
     $('.post-comments').hide();
+    $('#friend-list').hide();
+    
+    $(document).delegate("#viewFriendsLink", "click", function () {
+        $('#writePost').hide();
+        $('#newsfeedPost').hide();
+        $('#friend-list').show();
+    });
+
+    $(document).delegate("#backToTimeline", "click", function () {
+        $('#writePost').show();
+        $('#newsfeedPost').show();
+        $('#friend-list').hide();
+    });
 
     $(document).delegate(".btnAcceptRequest", "click", function () {
         alert(this.value)
@@ -56,6 +69,26 @@
 
     });
 
+    //function RefreshNewsfeed() {
+    //    //this will wait 3 seconds and then fire the load partial function
+    //    setTimeout(function () {
+    //        loadNewsfeed();
+    //        //recall this function so that it will continue to loop
+    //        RefreshNewsfeed();
+    //    }, 3000);
+    //}
+    ////initialize the loop
+    //RefreshNewsfeed();
+
+    //function loadNewsfeed() {
+    //    $.ajax({
+    //        url: getNewsfeedPostsURL,
+    //        dataType: "html",
+    //        success: function (result) {
+    //            $("#newsfeedPost").html(result);
+    //        }
+    //    })
+    //}
 
     $(document).delegate(".post-reaction-like", "click", function () {
         var data = {

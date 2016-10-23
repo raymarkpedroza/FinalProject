@@ -10,8 +10,98 @@
     margin-bottom: 10px;
 }
 
+#edit-icon {
+    margin-top:15px;
+    font-size:20px;
+}
+
+#noResults {
+    margin-left:15px;
+}
+
+#edit-icon:hover {
+    color:#aaa;
+}
+
+#backToTimeline {
+    margin-left:10px;
+}
+
+#friend-backToTimeline {
+   margin-top:10px;
+}
+
+.profile-options {
+    background-color:#fff;
+    font-size:16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding:10px 10px;
+}
+
+#friend-friend-list-container {
+    background-color:#fff;
+    margin-top:10px;
+}
+
+.profile-options {
+}
+
+.profile-options:hover {
+    color:#fff;
+    background-color:#424242;
+    cursor:pointer;
+}
+
+#profile-options-header {
+    margin-top:10px;
+    margin-bottom:11px;
+}
+
+.friendlist-item{
+    background-color: #eee;
+    border: 1px solid #000;
+    margin: 10px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size:11px;
+}
+
+.friend-friendlist-item{
+    background-color: #eee;
+    border: 1px solid #000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size:11px;
+}
+
+#friend-row {
+    margin-right:-80px;
+}
+
+.friend-friendlist-item{
+    background-color: #eee;
+    border: 1px solid #000;
+    margin: 10px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    font-size:16px;
+}
+
+#friend-list-container {
+    padding:10px 150px;
+    background-color:#fff;
+    margin-top:10px;
+}
+
+#friend-list{
+    background-color: #fff;
+    padding:10px 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
 .dropdown-menu {
     position:absolute;
+    padding-left:10px;
+    padding-right:10px;
+    height: 200px;
+    overflow: auto;
 }
 
 #friend-request-notification {
@@ -38,7 +128,7 @@
 }
 
 .notification-listitem {
-    padding:0px 5px;
+    padding:0px 2px;
     font-size:11px;
 }
 
@@ -56,6 +146,27 @@
     text-align:center;
     margin-top:10px;
     margin-left:400px;
+    position:relative;
+}
+
+#profile-profile-picture #camera-icon {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+#camera-icon {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font-size:40px;
+    opacity: 0.5;
+    color: #000;
+}
+
+#camera-icon:hover {
+    opacity:1;
+    color: #000;
 }
 
 #profile-prof-pic {
@@ -97,8 +208,8 @@
 #writePost {
     background-color:#fff;
     padding:10px 10px;
+    margin-right:-13px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    margin-left:13px;
 }
 
 .like {
@@ -127,6 +238,14 @@
 .textArea-comment {
     resize:none;
     margin-bottom: 10px;
+}
+
+.input-sm {
+    margin-bottom:12px;
+}
+
+#about-me{
+    resize:none;
 }
 
 .pastebookPost {
@@ -173,16 +292,22 @@
     color:#fff;
 }
 
+#edit-profile-choice {
+    margin-top:-10px;
+}
+
 .post-reaction-comment {
     background-color:#37474F;
     color:#fff;
 }
 
 #newsfeedPost {
-    margin-right:-13px;
+    margin-left:-13px;
+    margin-right:-26px;
 }
 
 #timelinePost {
+    margin-left:-13px;
     margin-right:-26px;
 }
 
@@ -236,6 +361,23 @@
     background-color:#424242;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 10px 10px;
+}
+
+#friend-prof-pic {
+    width:100%;
+    margin: 10px 0px 10px 0px;
+}
+
+#sender-prof-pic {
+    height:35px; 
+    width:35px;
+    margin-left:5px;
+}
+
+#requester-prof-pic {
+    height:35px; 
+    width:35px;
+    margin-left:5px;
 }
 
 #profile-content {

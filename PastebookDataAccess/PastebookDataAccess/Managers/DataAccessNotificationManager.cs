@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace PastebookDataAccess.Managers
 {
@@ -35,7 +36,7 @@ namespace PastebookDataAccess.Managers
             {
                 using (var context = new PASTEBOOKEntities())
                 {
-                    listOfNotification = context.PASTEBOOK_NOTIFICATION.Where(x=>x.RECEIVER_ID == receiverId).ToList();
+                    listOfNotification = context.PASTEBOOK_NOTIFICATION.Include(s=>s.PASTEBOOK_USER1).Where(x=>x.RECEIVER_ID == receiverId).ToList();
                 }
             }
             catch

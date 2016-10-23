@@ -13,5 +13,10 @@ namespace Pastebook.Models
         public PASTEBOOK_USER ProfileOwner = new PASTEBOOK_USER();
         public List<UserCommentModel> ListOfCommentsWithCommenters = new List<UserCommentModel>();
         public List<UserLikeModel> ListOfLikesWithLiker = new List<UserLikeModel>();
+
+        public static implicit operator UserPostModel(List<UserPostModel> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

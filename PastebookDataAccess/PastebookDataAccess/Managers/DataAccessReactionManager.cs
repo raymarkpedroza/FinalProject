@@ -38,6 +38,7 @@ namespace PastebookDataAccess.Managers
                 {
                     context.PASTEBOOK_COMMENT.Add(comment);
                     result = context.SaveChanges();
+                    result = comment.ID;
                 }
             }
             catch
