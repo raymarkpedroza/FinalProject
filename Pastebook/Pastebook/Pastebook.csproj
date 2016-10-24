@@ -171,8 +171,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Managers\_PostManager.cs" />
-    <Compile Include="Managers\_UserManager.cs" />
+    <Compile Include="Managers\PostManager.cs" />
+    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\FriendListViewModel.cs" />
     <Compile Include="Models\FriendRequestViewModel.cs" />
     <Compile Include="Models\FriendUserModel.cs" />
@@ -191,7 +192,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\logo-black.png" />
-    <Content Include="Content\Images\logo-blue.png" />
+    <Content Include="Content\Images\logo-gray.png" />
     <Content Include="Content\Images\pastebook-default.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Pastebook\Posts.cshtml" />
     <Content Include="Views\Pastebook\_ProfileDetailsPartialView.cshtml" />
     <Content Include="Views\Pastebook\Search.cshtml" />
+    <Content Include="Views\Pastebook\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

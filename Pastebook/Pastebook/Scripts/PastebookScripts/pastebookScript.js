@@ -20,4 +20,12 @@
     //    })
     //}
 
+    $('#logo-icon').hover(function () {
+        $(this).attr('src', '../Content/Images/logo-gray.png');
+    });
+
+    $('#logo-icon').mouseout(function () {
+        $(this).attr('src', '../Content/Images/logo-black.png');
+    });
+
 });

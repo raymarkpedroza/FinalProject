@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Pastebook.Models
 {
-    public class RegisterViewModel
+    public class EditProfileViewModel
     {
         public List<REF_COUNTRY> ListOfCountryModel = new List<REF_COUNTRY>();
         public PASTEBOOK_USER User = new PASTEBOOK_USER();

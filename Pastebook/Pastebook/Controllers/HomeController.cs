@@ -13,7 +13,7 @@ namespace Pastebook.Controllers
 {
     public class HomeController : Controller
     {
-        _UserManager userManager = new _UserManager();
+        UserManager userManager = new UserManager();
 
         DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
         DataAccessUserManager daUserManager = new DataAccessUserManager();

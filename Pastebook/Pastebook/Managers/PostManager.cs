@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Pastebook.Managers
 {
-    public class _PostManager
+    public class PostManager
     {
         DataAccessPostManager daPostManager = new DataAccessPostManager();
         DataAccessUserManager daUserManager = new DataAccessUserManager();
@@ -151,7 +151,7 @@ namespace Pastebook.Managers
             List<PASTEBOOK_LIKE> listOfLikes;
 
             PASTEBOOK_POST post = new PASTEBOOK_POST();
-            post = daPostManager.RetrievePost(postId).SingleOrDefault();
+            post = daPostManager.RetrievePost(postId);
 
             PASTEBOOK_USER poster = new PASTEBOOK_USER();
             poster = post.PASTEBOOK_USER;

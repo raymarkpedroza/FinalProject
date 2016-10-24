@@ -1,7 +1,43 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #eee;
+    background-color: #ECEFF1;
+}
+
+/*nav bar*/
+.navbar-inverse {
+    background-color: #fff;
+    border-color: #e0e0e0;
+}
+
+#logo-icon {
+    height:45px;
+    width: 100px;
+    margin-bottom:5px;
+}
+
+.icon{
+    font-size: 16px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #000;
+}
+
+.icon:hover{
+    color: #aaa;
+}
+
+#textboxSearch {
+    margin-top:15px;
+    color:#424242;
+}
+
+#btnSearch {
+    color:#fff;
+    background-color:#039BE5;
+    border-radius:100%;
+    border:1px solid #Eee;
 }
 
 #logo-home {
@@ -10,25 +46,89 @@
     margin-bottom: 10px;
 }
 
+#logout-link{
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.dropdown-menu {
+    position:absolute;
+    padding-left:10px;
+    padding-right:10px;
+    height:auto;
+    max-height: 200px;
+    overflow: auto;
+}
+
+
+#friend-request-notification {
+    margin-left: 5px;
+    margin-top: -20px;
+    color: #fff;
+    background-color: #f00;
+    position: absolute;
+    font-size: 8px;
+}
+
+.friend-request-listitem {
+    padding:0px 5px;
+    font-size:11px;
+}
+
+#other-notification {
+    margin-left: 5px;
+    margin-top: -18px;
+    color: #fff;
+    background-color: #f00;
+    position: absolute;
+    font-size: 8px;
+}
+
+#sender-prof-pic {
+    height:35px; 
+    width:35px;
+    margin-left:5px;
+}
+
+#requester-prof-pic {
+    height:35px; 
+    width:35px;
+    margin-left:5px;
+}
+
+.notification-listitem {
+    padding:0px 2px;
+    font-size:11px;
+}
+
+/*nav bar:end*/
+
+
+/*profile*/
+
+#user-profile {
+    background-color:#fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 10px 10px;
+}
+
+#profile-header {
+    background-color:#424242;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    padding: 10px 10px;
+}
+
 #edit-icon {
     margin-top:15px;
     font-size:20px;
-}
-
-#noResults {
-    margin-left:15px;
 }
 
 #edit-icon:hover {
     color:#aaa;
 }
 
-#backToTimeline {
-    margin-left:10px;
-}
-
-#friend-backToTimeline {
-   margin-top:10px;
+.editmode {
+    visibility:hidden;
 }
 
 .profile-options {
@@ -36,14 +136,6 @@
     font-size:16px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding:10px 10px;
-}
-
-#friend-friend-list-container {
-    background-color:#fff;
-    margin-top:10px;
-}
-
-.profile-options {
 }
 
 .profile-options:hover {
@@ -55,6 +147,115 @@
 #profile-options-header {
     margin-top:10px;
     margin-bottom:11px;
+}
+
+
+#profile-profile-picture {
+    height: 100px ;
+    width: 100px;
+    text-align:center;
+    margin-top:10px;
+    margin-left:400px;
+    position:relative;
+}
+
+#profile-profile-picture #camera-icon {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+}
+
+#camera-icon {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    font-size:40px;
+    opacity: 0.5;
+    color: #000;
+}
+
+#camera-icon:hover {
+    opacity:1;
+    color: #000;
+}
+
+#profile-prof-pic {
+    height: 100px ;
+    width: 100px;
+    margin-top:10px;
+    margin-left:10px;
+    display:block;
+}
+
+#profile-link{
+    margin-right:10px;
+    margin-top:10px;
+}
+
+#profile-username {
+    color:#fff;
+}
+
+#profile-fullname, #profile-username {
+    font-size:20px;
+}
+
+#profile-user-details {
+    background-color:#fff;
+    padding-bottom:20px;
+    font-size: 11px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+#profile-username {
+    color:#fff;
+    white-space:nowrap;
+}
+
+#about-me{
+    resize:none;
+}
+
+#interactButtons {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#intro {
+    margin-top: 30px;
+    margin-right: 70px;
+}
+
+#profile-content {
+    margin-top:10px;
+}
+
+/*profile:end*/
+
+/*search*/
+
+#noResults {
+    margin-left:15px;
+}
+
+/*search:end*/
+
+
+/*friends-page*/
+
+
+#friend-prof-pic {
+    width:100%;
+    margin: 10px 0px 10px 0px;
+}
+
+#friend-backToTimeline {
+   margin-top:10px;
+}
+
+#friend-friend-list-container {
+    background-color:#fff;
+    margin-top:10px;
 }
 
 .friendlist-item{
@@ -96,113 +297,40 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-.dropdown-menu {
-    position:absolute;
-    padding-left:10px;
-    padding-right:10px;
-    height: 200px;
-    overflow: auto;
+#backToTimeline {
+    margin-left:10px;
 }
+/*friend-page:end*/
 
-#friend-request-notification {
-    margin-left: 5px;
-    margin-top: -20px;
-    color: #fff;
-    background-color: #f00;
-    position: absolute;
-    font-size: 8px;
-}
-
-.friend-request-listitem {
-    padding:0px 5px;
-    font-size:11px;
-}
-
-#other-notification {
-    margin-left: 5px;
-    margin-top: -18px;
-    color: #fff;
-    background-color: #f00;
-    position: absolute;
-    font-size: 8px;
-}
-
-.notification-listitem {
-    padding:0px 2px;
-    font-size:11px;
-}
+/*home*/
 
 #prof-pic {
     height: 100px;
     width: 100px;
     text-align:center;
     margin-top:10px;
-    margin-left:90px;
+    margin-left:95px;
+    border-radius:5px;
+    border:2px solid #aaa;
 }
 
-#profile-profile-picture {
-    height: 100px ;
-    width: 100px;
-    text-align:center;
-    margin-top:10px;
-    margin-left:400px;
-    position:relative;
-}
-
-#profile-profile-picture #camera-icon {
-    position: absolute;
-    top: 20px;
-    left: 40px;
-}
-
-#camera-icon {
-    position: absolute;
-    top: 30px;
-    left: 40px;
-    font-size:40px;
-    opacity: 0.5;
-    color: #000;
-}
-
-#camera-icon:hover {
-    opacity:1;
-    color: #000;
-}
-
-#profile-prof-pic {
-    height: 100px ;
-    width: 100px;
-    margin-top:10px;
-    margin-left:10px;
-    display:block;
-}
-
-#textboxSearch {
-    margin-top:15px;
-}
-
-#profile-link{
-    margin-right:10px;
+#user-fullname {
     margin-top:10px;
 }
 
-#profile-username {
+/*home:end*/
+
+/*post*/
+
+#btnPost, #btnComment {
     color:#fff;
+    background-color:#039BE5;
+    border:1px solid #03A9F4;
 }
 
-#profile-fullname, #profile-username {
-    font-size:20px;
-}
-
-#profile-user-details {
-    background-color:#fff;
-    padding-bottom:20px;
-    font-size: 11px;
-}
-
-#profile-username {
-    color:#fff;
-    white-space:nowrap;
+#textAreaPost {
+    resize:none;
+    margin-bottom: 10px;
 }
 
 #writePost {
@@ -213,7 +341,7 @@
 }
 
 .like {
-    color: #EF5350;
+    color: #039BE5;
 }
 
 .comment {
@@ -244,10 +372,6 @@
     margin-bottom:12px;
 }
 
-#about-me{
-    resize:none;
-}
-
 .pastebookPost {
     background-color: #fff;
     margin-top:10px;
@@ -255,19 +379,17 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
+.pastebookPost:hover {
+    background-color: #E0F7FA;
+}
+
 .post-header {
-    /*background-color:#37474F;*/
     color:#000;
     padding: 5px 5px;
 }
 
 #writePost-header {
     margin-bottom:12px;
-}
-
-#interactButtons {
-    margin-top:10px;
-    margin-bottom:10px;
 }
 
 .post-content {
@@ -278,12 +400,12 @@
     margin-bottom:1px;
 }
 .post-reaction-like {
-    background-color:#37474F;
+    background-color:#039BE5;
     color:#fff;
 }
 
 .post-reaction-like:disabled {
-    background-color:#f00;
+    background-color:#2196F3;
     color:#fff;
 }
 
@@ -297,7 +419,7 @@
 }
 
 .post-reaction-comment {
-    background-color:#37474F;
+    background-color:#039BE5;
     color:#fff;
 }
 
@@ -312,8 +434,18 @@
 }
 
 .post-reaction-buttons:hover {
-    background-color:#eee;
-    color:#37474F;
+    background-color:#fff;
+    color:#039BE5;
+}
+
+.post-reaction-unlike {
+    background-color:#f00;
+    color:#fff;
+}
+
+.post-reaction-unlike:hover {
+    background-color:#fff;
+    color:#f00;
 }
 
 .post-reaction-count {
@@ -325,21 +457,13 @@
     font-size:11px;
 }
 
-#user-profile {
-    background-color:#fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    padding: 10px 10px;
-}
-
 .date {
     color:#aaa;
     font-size:11px;
 }
 
-#intro {
-    margin-top: 30px;
-    margin-right: 70px;
-}
+/*post:end*/
+
 
 .link {
     color:#000;
@@ -349,66 +473,13 @@
     color:#aaa;
 }
 
-#textboxSearch {
-    border-radius: 5px;
-}
-
 #newsfeed, #profile {
-    margin-top:10px;
-}
-
-#profile-header {
-    background-color:#424242;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    padding: 10px 10px;
-}
-
-#friend-prof-pic {
-    width:100%;
-    margin: 10px 0px 10px 0px;
-}
-
-#sender-prof-pic {
-    height:35px; 
-    width:35px;
-    margin-left:5px;
-}
-
-#requester-prof-pic {
-    height:35px; 
-    width:35px;
-    margin-left:5px;
-}
-
-#profile-content {
-    margin-top:10px;
-}
-
-#textAreaPost {
-    resize:none;
-    margin-bottom: 10px;
+    margin-top:20px;
 }
 
 label.required-asterisk:before
 {
      content: "*";
-}
-
-#logout-link{
-    margin-right: 20px;
-    margin-top: 10px;
-}
-
-.icon{
-    font-size: 16px;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    color: #000;
-}
-
-.icon:hover{
-    color: #aaa;
 }
 
 #login-form {
@@ -420,15 +491,19 @@ label.required-asterisk:before
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-.navbar-inverse {
-    background-color: #fff;
-    border-color: #aaa;
-}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+#user-profile, #writePost, .pastebookPost, #profile-header, #profile-user-details {
+    border-radius:10px;
+}
+
+#textAreaPost, .textArea-comment {
+    border-radius:5px;
 }
 
 

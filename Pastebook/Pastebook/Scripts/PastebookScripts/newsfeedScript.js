@@ -116,6 +116,33 @@
 
     });
 
+    $(document).delegate(".post-reaction-unlike", "click", function () {
+        alert("alerto tayo");
+        var data = {
+            likeId: this.value,
+        }
+        $.ajax({
+            url: unlikeURL,
+            data: data,
+            type: 'POST',
+            success: function (data) {
+                $.ajax({
+                    url: getNewsfeedPostsURL,
+                    dataType: "html",
+                    success: function (result) {
+                        $("#newsfeedPost").html(result);
+                        $('.post-comments').hide();
+                    }
+                });
+            },
+
+            error: function () {
+                alert('Something went wrong.')
+            }
+        })
+
+    });
+
     $(document).delegate("#btnComment", "click", function () {
         var data = {
             postId: this.value,

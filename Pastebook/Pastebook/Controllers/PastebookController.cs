@@ -17,7 +17,7 @@ namespace Pastebook.Controllers
         DataAccessCountryManager daCountryManager = new DataAccessCountryManager();
         DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
 
-        _PostManager postManager = new _PostManager();
+        PostManager postManager = new PostManager();
 
         [HttpGet]
         public ActionResult Home()
@@ -162,6 +162,16 @@ namespace Pastebook.Controllers
             ResultsViewModel resultsViewModel = new ResultsViewModel();
             resultsViewModel.searchResults = searchResults;
             return View(resultsViewModel);
+        }
+
+        public ActionResult EditProfile()
+        {
+            EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
+
+            editProfileViewModel.User = daUserManager.RetrieveUserById((int)Session["UserId"]);
+            editProfileViewModel.ListOfCountryModel = daCountryManager.RetrieveAllCountry();
+
+            return View(editProfileViewModel);
         }
     }
 }

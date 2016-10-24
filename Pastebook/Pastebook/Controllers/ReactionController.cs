@@ -12,27 +12,43 @@ namespace Pastebook.Controllers
 {
     public class ReactionController : Controller
     {
-        DataAccessReactionManager daReactionManager = new DataAccessReactionManager();
-        DataAccessUserManager daUserManager = new DataAccessUserManager();
-        DataAccessCountryManager daCountryManager = new DataAccessCountryManager();
-        DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
-        DataAccessPostManager daPostManager  = new DataAccessPostManager();
-        DataAccessNotificationManager daNotifactionManager = new DataAccessNotificationManager();
+        //DataAccessReactionManager daReactionManager = new DataAccessReactionManager();
+        GenericDataAccess<PASTEBOOK_LIKE> pastebookLikeManager = new GenericDataAccess<PASTEBOOK_LIKE>();
+        GenericDataAccess<PASTEBOOK_COMMENT> pastebookCommentManager = new GenericDataAccess<PASTEBOOK_COMMENT>();
+
+        //DataAccessUserManager daUserManager = new DataAccessUserManager();
+        GenericDataAccess<PASTEBOOK_USER> pastebookUserManager = new GenericDataAccess<PASTEBOOK_USER>();
+
+        //DataAccessCountryManager daCountryManager = new DataAccessCountryManager();
+        GenericDataAccess<REF_COUNTRY> pastebookCountryManager = new GenericDataAccess<REF_COUNTRY>();
+
+        //DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
+        GenericDataAccess<PASTEBOOK_FRIEND> pastebookFriendManager = new GenericDataAccess<PASTEBOOK_FRIEND>();
+
+        //DataAccessPostManager daPostManager  = new DataAccessPostManager();
+        GenericDataAccess<PASTEBOOK_POST> pastebookPostManager = new GenericDataAccess<PASTEBOOK_POST>();
+
+        //DataAccessNotificationManager daNotifactionManager = new DataAccessNotificationManager();
+        GenericDataAccess<PASTEBOOK_NOTIFICATION> pastebookNotificationManager = new GenericDataAccess<PASTEBOOK_NOTIFICATION>();
 
         public JsonResult AddLike(int postId)
         {
             PASTEBOOK_LIKE like = new PASTEBOOK_LIKE();
             like.POST_ID = postId;
             like.LIKED_BY = (int)Session["UserId"];
-            int result = 0;
-            result = daReactionManager.AddLike(like);
+
+            bool result = false;
+            result = pastebookLikeManager.CreateRecord(like);
 
             PASTEBOOK_NOTIFICATION posterLikeNotification = new PASTEBOOK_NOTIFICATION();
             posterLikeNotification.NOTIF_TYPE = "L";
             posterLikeNotification.SEEN = "N";
             posterLikeNotification.POST_ID = postId;
             posterLikeNotification.CREATED_DATE = DateTime.Now;
-            posterLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().POSTER_ID;
+
+            //posterLikeNotification.RECEIVER_ID = pastebookPostManager.Ret(postId).POSTER_ID;
+            posterLikeNotification.RECEIVER_ID = pastebookPostManager.RetrieveSpecificRecord(x=>x.POSTER_ID.Equals(postId)).POSTER_ID;
+
             posterLikeNotification.SENDER_ID = (int)Session["UserId"];
             posterLikeNotification.COMMENT_ID = null;
 
@@ -41,13 +57,31 @@ namespace Pastebook.Controllers
             profileOwnerLikeNotification.SEEN = "N";
             profileOwnerLikeNotification.POST_ID = postId;
             profileOwnerLikeNotification.CREATED_DATE = DateTime.Now;
-            profileOwnerLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().PROFILE_OWNER_ID;
+            //profileOwnerLikeNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).PROFILE_OWNER_ID;
+            profileOwnerLikeNotification.RECEIVER_ID = pastebookPostManager.RetrieveSpecificRecord(x => x.ID.Equals(postId)).PROFILE_OWNER_ID;
+
             profileOwnerLikeNotification.SENDER_ID = (int)Session["UserId"];
             profileOwnerLikeNotification.COMMENT_ID = null;
 
-            daNotifactionManager.AddNotification(posterLikeNotification);
-            daNotifactionManager.AddNotification(profileOwnerLikeNotification);
 
+
+            ////daNotifactionManager.AddNotification(posterLikeNotification);
+            //pastebookNotificationManager.CreateRecord(posterLikeNotification);
+
+            ////daNotifactionManager.AddNotification(profileOwnerLikeNotification);
+            //pastebookNotificationManager.CreateRecord(profileOwnerLikeNotification);
+            pastebookNotificationManager.CreateRecord(posterLikeNotification, profileOwnerLikeNotification);
+            return Json(new { result = result });
+        }
+
+        public JsonResult Unlike(int likeId)
+        {
+            PASTEBOOK_LIKE like = new PASTEBOOK_LIKE();
+
+            like = pastebookLikeManager.RetrieveSpecificRecord(x=>x.ID == likeId);
+            int result = 0;
+
+            result = daReactionManager.Unlike(like);
             return Json(new { result = result });
         }
 
@@ -66,7 +100,7 @@ namespace Pastebook.Controllers
             posterCommentNotification.SEEN = "N";
             posterCommentNotification.POST_ID = postId;
             posterCommentNotification.CREATED_DATE = DateTime.Now;
-            posterCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().POSTER_ID;
+            posterCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).POSTER_ID;
             posterCommentNotification.SENDER_ID = (int)Session["UserId"];
             posterCommentNotification.COMMENT_ID = result;
 
@@ -75,7 +109,7 @@ namespace Pastebook.Controllers
             profileOwnerCommentNotification.SEEN = "N";
             profileOwnerCommentNotification.POST_ID = postId;
             profileOwnerCommentNotification.CREATED_DATE = DateTime.Now;
-            profileOwnerCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).SingleOrDefault().PROFILE_OWNER_ID;
+            profileOwnerCommentNotification.RECEIVER_ID = daPostManager.RetrievePost(postId).PROFILE_OWNER_ID;
             profileOwnerCommentNotification.SENDER_ID = (int)Session["UserId"];
             profileOwnerCommentNotification.COMMENT_ID = result;
 

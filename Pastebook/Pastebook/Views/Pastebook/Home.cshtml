@@ -17,7 +17,7 @@
             }
 
             <div class="text-center">
-                <div class="user-fullname">
+                <div id="user-fullname">
                     @Html.ActionLink(Model.FIRST_NAME + " " + Model.LAST_NAME, "Index", "Pastebook", new { username = Session["Username"].ToString() }, null)
                 </div>
 
@@ -62,7 +62,8 @@
         var getNewsfeedPostsURL = '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.ID })'
         var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Reaction")';
         var acceptFriendURL = '@Url.Action("AcceptFriend", "Reaction")'
-        var searchURL = '@Url.Action("Search", "Pastebook")';
+        var unlikeURL = '@Url.Action("Unlike", "Reaction")';
+        var searchURL = '@Url.Action("Seach", "Pastebook")';
     </script>
 
     <script src="~/Scripts/PastebookScripts/newsfeedScript.js"> </script>

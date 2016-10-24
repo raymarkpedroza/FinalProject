@@ -7,7 +7,7 @@ using PastebookEF;
 
 namespace Pastebook.Managers
 {
-    public class _UserManager
+    public class UserManager
     {
         DataAccessUserManager daUserManager = new DataAccessUserManager();
         DataAccessPasswordManager daPasswordmanager = new DataAccessPasswordManager();

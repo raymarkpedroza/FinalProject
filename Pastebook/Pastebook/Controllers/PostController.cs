@@ -12,7 +12,7 @@ namespace Pastebook.Controllers
 {
     public class PostController : Controller
     {
-        _PostManager postManager = new _PostManager();
+        PostManager postManager = new PostManager();
         DataAccessPostManager daPostManager = new DataAccessPostManager();
         DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
         DataAccessNotificationManager daNotifactionManager = new DataAccessNotificationManager();
