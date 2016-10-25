@@ -5,17 +5,18 @@
         
         @using (Html.BeginForm("Search", "Pastebook", FormMethod.Post, new { @class = "form-inline" }))
         { 
-            <span><img src="~/Content/Images/logo-black.png" id="logo-icon"></span>
-            <span id="search-bar">
-                @if (Session["UserFullname"] != null)
+            <span class="col-md-1"><img src="~/Content/Images/logo-black.png" id="logo-icon"></span>
+                if (Session["UserFullname"] != null)
                 {
-                        @Html.TextBoxFor(m => m.Name, new { id = "textboxSearch", @class="input-sm  "})
-
-                        <button type="submit" id="btnSearch">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
+                    <span class="col-md-3" id="searchBar">
+                        <span class="input-group">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-sm", id = "textboxSearch", type = "text", placeholder = "search" })
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-sm" type="submit" id="btnSearch"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </span>
+                    </span>
                 }
-            </span>
 
             <div class="pull-right">
                 <div class="btn-group">

@@ -4,6 +4,14 @@
     background-color: #ECEFF1;
 }
 
+/*register*/
+#registerForm {
+    background-color:#fff;
+    margin-top:40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+/*register:end*/
+
 /*nav bar*/
 .navbar-inverse {
     background-color: #fff;
@@ -29,16 +37,15 @@
 }
 
 #textboxSearch {
-    margin-top:15px;
+    margin-top:10px;
     color:#424242;
 }
 
 #btnSearch {
-    color:#fff;
-    background-color:#039BE5;
-    border-radius:100%;
-    border:1px solid #Eee;
-}
+    margin-top:10.5px;
+    border-bottom-right-radius:10px;
+    border-top-right-radius:10px;
+}    
 
 #logo-home {
     width: 1.5%;
@@ -58,6 +65,7 @@
     height:auto;
     max-height: 200px;
     overflow: auto;
+    overflow-x: hidden;
 }
 
 
@@ -71,7 +79,6 @@
 }
 
 .friend-request-listitem {
-    padding:0px 5px;
     font-size:11px;
 }
 
@@ -87,18 +94,32 @@
 #sender-prof-pic {
     height:35px; 
     width:35px;
-    margin-left:5px;
+    margin-top:3px;
+    margin-right:10px;
+    border-radius:2px;
 }
 
 #requester-prof-pic {
     height:35px; 
     width:35px;
-    margin-left:5px;
+    margin-top:3px;
+    margin-right:10px;
+    border-radius:2px;
+}
+
+.friend-request-item {
+    margin-bottom:10px;
 }
 
 .notification-listitem {
     padding:0px 2px;
     font-size:11px;
+    margin-bottom:12px;
+    margin-left:10px;
+}
+
+.friend-request-button {
+    margin-bottom:10px;
 }
 
 /*nav bar:end*/
@@ -107,7 +128,8 @@
 /*profile*/
 
 #user-profile {
-    background-color:#fff;
+    background: linear-gradient(to bottom, black 0%,black 50%,#000000 50%,white 50%,white 100%); 
+    /*background-color:#009688;*/
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 10px 10px;
 }
@@ -127,15 +149,12 @@
     color:#aaa;
 }
 
-.editmode {
-    visibility:hidden;
-}
-
 .profile-options {
     background-color:#fff;
     font-size:16px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding:10px 10px;
+    border-radius:10px;
 }
 
 .profile-options:hover {
@@ -185,6 +204,7 @@
     margin-top:10px;
     margin-left:10px;
     display:block;
+    border-radius:2px;
 }
 
 #profile-link{
@@ -238,6 +258,10 @@
     margin-left:15px;
 }
 
+#searchBar {
+    margin-left:30px;
+}
+
 /*search:end*/
 
 
@@ -247,6 +271,7 @@
 #friend-prof-pic {
     width:100%;
     margin: 10px 0px 10px 0px;
+    border-radius:10px;
 }
 
 #friend-backToTimeline {
@@ -295,6 +320,7 @@
     background-color: #fff;
     padding:10px 10px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius:10px;
 }
 
 #backToTimeline {
@@ -464,6 +490,25 @@
 
 /*post:end*/
 
+/*edit profile*/
+#edit-profile {
+    margin-top:40px;
+    background-color:#fff;
+}
+
+#edit-basic-info {
+    background-color:#aaa;
+    margin:10px 10px;
+    padding:10px 10px;
+}
+
+#change-password {
+    background-color:#eee;
+    margin:10px 10px;
+    padding:10px 10px;
+}
+/*edit profile:end*/
+
 
 .link {
     color:#000;
@@ -498,7 +543,7 @@ label.required-asterisk:before
     padding-right: 15px;
 }
 
-#user-profile, #writePost, .pastebookPost, #profile-header, #profile-user-details {
+/*#user-profile,*/ #writePost, .pastebookPost, #profile-header, #profile-user-details , #registerForm{
     border-radius:10px;
 }
 

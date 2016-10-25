@@ -18,7 +18,7 @@
         <a data-value=@Model.User.ID>+ Describe who you are</a>
     }
 </span>
-
+@Html.HiddenFor(model => model.User.ID)
 <hr>
 <span class="editmode">
     @Html.TextAreaFor(model => model.User.ABOUT_ME, new { @id = "about-me", rows = "10", cols = "47", placeholder = "Describe who you are" })
@@ -30,7 +30,7 @@
 
 <div id="profile-user-gender">
     @Html.LabelFor(model => model.User.GENDER):
-    <span class="viewmode">
+    @*<span class="viewmode">*@
         @if (Model.User.GENDER == "M")
         {
             <span>Male</span>
@@ -45,9 +45,9 @@
         {
             <span>Unspecified</span>
         }
-    </span>
+    @*</span>*@
 
-    <span class="editmode">
+    @*<span class="editmode">
 
         @{
             List<SelectListItem> listOfGenders = new List<SelectListItem>();
@@ -62,17 +62,17 @@
         }
 
         @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "-- Select Gender --", new { @class = "form-control input-sm", id="selectGender" })
-    </span>
+    </span>*@
 </div>
 
 <div id="profile-user-country">
 
     @Html.LabelFor(model => model.User.COUNTRY_ID):
-    <span class="viewmode">
+    @*<span class="viewmode">*@
         @Html.DisplayFor(model => model.CountryName, Model.CountryName)
-    </span>
+    @*</span>*@
 
-    <span class="editmode">
+    @*<span class="editmode">
         @if (Model.ListOfCountryModel != null)
         {
             List<SelectListItem> listOfCountries = new List<SelectListItem>();
@@ -89,18 +89,18 @@
 
             @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "-- Select Country --", new { @class = "form-control input-sm",id="selectCountry" })
         }
-    </span>
+    </span>*@
 </div>
 
 <div id="profile-user-birthday">
     @Html.LabelFor(model => model.User.BIRTHDAY):
-    <span class="viewmode">
+    @*<span class="viewmode">*@
         @Model.User.BIRTHDAY.ToString("MMMM dd, yyyy")
-    </span>
+    @*</span>*@
 
-    <span class="editmode">
+    @*<span class="editmode">
         @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "form-control input-sm", id = "dtpBirthday" } })
-    </span>
+    </span>*@
 </div>
 
 <hr>
@@ -111,24 +111,24 @@
 
 <div id="profile-user-contactnumber">
     @Html.LabelFor(model => model.User.MOBILE_NO):
-    <span class="viewmode">
+    @*<span class="viewmode">*@
         @Html.DisplayFor(model => model.User.MOBILE_NO, Model.User.MOBILE_NO)
-    </span>
+    @*</span>
 
-    <span class="editmode">
+    @*<span class="editmode">
         @Html.EditorFor(model => model.User.MOBILE_NO, new { htmlAttributes = new { @class = "form-control input-sm" , id="txtMobileNumber"} })
-    </span>
+    </span>*@
 </div>
 
 <div id="profile-user-email">
     @Html.LabelFor(model => model.User.EMAIL_ADDRESS):
-    <span class="viewmode">
+    @*<span class="viewmode">*@
         @Html.DisplayFor(model => model.User.EMAIL_ADDRESS, Model.User.EMAIL_ADDRESS)
-    </span>
+    @*</span>*@
 
-    <span class="editmode">
+    @*<span class="editmode">
         @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control input-sm", id="txtEmailAddress" } })
-    </span>
+    </span>*@
 </div>
 
 <hr>

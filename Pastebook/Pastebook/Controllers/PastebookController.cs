@@ -1,6 +1,5 @@
 ﻿using Pastebook.Managers;
 using Pastebook.Models;
-using PastebookDataAccess.Managers;
 using PastebookEF;
 using System;
 using System.Collections.Generic;
@@ -8,15 +7,15 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PastebookBusinessLayer.BusinessLayer;
 
 namespace Pastebook.Controllers
 {
     public class PastebookController : Controller
     {
-        DataAccessUserManager daUserManager = new DataAccessUserManager();
-        DataAccessCountryManager daCountryManager = new DataAccessCountryManager();
-        DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
-
+        AccountManager accountManager = new AccountManager();
+        CountryManager countryManager = new CountryManager();
+        InteractionManager interactionManager = new InteractionManager();
         PostManager postManager = new PostManager();
 
         [HttpGet]
@@ -25,7 +24,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 PASTEBOOK_USER model = new PASTEBOOK_USER();
-                model = daUserManager.RetrieveUserByUsername(Session["Username"].ToString());
+                model = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
                 return View(model);
             }
             else
@@ -37,11 +36,12 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 ProfileViewModel profileViewModel = new ProfileViewModel();
-                profileViewModel.User = daUserManager.RetrieveUserByUsername(username);
+                profileViewModel.User = accountManager.RetrieveUserByUsername(username);
                 profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
-                profileViewModel.ListOfCountryModel = daCountryManager.RetrieveAllCountry();
-                profileViewModel.ListOfFriends = daFriendManager.RetrieveFriends(profileViewModel.User.ID);
+                List<int> listOfFriendId = new List<int>();
+                profileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
+                profileViewModel.ListOfFriends = interactionManager.RetrieveFriends(profileViewModel.User.ID, out listOfFriendId);
                 return View(profileViewModel);
             }
             else
@@ -52,8 +52,9 @@ namespace Pastebook.Controllers
         {
             List<PASTEBOOK_FRIEND> listOfFriend = new List<PASTEBOOK_FRIEND>();
             FriendListViewModel friendListViewModel = new FriendListViewModel();
+            List<int> listOfFriendId = new List<int>();
 
-            listOfFriend = daFriendManager.RetrieveFriends((int)Session["UserId"]);
+            listOfFriend = interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendId);
 
             foreach (var friend in listOfFriend)
             {
@@ -85,10 +86,11 @@ namespace Pastebook.Controllers
                     byte[] array = ms.GetBuffer();
 
                     PASTEBOOK_USER user = new PASTEBOOK_USER();
-                    user = daUserManager.RetrieveUserByUsername(Session["Username"].ToString());
+                    user = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
                     user.PROFILE_PIC = array;
 
-                    int result = daUserManager.UpdateProfile(user);
+                    bool result = false;
+                    result = accountManager.UpdateUser(user);
                 }
             }
 
@@ -98,14 +100,15 @@ namespace Pastebook.Controllers
         public ActionResult UpdateProfile(string gender, int country, DateTime birthday, string mobilenumber, string email, string aboutme)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = daUserManager.RetrieveUserByUsername(Session["Username"].ToString());
+            user = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
             user.GENDER = gender;
             user.COUNTRY_ID = country;
             user.BIRTHDAY = birthday;
             user.MOBILE_NO = mobilenumber;
             user.EMAIL_ADDRESS = email;
             user.ABOUT_ME = aboutme;
-            int result = daUserManager.UpdateProfile(user);
+            bool result = false; 
+            result = accountManager.UpdateUser(user);
 
             return RedirectToAction("GetProfileDetails", "Pastebook", new { username = Session["Username"].ToString() });
         }
@@ -113,11 +116,13 @@ namespace Pastebook.Controllers
         public PartialViewResult GetProfileDetails(string username)
         {
             ProfileViewModel profileViewModel = new ProfileViewModel();
-            profileViewModel.User = daUserManager.RetrieveUserByUsername(username);
+            List<int> listOfFriendId = new List<int>();
+
+            profileViewModel.User = accountManager.RetrieveUserByUsername(username);
             profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
-            profileViewModel.ListOfCountryModel = daCountryManager.RetrieveAllCountry();
-            profileViewModel.ListOfFriends = daFriendManager.RetrieveFriends(profileViewModel.User.ID);
+            profileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
+            profileViewModel.ListOfFriends = interactionManager.RetrieveFriends(profileViewModel.User.ID, out listOfFriendId);
 
             return PartialView("~/Views/Pastebook/_ProfileDetailsPartialView.cshtml", profileViewModel);
         }
@@ -126,8 +131,9 @@ namespace Pastebook.Controllers
         {
             List<PASTEBOOK_FRIEND> listOfFriend = new List<PASTEBOOK_FRIEND>();
             FriendListViewModel friendListViewModel = new FriendListViewModel();
+            List<int> listOfFriendId = new List<int>();
 
-            listOfFriend = daFriendManager.RetrieveFriends(id);
+            listOfFriend = interactionManager.RetrieveFriends(id, out listOfFriendId);
 
             foreach (var friend in listOfFriend)
             {
@@ -149,15 +155,15 @@ namespace Pastebook.Controllers
 
         public ActionResult Posts(int postId)
         {
-            UserPostModel PostWithPoster = new UserPostModel();
-            PostWithPoster = postManager.RetrievePost(postId);
-            return View(PostWithPoster);
+            PASTEBOOK_POST post = new PASTEBOOK_POST();
+            post = postManager.RetrievePost(postId);
+            return View(post);
         }
 
         public ActionResult Search(SearchModel search)
         {
             List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
-            searchResults = daUserManager.SearchUser(search.Name);
+            searchResults = accountManager.SearchUserByName(search.Name);
 
             ResultsViewModel resultsViewModel = new ResultsViewModel();
             resultsViewModel.searchResults = searchResults;
@@ -168,8 +174,8 @@ namespace Pastebook.Controllers
         {
             EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
 
-            editProfileViewModel.User = daUserManager.RetrieveUserById((int)Session["UserId"]);
-            editProfileViewModel.ListOfCountryModel = daCountryManager.RetrieveAllCountry();
+            editProfileViewModel.User = accountManager.RetrieveUserById((int)Session["UserId"]);
+            editProfileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
 
             return View(editProfileViewModel);
         }

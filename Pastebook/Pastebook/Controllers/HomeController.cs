@@ -1,24 +1,21 @@
 ﻿using Pastebook.Managers;
 using Pastebook.Models;
-using PastebookDataAccess.Managers;
 using PastebookEF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PastebookBusinessLayer.BusinessLayer;
 
 
 namespace Pastebook.Controllers
 {
     public class HomeController : Controller
     {
-        UserManager userManager = new UserManager();
-
-        DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
-        DataAccessUserManager daUserManager = new DataAccessUserManager();
-        DataAccessCountryManager daCountryManager = new DataAccessCountryManager();
-
+        AccountManager accountManager = new AccountManager();
+        CountryManager countryManager = new CountryManager();
+       
         public ActionResult Index()
         {
             if (Session["Username"] != null)
@@ -35,15 +32,16 @@ namespace Pastebook.Controllers
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
-            registerViewModel.ListOfCountryModel = daCountryManager.RetrieveAllCountry();
+            registerViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
             return View(registerViewModel);
         }
 
         [HttpPost]
-        public ActionResult Register(PASTEBOOK_USER user)
+        public ActionResult Register(RegisterViewModel registerVM, PASTEBOOK_USER user)
         {
+            user.PASSWORD = registerVM.Password;
             user.DATE_CREATED = DateTime.Now;
-            daUserManager.RegisterUser(user);
+            accountManager.RegisterUser(user);
             return RedirectToAction("Index");
         }
 
@@ -56,7 +54,7 @@ namespace Pastebook.Controllers
         [HttpPost]
         public ActionResult Login(PASTEBOOK_USER user)
         {
-            if (userManager.LoginUser(user.EMAIL_ADDRESS, user.PASSWORD, out user))
+            if (accountManager.LoginUser(user.EMAIL_ADDRESS, user.PASSWORD, out user))
             {
                 Session["UserId"] = user.ID;
                 Session["Username"] = user.USER_NAME;

@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            @if (Model.ListOfFriends.Where(x=>x.REQUEST == "Y").Any(x => x.FRIEND_ID == (int)Session["UserId"])  || Model.ListOfFriends.Where(x => x.REQUEST == "Y").Any(x => x.USER_ID == (int)Session["UserId"]))
+            @if ((Model.User.ID == (int)Session["UserId"]) || (Model.ListOfFriends.Where(x=>x.REQUEST == "Y").Any(x => x.FRIEND_ID == (int)Session["UserId"]))  || (Model.ListOfFriends.Where(x => x.REQUEST == "Y").Any(x => x.USER_ID == (int)Session["UserId"])))
             {
                 <div class="col-md-8">
                 <div id="profile-options-header">
@@ -57,7 +57,7 @@
                         @if ((int)Session["UserId"] == Model.User.ID)
                         {
                         <span class="glyphicon glyphicon-pencil"></span><span>Status</span>
-                        }
+                }
 
                         else
                         {

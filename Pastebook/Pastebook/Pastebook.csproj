@@ -85,8 +85,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PastebookDataAccess">
-      <HintPath>..\..\PastebookDataAccess\PastebookDataAccess\bin\Debug\PastebookDataAccess.dll</HintPath>
+    <Reference Include="PastebookBusinessLayer">
+      <HintPath>..\..\PastebookBusinessLayer\PastebookBusinessLayer\bin\Debug\PastebookBusinessLayer.dll</HintPath>
     </Reference>
     <Reference Include="PastebookEF">
       <HintPath>..\..\PastebookEF\PastebookEF\bin\Debug\PastebookEF.dll</HintPath>
@@ -172,17 +172,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Managers\PostManager.cs" />
-    <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\FriendListViewModel.cs" />
     <Compile Include="Models\FriendRequestViewModel.cs" />
     <Compile Include="Models\FriendUserModel.cs" />
-    <Compile Include="Models\NewsfeedViewModel.cs" />
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\ResultsViewModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\PostViewModel.cs" />
     <Compile Include="Models\UserCommentModel.cs" />
     <Compile Include="Models\UserLikeModel.cs" />
     <Compile Include="Models\UserPostModel.cs" />
@@ -250,6 +249,7 @@
     <Content Include="Views\Pastebook\_ProfileDetailsPartialView.cshtml" />
     <Content Include="Views\Pastebook\Search.cshtml" />
     <Content Include="Views\Pastebook\EditProfile.cshtml" />
+    <Content Include="Views\Pastebook\_LikePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

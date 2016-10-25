@@ -11,7 +11,9 @@ namespace PastebookEF
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class PASTEBOOK_USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,18 +30,57 @@ namespace PastebookEF
         }
     
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "Username is required.", AllowEmptyStrings = false)]
+        [DisplayName("Username")]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [StringLength(50, ErrorMessage = "Maximum characters for username is 50")]
+        [MinLength(2, ErrorMessage = "Username is required.")]
         public string USER_NAME { get; set; }
+
+        [DisplayName("Password")]
         public string PASSWORD { get; set; }
         public string SALT { get; set; }
+
+        [Required(ErrorMessage = "Firstname is required.", AllowEmptyStrings = false)]
+        [DisplayName("Firstname")]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [StringLength(50, ErrorMessage = "Maximum first name for password is 50")]
+        [MinLength(1, ErrorMessage = "Firstname is required.")]
         public string FIRST_NAME { get; set; }
+
+        [Required(ErrorMessage = "Lastname is required.", AllowEmptyStrings = false)]
+        [DisplayName("Lastname")]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [StringLength(50, ErrorMessage = "Maximum last name for password is 50")]
+        [MinLength(1, ErrorMessage = "Lastname is required.")]
         public string LAST_NAME { get; set; }
+
+        [Required(ErrorMessage = "Birthday is required.")]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [DataType(DataType.DateTime)]
+        [DisplayName("Birthday")]
         public System.DateTime BIRTHDAY { get; set; }
+
+        [DisplayName("Country")]
         public Nullable<int> COUNTRY_ID { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [DisplayName("Mobile Number")]
         public string MOBILE_NO { get; set; }
+
+        [DisplayName("Gender")]
         public string GENDER { get; set; }
         public byte[] PROFILE_PIC { get; set; }
         public System.DateTime DATE_CREATED { get; set; }
+
+        [DisplayName("About Me")]
         public string ABOUT_ME { get; set; }
+
+        [Required(ErrorMessage = "Email address is required.", AllowEmptyStrings = false)]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [DisplayName("Email Address")]
+        [DataType(DataType.EmailAddress)]
         public string EMAIL_ADDRESS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

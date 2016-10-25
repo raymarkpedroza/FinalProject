@@ -12,8 +12,8 @@ namespace PastebookDataAccess.Repositories
         List<T> RetrieveAllRecords(params Expression<Func<T, object>>[] navigationProperties);
         List<T> RetrieveList(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
         T RetrieveSpecificRecord(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties);
-        bool CreateRecord(T records);
-        bool UpdateRecord(T records);
-        bool DeleteRecord(T records);
+        bool CreateRecord(T record);
+        bool UpdateRecord(T record);
+        bool DeleteRecord(T record);
     }
 }

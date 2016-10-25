@@ -23,7 +23,10 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryvalunobs")
     @Scripts.Render("~/bundles/bootstrap")
+
     @RenderSection("reload", required: false);
     @RenderSection("scripts", required: false)
 </body>
@@ -32,6 +35,8 @@
 <script>
     var getNavBarUrl = '@Url.Action("GetPastebookNavBar", "Home")';
     var searchURL = '@Url.Action("Search", "Pastebook")';
+    var getLikesURL = '@Url.Action("GetLikes", "Reaction")';
+
 </script>
 
 <script src="~/Scripts/PastebookScripts/pastebookScript.js"> </script>

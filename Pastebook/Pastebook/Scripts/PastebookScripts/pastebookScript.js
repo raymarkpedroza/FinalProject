@@ -1,4 +1,11 @@
 ﻿$(document).ready(function () {
+    //$('.editmode').hide();
+    //$('.post-comments').hide();
+    //$('#friend-list').hide();
+    //$('#saveButton').hide();
+    //$('#cancelEditButton').hide();
+    //$('#camera-icon').hide();
+
     //function RefreshNavBar() {
     //    //this will wait 3 seconds and then fire the load partial function
     //    setTimeout(function () {
@@ -21,11 +28,12 @@
     //}
 
     $('#logo-icon').hover(function () {
-        $(this).attr('src', '../Content/Images/logo-gray.png');
+        $(this).attr('src', '../Content/Images/logo-black.png');
     });
 
     $('#logo-icon').mouseout(function () {
-        $(this).attr('src', '../Content/Images/logo-black.png');
+        $(this).attr('src', '../Content/Images/logo-gray.png');
     });
+
 
 });

@@ -53,20 +53,34 @@ namespace PastebookBusinessLayer.BusinessLayer
             return result;
         }
 
-        public List<PASTEBOOK_FRIEND> RetrieveFriends(int userId)
+        public List<PASTEBOOK_FRIEND> RetrieveFriends(int userId, out List<int> listOfFriendId)
         {
             List<PASTEBOOK_FRIEND> listOfFriends = new List<PASTEBOOK_FRIEND>();
+            listOfFriendId = new List<int>();
+            
+            listOfFriends = _friendRepo.RetrieveList(x=>x.FRIEND_ID == userId, receiver=> receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER);
+            listOfFriends.AddRange(_friendRepo.RetrieveList(x => x.USER_ID == userId, receiver => receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER));
 
-            listOfFriends = _friendRepo.RetrieveList(x=>x.FRIEND_ID == userId);
-            listOfFriends.AddRange(_friendRepo.RetrieveList(x => x.USER_ID == userId));
+            foreach (var friend in listOfFriends)
+            {
+                if (friend.USER_ID == userId && friend.REQUEST == "Y")
+                {
+                    listOfFriendId.Add(friend.FRIEND_ID);
+                }
+
+                else if(friend.FRIEND_ID == userId && friend.REQUEST == "Y")
+                {
+                    listOfFriendId.Add(friend.USER_ID);
+                }
+            }
 
             return listOfFriends;
         }
 
-        public PASTEBOOK_LIKE RetrieveLikedPost(int postId)
+        public PASTEBOOK_LIKE RetrieveLike(int likeId)
         {
             PASTEBOOK_LIKE like = new PASTEBOOK_LIKE();
-            like = _likeRepo.RetrieveSpecificRecord(x=>x.POST_ID == postId);
+            like = _likeRepo.RetrieveSpecificRecord(x=>x.ID == likeId);
 
             return like;
         }
@@ -85,6 +99,22 @@ namespace PastebookBusinessLayer.BusinessLayer
             result = _friendRepo.UpdateRecord(friendRequest);
 
             return result;
+        }
+
+        public PASTEBOOK_FRIEND RetrieveFriendRequest(int friendRequestId)
+        {
+            PASTEBOOK_FRIEND friendRequest = new PASTEBOOK_FRIEND();
+            friendRequest = _friendRepo.RetrieveSpecificRecord(x=>x.ID.Equals(friendRequestId));
+
+            return friendRequest;
+        }
+
+        public List<PASTEBOOK_LIKE> RetrieveLikes(int postId)
+        {
+            List<PASTEBOOK_LIKE> listOfLikes = new List<PASTEBOOK_LIKE>();
+            listOfLikes = _likeRepo.RetrieveList(x=>x.POST_ID == postId, liker=>liker.PASTEBOOK_USER);
+
+            return listOfLikes;
         }
     }
 }

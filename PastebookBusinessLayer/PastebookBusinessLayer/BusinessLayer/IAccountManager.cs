@@ -21,9 +21,9 @@ namespace PastebookBusinessLayer.BusinessLayer
         bool RegisterUser(PASTEBOOK_USER user);
         bool UpdateUser(PASTEBOOK_USER user);
 
-        PASTEBOOK_USER GetUserByEmail(string email);
-        PASTEBOOK_USER GetUserByUsername(string username);
-        PASTEBOOK_USER GetUserById(int id);
+        PASTEBOOK_USER RetrieveUserByEmail(string email);
+        PASTEBOOK_USER RetrieveUserByUsername(string username);
+        PASTEBOOK_USER RetrieveUserById(int id);
         List<PASTEBOOK_USER> SearchUserByName(string name);
     }
 }

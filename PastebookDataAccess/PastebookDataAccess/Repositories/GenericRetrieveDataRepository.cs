@@ -11,7 +11,7 @@ namespace PastebookDataAccess.Repositories
 {
     public class GenericRetrieveDataRepository<T> : IGenericRetrieveDataRepository<T> where T : class
     {
-        public List<T> RetrieveAllRecords(params Expression<Func<T, object>>[] navigationProperties)
+        public List<T> RetrieveAllRecords(Expression<Func<T, object>>[] navigationProperties)
         {
             List<T> records = new List<T>();
             try
@@ -33,7 +33,7 @@ namespace PastebookDataAccess.Repositories
             return records;
         }
 
-        public List<T> RetrieveList(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
+        public List<T> RetrieveList(Func<T, bool> where, Expression<Func<T, object>>[] navigationProperties)
         {
             List<T> recordList = new List<T>();
 
@@ -58,7 +58,7 @@ namespace PastebookDataAccess.Repositories
             return recordList;
         }
 
-        public T RetrieveSpecificRecord(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
+        public T RetrieveSpecificRecord(Func<T, bool> where, Expression<Func<T, object>>[] navigationProperties)
         {
             T record = null;
 

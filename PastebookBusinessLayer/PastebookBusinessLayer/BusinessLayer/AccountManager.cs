@@ -66,26 +66,26 @@ namespace PastebookBusinessLayer.BusinessLayer
             return Encoding.ASCII.GetString(resultBytes);
         }
 
-        public PASTEBOOK_USER GetUserByEmail(string email)
+        public PASTEBOOK_USER RetrieveUserByEmail(string email)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email));
+            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email), c=>c.REF_COUNTRY);
 
             return user;
         }
 
-        public PASTEBOOK_USER GetUserById(int id)
+        public PASTEBOOK_USER RetrieveUserById(int id)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x => x.ID.Equals(id));
+            user = _userRepo.RetrieveSpecificRecord(x => x.ID.Equals(id), c => c.REF_COUNTRY);
 
             return user;
         }
 
-        public PASTEBOOK_USER GetUserByUsername(string username)
+        public PASTEBOOK_USER RetrieveUserByUsername(string username)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x => x.USER_NAME.Equals(username));
+            user = _userRepo.RetrieveSpecificRecord(x => x.USER_NAME.Equals(username), c => c.REF_COUNTRY);
 
             return user;
         }
@@ -115,6 +115,9 @@ namespace PastebookBusinessLayer.BusinessLayer
         public bool RegisterUser(PASTEBOOK_USER user)
         {
             bool result = false;
+            string salt = string.Empty;
+            user.PASSWORD = GeneratePasswordHash(user.PASSWORD, out salt);
+            user.SALT = salt;
             result = _userRepo.CreateRecord(user);
 
             return result;

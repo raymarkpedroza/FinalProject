@@ -11,8 +11,12 @@ namespace PastebookBusinessLayer.BusinessLayer
     {
         bool CreateNotification(PASTEBOOK_NOTIFICATION notification);
         bool UpdateNotification(PASTEBOOK_NOTIFICATION notification);
+        bool DeleteNotification(PASTEBOOK_NOTIFICATION notification);
 
-        List<PASTEBOOK_NOTIFICATION> RetrieveNotificationById(int userId);
+        PASTEBOOK_NOTIFICATION RetrieveNotificationByNotificationId(int notificationId);
+        PASTEBOOK_NOTIFICATION RetrieveCommentNotificationByCommentIdAndUserId(int commentId, int userId);
+        PASTEBOOK_NOTIFICATION RetrieveLikeNotificationByPostIdAndUserId(int postId, int userId);
+        List<PASTEBOOK_NOTIFICATION> RetrieveNotificationByUserId(int userId);
 
     }
 }

@@ -1,12 +1,13 @@
 ﻿@model Pastebook.Models.RegisterViewModel
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { @id = "register-form" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Register Account.</h4>
+    <div id="registerForm" class="container">
+        <h4>Account Registration</h4>
         <hr />
         <h4>Fill up the required fields(*).</h4>
 
@@ -28,10 +29,13 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.PASSWORD, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.PASSWORD, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.User.PASSWORD, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    @*@Html.HiddenFor(model => model.User.Password)*@
+
+
                 </div>
             </div>
 
@@ -124,16 +128,24 @@
             </div>
         </div>
     </div>
+</div>
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
             $(function () {
-                $("#dtpBirthday").datepicker({ dateFormat: 'mm/dd/yy', minDate: new Date('01/01/1600'), maxDate: '0' });
+                $("#dtpBirthday").datepicker({
+                    dateFormat: 'mm/dd/yy',
+                    minDate: new Date('01/01/1600'),
+                    maxDate: '0',
+                    autoclose: true,
+                    changeMonth: true,
+                    changeYear: true,
+            });
+
                 $("#dtpBirthday").datepicker().datepicker("setDate", new Date());
                 $("#dtpBirthday").keyup(function () {
                     if ($(this).val().length == 2) {

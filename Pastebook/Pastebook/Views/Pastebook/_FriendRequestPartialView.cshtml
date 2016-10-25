@@ -1,16 +1,16 @@
-﻿@model IEnumerable<Pastebook.Models.FriendRequestViewModel>
+﻿@model IEnumerable<PastebookEF.PASTEBOOK_FRIEND>
 
 
 <span class="glyphicon glyphicon-user icon" id="friendRequests" data-toggle="dropdown">
 </span>
-@if (Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() > 0)
+@if (Model.Where(x => x.USER_ID != (int)Session["UserId"]).Where(x => x.REQUEST != "Y").Count() > 0)
 {
-    <span class="badge badge-notify" id="friend-request-notification" data-toggle="dropdown"> @Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() </span>
+    <span class="badge badge-notify" id="friend-request-notification" data-toggle="dropdown"> @Model.Where(x => x.USER_ID != (int)Session["UserId"]).Where(x => x.REQUEST != "Y").Count() </span>
 }
 
 <div class="dropdown-menu" aria-labelledby="friendRequests">
 
-    @if (Model.Where(x => x.FriendRequest.USER_ID != (int)Session["UserId"]).Where(x => x.FriendRequest.REQUEST != "Y").Count() == 0)
+    @if (Model.Where(x => x.USER_ID != (int)Session["UserId"]).Where(x => x.REQUEST != "Y").Count() == 0)
     {
             <div class="friend-request-listitem">No friend request.</div>
     }
@@ -18,32 +18,36 @@
     {
         foreach (var friendRequest in Model)
         {
-            if (friendRequest.FriendRequest.USER_ID != (int)Session["UserId"] && friendRequest.FriendRequest.REQUEST != "Y")
+            if (friendRequest.USER_ID != (int)Session["UserId"] && friendRequest.REQUEST != "Y")
             {
-                if (friendRequest.Requester.PROFILE_PIC == null)
-                {
-                    <img src="~/Content/Images/pastebook-default.png" id="requester-prof-pic" alt=@friendRequest.Requester.FIRST_NAME @friendRequest.Requester.LAST_NAME>
-                }
+                <div class="row friend-request-item">
+                    <div class="col-md-4">
+                        @if (friendRequest.PASTEBOOK_USER1.PROFILE_PIC == null)
+                        {
+                            <img src="~/Content/Images/pastebook-default.png" id="requester-prof-pic" alt=@friendRequest.PASTEBOOK_USER1.FIRST_NAME @friendRequest.PASTEBOOK_USER1.LAST_NAME>
+                        }
 
-                else
-                {
-                    var base64 = Convert.ToBase64String(friendRequest.Requester.PROFILE_PIC);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        else
+                        {
+                            var base64 = Convert.ToBase64String(friendRequest.PASTEBOOK_USER1.PROFILE_PIC);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                    <img src=@imgSrc id="requester-prof-pic" class="img-circle" alt=@friendRequest.Requester.FIRST_NAME @friendRequest.Requester.LAST_NAME>
-                }
-            <div class="friend-request-listitem">@Html.ActionLink(friendRequest.Requester.FIRST_NAME + " " + friendRequest.Requester.LAST_NAME, "Index", "Pastebook", new { username = friendRequest.Requester.USER_NAME }, null)  has requested to add you.
-            <div>
-                <button type="button" class="btnAcceptRequest btn-primary" value=@friendRequest.FriendRequest.ID>Accept</button> 
-                <button type="button" class="btnIgnoreRequest  btn-warning" value=@friendRequest.FriendRequest.ID>Ignore</button>
+                            <img src=@imgSrc id="requester-prof-pic" alt=@friendRequest.PASTEBOOK_USER1.FIRST_NAME @friendRequest.PASTEBOOK_USER1.LAST_NAME>
+                        }
+                    </div>
+                    <div class="friend-request-listitem col-md-8">
+                        @Html.ActionLink(friendRequest.PASTEBOOK_USER1.FIRST_NAME + " " + friendRequest.PASTEBOOK_USER1.LAST_NAME, "Index", "Pastebook", new { username = friendRequest.PASTEBOOK_USER1.USER_NAME }, null)  has requested to add you.
+                    </div>
             </div>
-            </div>
+
+                    <div class="text-center friend-request-button">
+                        <button type="button" class="btnAcceptRequest btn-primary btn-sm" value=@friendRequest.ID>Accept</button>
+                        <button type="button" class="btnIgnoreRequest  btn-danger btn-sm" value=@friendRequest.ID>Ignore</button>
+                    </div>
             }
         }
     }
 </div>
-
-
 
 
 

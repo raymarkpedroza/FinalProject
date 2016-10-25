@@ -1,21 +1,21 @@
 ﻿using Pastebook.Managers;
 using Pastebook.Models;
-using PastebookDataAccess.Managers;
 using PastebookEF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PastebookBusinessLayer.BusinessLayer;
 
 namespace Pastebook.Controllers
 {
     public class PostController : Controller
     {
         PostManager postManager = new PostManager();
-        DataAccessPostManager daPostManager = new DataAccessPostManager();
-        DataAccessFriendManager daFriendManager = new DataAccessFriendManager();
-        DataAccessNotificationManager daNotifactionManager = new DataAccessNotificationManager();
+        InteractionManager interactionManager = new InteractionManager();
+        NotificationManager notifactionManager = new NotificationManager();
+
         public JsonResult CreatePost(string content, int profileOwner)
         {
             PASTEBOOK_POST post = new PASTEBOOK_POST();
@@ -24,36 +24,27 @@ namespace Pastebook.Controllers
             post.PROFILE_OWNER_ID = profileOwner;
             post.CREATED_DATE = DateTime.Now;
 
-            int result = 0;
-            result = daPostManager.CreatePost(post);
-
-            PASTEBOOK_NOTIFICATION postedOnTimelineNotification = new PASTEBOOK_NOTIFICATION();
-            postedOnTimelineNotification.NOTIF_TYPE = "P";
-            postedOnTimelineNotification.SEEN = "N";
-            postedOnTimelineNotification.POST_ID = result;
-            postedOnTimelineNotification.CREATED_DATE = DateTime.Now;
-            postedOnTimelineNotification.RECEIVER_ID = profileOwner;
-            postedOnTimelineNotification.SENDER_ID = (int)Session["UserId"];
-            postedOnTimelineNotification.COMMENT_ID = null;
-            daNotifactionManager.AddNotification(postedOnTimelineNotification);
+            bool result = false;
+            result = postManager.CreatePost(post);
 
             return Json(new { result = result });
         }
 
         public PartialViewResult GetTimelinePosts(int id)
         {
-            NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
-            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveTimelinePosts(id);
-
-            return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", newsfeedViewModel);
+            PostViewModel postView = new PostViewModel();
+            postView.ListOfPost = postManager.RetrieveTimelinePost(id);
+            return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", postView);
         }
 
         public PartialViewResult GetNewsfeedPosts(int id)
         {
-            NewsfeedViewModel newsfeedViewModel = new NewsfeedViewModel();
-            newsfeedViewModel.listOfPostsWithPoster = postManager.RetrieveNewsfeedPosts(id);
+            PostViewModel postView = new PostViewModel();
+            List<int> listOfFriendIds = new List<int>();
 
-            return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", newsfeedViewModel);
+            interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendIds);
+            postView.ListOfPost = postManager.RetrieveNewsfeedPost(id, listOfFriendIds);
+            return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", postView);
         }
 
        
