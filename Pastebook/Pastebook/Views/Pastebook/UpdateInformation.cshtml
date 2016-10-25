@@ -1,24 +1,16 @@
-﻿@model Pastebook.Models.RegisterViewModel
+﻿@model Pastebook.Models.EditProfileViewModel
 
 
-@using (Html.BeginForm(new { @id = "register-form" }))
+@using (Html.BeginForm("UpdateInformation", "Profile", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+<div class="form-horizontal container" id="edit-profile">
+    <h4>Update Information</h4>
+    <hr />
+    <h4>Fill up the required fields(*).</h4>
 
-    <div class="form-horizontal">
-    <div id="registerForm" class="container">
-        <h4>Account Registration</h4>
-        <hr />
-        <h4>Fill up the required fields(*).</h4>
-
-        <div class="col-md-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.User.EMAIL_ADDRESS, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.User.EMAIL_ADDRESS, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    <div id="edit-basic-info" class="container">
+        <div class="col-md-offset-3 col-md-6">
+            <h4>User Information</h4>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.User.USER_NAME, htmlAttributes: new { @class = "control-label col-md-4 required-asterisk" })
@@ -28,40 +20,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            @{
-                List<SelectListItem> listOfGenders = new List<SelectListItem>();
-
-                listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
-                listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
-            }
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.User.GENDER, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "-- Select Gender --", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.User.FIRST_NAME, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
                 <div class="col-md-8">
@@ -99,6 +57,8 @@
                     });
                 }
 
+                listOfCountries.Where(x => x.Value == Model.User.COUNTRY_ID.ToString()).SingleOrDefault().Selected = true;
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.User.COUNTRY_ID, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
@@ -106,8 +66,24 @@
                         @Html.ValidationMessageFor(model => model.User.COUNTRY_ID, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
             }
+
+            @{
+                List<SelectListItem> listOfGenders = new List<SelectListItem>();
+
+                listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
+                listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
+
+                listOfGenders.Where(x => x.Value == Model.User.GENDER.ToString()).SingleOrDefault().Selected = true;
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User.GENDER, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "-- Select Gender --", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.User.MOBILE_NO, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -119,8 +95,8 @@
 
             <div class="form-group">
                 <div class="pull-right ">
-                    <input type="submit" value="Create Account" class="btn btn-default" />
-                    <input type="button" value="Cancel" class="btn btn-default" id="btnCancel"/>
+                    <input type="submit" value="Update Account" class="btn btn-default" />
+                    <input type="button" value="Cancel" class="btn btn-default" id="btnCancel" />
                 </div>
             </div>
         </div>
@@ -129,20 +105,13 @@
 }
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
             $(function () {
-                $("#dtpBirthday").datepicker({
-                    dateFormat: 'mm/dd/yy',
-                    minDate: new Date('01/01/1600'),
-                    maxDate: '0',
-                    autoclose: true,
-                    changeMonth: true,
-                    changeYear: true,
-            });
-
+                $("#dtpBirthday").datepicker({ dateFormat: 'mm/dd/yy', minDate: new Date('01/01/1600'), maxDate: '0' });
                 $("#dtpBirthday").datepicker().datepicker("setDate", new Date());
                 $("#dtpBirthday").keyup(function () {
                     if ($(this).val().length == 2) {

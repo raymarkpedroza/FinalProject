@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ReactionController.cs" />
     <Compile Include="Controllers\PastebookController.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,8 +249,10 @@
     <Content Include="Views\Pastebook\Posts.cshtml" />
     <Content Include="Views\Pastebook\_ProfileDetailsPartialView.cshtml" />
     <Content Include="Views\Pastebook\Search.cshtml" />
-    <Content Include="Views\Pastebook\EditProfile.cshtml" />
+    <Content Include="Views\Pastebook\UpdateInformation.cshtml" />
     <Content Include="Views\Pastebook\_LikePartialView.cshtml" />
+    <Content Include="Views\Pastebook\UpdateEmail.cshtml" />
+    <Content Include="Views\Pastebook\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
