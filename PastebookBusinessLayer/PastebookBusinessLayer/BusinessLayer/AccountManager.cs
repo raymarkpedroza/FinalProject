@@ -69,7 +69,7 @@ namespace PastebookBusinessLayer.BusinessLayer
         public PASTEBOOK_USER RetrieveUserByEmail(string email)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email), c=>c.REF_COUNTRY);
+            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email));
 
             return user;
         }
@@ -126,8 +126,8 @@ namespace PastebookBusinessLayer.BusinessLayer
         public List<PASTEBOOK_USER> SearchUserByName(string name)
         {
             List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
-            searchResults = _userRepo.RetrieveList(x=>x.FIRST_NAME.Equals(name));
-            searchResults.AddRange(_userRepo.RetrieveList(x=>x.LAST_NAME.Equals(name)));
+            searchResults = _userRepo.RetrieveList(x=>x.FIRST_NAME.ToLower().Equals(name.ToLower()));
+            searchResults.AddRange(_userRepo.RetrieveList(x=>x.LAST_NAME.ToLower().Equals(name.ToLower())));
 
             return searchResults;
         }
@@ -138,6 +138,16 @@ namespace PastebookBusinessLayer.BusinessLayer
             result = _userRepo.UpdateRecord(user);
 
             return result;
+        }
+
+        public bool CheckUserIfExist_Email(string email)
+        {
+            return _userRepo.RetrieveList(x=>x.EMAIL_ADDRESS.ToLower() == email.ToLower()).Count() > 0;
+        }
+
+        public bool CheckUserIfExist_Username(string username)
+        {
+            return _userRepo.RetrieveList(x => x.USER_NAME.ToLower() == username.ToLower()).Count() > 0;
         }
     }
 }

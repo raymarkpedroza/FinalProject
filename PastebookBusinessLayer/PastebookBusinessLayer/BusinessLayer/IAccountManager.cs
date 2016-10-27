@@ -25,5 +25,7 @@ namespace PastebookBusinessLayer.BusinessLayer
         PASTEBOOK_USER RetrieveUserByUsername(string username);
         PASTEBOOK_USER RetrieveUserById(int id);
         List<PASTEBOOK_USER> SearchUserByName(string name);
+        bool CheckUserIfExist_Email(string email);
+        bool CheckUserIfExist_Username(string username);
     }
 }

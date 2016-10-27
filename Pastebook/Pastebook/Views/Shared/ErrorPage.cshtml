@@ -1,0 +1,20 @@
+﻿@Styles.Render("~/Content/error.css")
+@{
+    ViewBag.Title = "OOOPS. ERROR";
+}
+
+<div class="container">
+    <div class="row jumbotron">
+        <div class="col-md-6">
+            <p id="mainError">Oops! </p>
+            <p id="secondaryError">
+                An unexpected error occured<br />
+            </p>
+            <p>@Html.ActionLink("return to pastebook.com", "Login", "Pastebook")</p>
+        </div>
+        <div class="col-md-6">
+            <p id="warning"> <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span></p>
+        </div>
+    </div>
+
+</div>

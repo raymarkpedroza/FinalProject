@@ -31,13 +31,14 @@ namespace PastebookBusinessLayer.BusinessLayer
 
             listOfUsersPost = _postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER));
 
-            //foreach (var post in _postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)))
-            //{
-            //    if (listOfUsersPost.Any(x => x.ID != post.ID))
-            //    {
-            //        listOfUsersPost.Add(post);
-            //    }
-            //}
+
+            foreach (var comparePost in _postRepo.RetrieveList(x => x.POSTER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)))
+            {
+                if (!(listOfUsersPost.Any(x => x.ID.Equals(comparePost.ID))))
+                {
+                    listOfUsersPost.Add(comparePost);
+                }
+            }
 
             foreach (var friendId in listOfFriendIds)
             {
@@ -58,9 +59,15 @@ namespace PastebookBusinessLayer.BusinessLayer
         public List<PASTEBOOK_POST> RetrieveTimelinePost(int id)
         {
             List<PASTEBOOK_POST> listOfUsersPost = new List<PASTEBOOK_POST>();
-
             listOfUsersPost = _postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER));
-            //listOfUsersPost.AddRange(_postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)));
+
+            foreach (var comparePost in _postRepo.RetrieveList(x => x.POSTER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)))
+            {
+                if (!(listOfUsersPost.Any(x => x.ID.Equals(comparePost.ID))))
+                {
+                    listOfUsersPost.Add(comparePost);
+                }
+            }
 
             return listOfUsersPost.OrderByDescending(x => x.CREATED_DATE).ToList();
         }

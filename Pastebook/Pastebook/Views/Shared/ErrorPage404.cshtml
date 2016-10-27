@@ -1,0 +1,21 @@
+﻿@Styles.Render("~/Content/error404.css")
+
+@{
+    ViewBag.Title = "ERROR 404";
+}
+
+<div class="container">
+    <div class="row jumbotron">
+        <div class="col-md-6">
+            <p id="mainError">Oops! </p>
+            <p id="secondaryError">
+                Page not found<br />
+            </p>
+            <p>@Html.ActionLink("return to pastebook.com", "Login" ,"Pastebook")</p>
+        </div>  
+        <div class="col-md-6">
+            <p id="search"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span></p>
+        </div>
+    </div>
+</div>
+

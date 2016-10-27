@@ -164,15 +164,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
-    <Compile Include="Controllers\ReactionController.cs" />
+    <Compile Include="Controllers\InteractionController.cs" />
     <Compile Include="Controllers\PastebookController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Managers\PostManager.cs" />
     <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\FriendListViewModel.cs" />
     <Compile Include="Models\FriendRequestViewModel.cs" />
@@ -191,9 +190,12 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\error.css" />
+    <Content Include="Content\error404.css" />
     <Content Include="Content\Images\logo-black.png" />
     <Content Include="Content\Images\logo-gray.png" />
     <Content Include="Content\Images\pastebook-default.png" />
+    <Content Include="Content\navbar-no-display.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -216,6 +218,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\PastebookScripts\newsfeedScript.js" />
     <Content Include="Scripts\PastebookScripts\pastebookScript.js" />
+    <Content Include="Scripts\PastebookScripts\postScript.js" />
     <Content Include="Scripts\PastebookScripts\profileScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -233,13 +236,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Pastebook\Home.cshtml" />
     <Content Include="Views\Pastebook\_PostPartialView.cshtml" />
-    <Content Include="Views\Pastebook\Index.cshtml" />
+    <Content Include="Views\Pastebook\Profile.cshtml" />
     <Content Include="Views\Pastebook\_InteractButtonsPartialView.cshtml" />
     <Content Include="Views\Pastebook\_PastebookNavbarPartialView.cshtml" />
     <Content Include="Views\Pastebook\_NotificationPartialView.cshtml" />
@@ -250,9 +251,11 @@
     <Content Include="Views\Pastebook\_ProfileDetailsPartialView.cshtml" />
     <Content Include="Views\Pastebook\Search.cshtml" />
     <Content Include="Views\Pastebook\UpdateInformation.cshtml" />
-    <Content Include="Views\Pastebook\_LikePartialView.cshtml" />
     <Content Include="Views\Pastebook\UpdateEmail.cshtml" />
     <Content Include="Views\Pastebook\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\ErrorPage.cshtml" />
+    <Content Include="Views\Shared\ErrorPage404.cshtml" />
+    <Content Include="Views\Pastebook\_NotificationItemPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

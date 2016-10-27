@@ -1,50 +1,44 @@
 ﻿@model PastebookEF.PASTEBOOK_USER
 
 @{
-    ViewBag.Title = "Pastebook";
+    ViewBag.Title = "Log in to Pastebook";
 }
+
+@Styles.Render("~/Content/error.css")
 
 <div class="container">
     <div class="row">
-    <div class="col-md-6 jumbotron" id="intro">
-        <h1>Pastebook</h1>
-        <p class="lead">Pastebook connects many people nationwide.</p>
-    </div>
-    <div class="col-md-5" id="login-form">
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    <div class="col-md-4 col-md-offset-4" id="login-form">
+    @using (Html.BeginForm("Login", "Pastebook", FormMethod.Post))
     {
-        <div class="form-group">
-            @Html.LabelFor(model => model.EMAIL_ADDRESS, htmlAttributes: new { @class = "control-label col-md-5" })
-            <div class="col-md-7 form-group">
-                @Html.EditorFor(model => model.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EMAIL_ADDRESS, "", new { @class = "text-danger" })
-            </div>
+        <div id="login-header" class="text-left">
+            <h1 id="loginText">LOGIN</h1>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PASSWORD, htmlAttributes: new { @class = "control-label col-md-5" })
-            <div class="col-md-7 form-group">
-                @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "text-line", placeholder="email"} })
+            @Html.ValidationMessageFor(model => model.EMAIL_ADDRESS, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(model => model.PASSWORD, new { htmlAttributes = new { @class = "text-line", placeholder = "password" } })
+            @Html.ValidationMessageFor(model => model.PASSWORD, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="LOGIN" class="btn btn-default" id="btnSignIn"/>
             </div>
         </div>
 
+        <hr />
         <div class="form-group">
             <div class="text-right">
-                <input type="submit" value="SIGN IN" class="btn btn-default" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="text-right">
-                @Html.ActionLink("Don't have an account? Sign up here", "Register", "Home", null , new { @class = "link"  })
+                @Html.ActionLink("REGISTER", "Register", "Pastebook", null , new { @class = "link"  })
             </div>
         </div>
        
     }
     </div>
     </div>
-
-
-
 </div>

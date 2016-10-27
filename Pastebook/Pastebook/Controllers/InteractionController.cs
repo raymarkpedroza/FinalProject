@@ -1,5 +1,4 @@
-﻿using Pastebook.Managers;
-using Pastebook.Models;
+﻿using Pastebook.Models;
 using PastebookEF;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using PastebookBusinessLayer.BusinessLayer;
 
 namespace Pastebook.Controllers
 {
-    public class ReactionController : Controller
+    public class InteractionController : Controller
     {
         InteractionManager interactionManager = new InteractionManager();
         PostManager postManager = new PostManager();
@@ -105,6 +104,35 @@ namespace Pastebook.Controllers
             return PartialView("~/Views/Pastebook/_NotificationPartialView.cshtml", listOfNotification.OrderByDescending(x=>x.CREATED_DATE).ToList());
         }
 
+        public PartialViewResult GetNotificationItems()
+        {
+            List<NotificationViewModel> listOfNotificationWithSender = new List<NotificationViewModel>();
+            List<PASTEBOOK_NOTIFICATION> listOfNotification = new List<PASTEBOOK_NOTIFICATION>();
+
+            listOfNotification = notificationManager.RetrieveNotificationByUserId((int)Session["UserId"]);
+
+            return PartialView("~/Views/Pastebook/_NotificationItemPartialView.cshtml", listOfNotification.OrderByDescending(x => x.CREATED_DATE).ToList());
+
+        }
+
+        public JsonResult SawNotification()
+        {
+            List<NotificationViewModel> listOfNotificationWithSender = new List<NotificationViewModel>();
+            List<PASTEBOOK_NOTIFICATION> listOfNotification = new List<PASTEBOOK_NOTIFICATION>();
+
+            listOfNotification = notificationManager.RetrieveNotificationByUserId((int)Session["UserId"]);
+
+            bool result = false;
+
+            foreach (var notification in listOfNotification)
+            {
+                notification.SEEN = "Y";
+                result = notificationManager.UpdateNotification(notification);
+            }
+
+            return Json(new { result = result });
+        }
+
         public ActionResult GetInteractButtons(int id)
         {
             List<int> listOfFriendId = new List<int>();
@@ -128,6 +156,28 @@ namespace Pastebook.Controllers
             result = interactionManager.AddFriendRequest(friend);
 
             return Json(new { result = result });
+        }
+
+        public JsonResult RejectFriendRequest(int friendId)
+        {
+            PASTEBOOK_FRIEND friendRequest = new PASTEBOOK_FRIEND();
+            friendRequest = interactionManager.RetrieveFriendRequest(friendId);
+
+            bool result = false;
+            result = interactionManager.RejectFriendRequest(friendRequest);
+
+            return Json(new { result = result });
+        }
+
+        public JsonResult GetNotificationsCount()
+        {
+            int notifCount = 0;
+
+            if (Session != null && Session["UserId"] != null)
+            {
+                notifCount = notificationManager.RetrieveNotificationByUserId((int)Session["UserId"]).Where(x => x.SEEN == "N").Where(y=>y.SENDER_ID != (int)Session["UserId"]).Count();
+            }
+            return Json(new { result = notifCount }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult AcceptFriend(int friendRequestId)

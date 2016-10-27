@@ -24,7 +24,7 @@
                     <div class="col-md-4">
                         @if (friendRequest.PASTEBOOK_USER1.PROFILE_PIC == null)
                         {
-                            <img src="~/Content/Images/pastebook-default.png" id="requester-prof-pic" alt=@friendRequest.PASTEBOOK_USER1.FIRST_NAME @friendRequest.PASTEBOOK_USER1.LAST_NAME>
+                            <img src="@Url.Content("~/Content/Images/pastebook-default.png")" id="requester-prof-pic" alt=@friendRequest.PASTEBOOK_USER1.FIRST_NAME @friendRequest.PASTEBOOK_USER1.LAST_NAME>
                         }
 
                         else
@@ -36,13 +36,13 @@
                         }
                     </div>
                     <div class="friend-request-listitem col-md-8">
-                        @Html.ActionLink(friendRequest.PASTEBOOK_USER1.FIRST_NAME + " " + friendRequest.PASTEBOOK_USER1.LAST_NAME, "Index", "Pastebook", new { username = friendRequest.PASTEBOOK_USER1.USER_NAME }, null)  has requested to add you.
+                        @Html.ActionLink(friendRequest.PASTEBOOK_USER1.FIRST_NAME + " " + friendRequest.PASTEBOOK_USER1.LAST_NAME, "UserProfile", "Pastebook", new { username = friendRequest.PASTEBOOK_USER1.USER_NAME }, null)  has requested to add you.
                     </div>
             </div>
 
                     <div class="text-center friend-request-button">
-                        <button type="button" class="btnAcceptRequest btn-primary btn-sm" value=@friendRequest.ID>Accept</button>
-                        <button type="button" class="btnIgnoreRequest  btn-danger btn-sm" value=@friendRequest.ID>Ignore</button>
+                        <button type="button" class="btnAcceptRequest btn-default btn-sm" value=@friendRequest.ID>Accept</button>
+                        <button type="button" class="btnIgnoreRequest  btn-danger btn-sm" value=@friendRequest.ID>Reject</button>
                     </div>
             }
         }

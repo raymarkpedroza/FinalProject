@@ -1,5 +1,4 @@
-﻿using Pastebook.Managers;
-using Pastebook.Models;
+﻿using Pastebook.Models;
 using PastebookEF;
 using System;
 using System.Collections.Generic;
@@ -42,11 +41,17 @@ namespace Pastebook.Controllers
             PostViewModel postView = new PostViewModel();
             List<int> listOfFriendIds = new List<int>();
 
-            interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendIds);
-            postView.ListOfPost = postManager.RetrieveNewsfeedPost(id, listOfFriendIds);
+            if (Session != null && Session["UserId"] != null)
+            {
+                interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendIds);
+                postView.ListOfPost = postManager.RetrieveNewsfeedPost(id, listOfFriendIds);
+            }
+
             return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", postView);
+
         }
 
-       
+
+
     }
 }

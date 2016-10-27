@@ -1,39 +1,41 @@
 ﻿@model Pastebook.Models.EditProfileViewModel
 
+@{
+    ViewBag.Title = "Update Email";
+}
+
 @using (Html.BeginForm("UpdateEmail", "Profile", FormMethod.Post))
 {
-<div class="form-horizontal container" id="edit-profile">
-    <h4>Update Information</h4>
+<div class="form-horizontal container"> 
+    <div class="col-md-offset-2 col-md-8" id="edit-profile">
+        <h4>Update Email</h4>
     <hr />
     <h4>Fill up the required fields(*).</h4>
 
         <div id="edit-email" class="container">
-            <div class="col-md-offset-3 col-md-6">
-                <h4>Edit Email</h4>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.User.EMAIL_ADDRESS, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
+                    <span class="col-md-4"><span class="glyphicon glyphicon-envelope"></span> Email*</span>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "text-line", placeholder = "email" } })
                         @Html.ValidationMessageFor(model => model.User.EMAIL_ADDRESS, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CurrentPassword, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
+                    <span class="col-md-4"><span class="glyphicon glyphicon-lock"></span> Current Password*</span>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.CurrentPassword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.CurrentPassword, new { htmlAttributes = new { @class = "text-line", placeholder = "current password" } })
                         @Html.ValidationMessageFor(model => model.CurrentPassword, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="pull-right ">
-                        <input type="submit" value="Change Email" class="btn btn-default" />
+                        <input type="submit" value="Update Email" class="btn btn-default" />
                         <input type="button" value="Cancel" class="btn btn-default" id="btnCancel" />
                     </div>
                 </div>
-            </div>
         </div>
+    </div>
 </div>
 }

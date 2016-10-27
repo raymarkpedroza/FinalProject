@@ -1,82 +1,164 @@
-﻿@model Pastebook.Models.UserPostModel
+﻿@model PastebookEF.PASTEBOOK_POST
+
+@{
+    ViewBag.Title = "Post";
+}
 
 <div class="col-md-12">
-    <div class="pastebookPost">
-        <div class="post-header">
-            @if (Model.Poster.ID == Model.ProfileOwner.ID)
+    <div class="pastebookPost container">
+        <div class="post-header row">
+            @if (Model.POSTER_ID == Model.PROFILE_OWNER_ID)
             {
-                <div>
+                <div class="col-md-12 post-text-header">
                     <label>
-                        @Html.ActionLink(Model.Poster.FIRST_NAME + " " + Model.Poster.LAST_NAME, "Index", "Pastebook", new { username = Model.Poster.USER_NAME }, null)
+                        @Html.ActionLink(Model.PASTEBOOK_USER.FIRST_NAME + " " + Model.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER.USER_NAME }, null)
                     </label>
+                    <div class="date">@Model.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.CREATED_DATE.ToShortTimeString()</div>
+
                 </div>
             }
 
             else
             {
-                <div>
+                <div class="col-md-12">
                     <label>
-                        @Html.ActionLink(Model.Poster.FIRST_NAME + " " + Model.Poster.LAST_NAME, "Index", "Pastebook", new { username = Model.Poster.USER_NAME }, null)
+                        @Html.ActionLink(Model.PASTEBOOK_USER.FIRST_NAME + " " + Model.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER.USER_NAME }, null)
                         <span class="glyphicon glyphicon-play"></span>
-                        @Html.ActionLink(Model.ProfileOwner.FIRST_NAME + " " + Model.ProfileOwner.LAST_NAME, "Index", "Pastebook", new { username = Model.ProfileOwner.USER_NAME }, null)
+                        @Html.ActionLink(Model.PASTEBOOK_USER1.FIRST_NAME + " " + Model.PASTEBOOK_USER1.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER1.USER_NAME }, null)
                     </label>
+                    <div class="date">@Model.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.CREATED_DATE.ToShortTimeString()</div>
                 </div>
             }
-            <p class="date">@Model.Post.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.Post.CREATED_DATE.ToShortTimeString()</p>
+
         </div>
-        <div class="post-content">
-            @Model.Post.CONTENT
+        <div class="row">
+            <div class="post-content col-md-12">
+                @Model.CONTENT
+            </div>
         </div>
 
         <div class="post-reaction-count clearfix">
-            @if (Model.ListOfLikesWithLiker.Count > 0)
+            @if (Model.PASTEBOOK_LIKE.Count() > 0)
             {
-                <span class="glyphicon glyphicon-heart like"></span>@Model.ListOfLikesWithLiker.Count
+                <span class="glyphicon glyphicon-thumbs-up like"></span>
+                if (Model.PASTEBOOK_LIKE.Count() > 3)
+                {
+                    <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
+                        @Model.PASTEBOOK_LIKE.Count()
+                    </span>
+                }
+
+                else
+                {
+                    foreach (var like in Model.PASTEBOOK_LIKE)
+                    {
+                        if (like == Model.PASTEBOOK_LIKE.Last())
+                        {
+                            <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
+                                @like.PASTEBOOK_USER.FIRST_NAME @like.PASTEBOOK_USER.LAST_NAME
+                            </span>
+                        }
+
+                        else
+                        {
+                            <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
+                                @like.PASTEBOOK_USER.FIRST_NAME @like.PASTEBOOK_USER.LAST_NAME,
+                            </span>
+                        }
+                        <div class="likeModal modal fade" role="dialog" id=@Model.ID>
+                            <div class="modal-dialog">
+
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Liked by</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @foreach (var likedBy in Model.PASTEBOOK_LIKE)
+                                        {
+                                            <div>
+                                                @Html.ActionLink(likedBy.PASTEBOOK_USER.FIRST_NAME + " " + likedBy.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = likedBy.PASTEBOOK_USER.USER_NAME }, null)
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    }
+                }
             }
 
-            @if (Model.ListOfCommentsWithCommenters.Count > 0)
+            @if (Model.PASTEBOOK_COMMENT.Count() > 0)
             {
-                <span class="pull-right"><a class="comment-count" data-value=@Model.Post.ID>@Model.ListOfCommentsWithCommenters.Count Comments</a></span>
+                if (Model.PASTEBOOK_COMMENT.Count() == 1)
+                {
+                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.PASTEBOOK_COMMENT.Count() Comment</a></span>
+                }
+
+                else
+                {
+                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.PASTEBOOK_COMMENT.Count() Comments</a></span>
+                }
             }
         </div>
 
         <hr>
         <div class="post-reaction">
-            @if (Model.ListOfLikesWithLiker.Any(x => x.Like.LIKED_BY == (int)Session["UserId"]))
+            @if (Model.PASTEBOOK_LIKE.Any(x => x.LIKED_BY == (int)Session["UserId"]))
             {
-                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.Post.ID disabled><span class="glyphicon glyphicon-heart"></span></button>
+                <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@Model.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == Model.ID).FirstOrDefault().ID><span class="glyphicon glyphicon-thumbs-down"></span></button>
             }
 
             else
             {
-                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.Post.ID><span class="glyphicon glyphicon-heart"></span></button>
+                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.ID><span class="glyphicon glyphicon-thumbs-up"></span></button>
             }
 
-            <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@Model.Post.ID><span class="glyphicon glyphicon-comment"></span></button>
+            <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@Model.ID><span class="glyphicon glyphicon-comment"></span></button>
         </div>
 
-        <div class="post-comments" value=@Model.Post.ID>
-            @foreach (var commentersComment in Model.ListOfCommentsWithCommenters)
+        <div class="post-comments" value=@Model.ID>
+            @foreach (var commentatorsComment in Model.PASTEBOOK_COMMENT)
             {
                 <hr>
                 <div class="post-comment">
                     <div class="post-comment-header">
                         <span>
                             <label>
-                                @Html.ActionLink(commentersComment.Commenter.FIRST_NAME + " " + commentersComment.Commenter.LAST_NAME, "Index", "Pastebook", new { username = commentersComment.Commenter.USER_NAME }, null)
+                                @Html.ActionLink(commentatorsComment.PASTEBOOK_USER.FIRST_NAME + " " + commentatorsComment.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = commentatorsComment.PASTEBOOK_USER.USER_NAME }, null)
                             </label>
-                        </span> @commentersComment.Comment.CONTENT
+                        </span> @commentatorsComment.CONTENT
                     </div>
                     <div class="post-comment-content">
                     </div>
-                    <p class="date">@commentersComment.Comment.DATE_CREATED.ToString("MMMM dd, yyyy") at @commentersComment.Comment.DATE_CREATED.ToShortTimeString()</p>
+                    <p class="date">@commentatorsComment.DATE_CREATED.ToString("MMMM dd, yyyy") at @commentatorsComment.DATE_CREATED.ToShortTimeString()</p>
                 </div>
             }
             <hr>
             <div class="write-comment clearfix">
-                <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@Model.Post.ID placeholder="Write comment.."></textarea>
-                <button type="button" class="btn pull-right" id="btnComment" value=@Model.Post.ID>Add Comment</button>
+                <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@Model.ID placeholder="Write comment.."></textarea>
+                <button type="button" class="btn pull-right" id="btnComment" value=@Model.ID>Add Comment</button>
             </div>
         </div>
     </div>
 </div>
+
+@section scripts{
+
+    <script>
+        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
+        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
+        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
+        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var errorURL = '@Url.Action("ErrorPage","Error")';
+
+    </script>
+
+    <script src="~/Scripts/PastebookScripts/postScript.js"> </script>
+}

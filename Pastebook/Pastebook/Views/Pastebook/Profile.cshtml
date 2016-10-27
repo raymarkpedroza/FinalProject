@@ -1,36 +1,50 @@
 ﻿@model Pastebook.Models.ProfileViewModel
 
+@{
+    ViewBag.Title = Model.User.FIRST_NAME + " " + Model.User.LAST_NAME;
+}
+
 <div id="profile">
     <div class="container">
         <div class="row">
-            <div id="profile-header" class="text-center col-md-12">
-                <div id="profile-profile-picture">
-                    @if (Model.User.PROFILE_PIC == null)
-                    {
-                    <img src="~/Content/Images/pastebook-default.png" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
-                    }
+            <div id="profile-header" class="container">
+                <div class="col-md-6 text-center container" >
+                    <div id="profile-profile-picture col-md-6">
+                        @if (Model.User.PROFILE_PIC == null)
+                        {
+                        <img src="@Url.Content("~/Content/Images/pastebook-default.png")" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
+                        }
 
-                    else
-                    {
-                        var base64 = Convert.ToBase64String(Model.User.PROFILE_PIC);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        else
+                        {
+                            var base64 = Convert.ToBase64String(Model.User.PROFILE_PIC);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                        <img src=@imgSrc type="hidden" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
-                    }
-                    <span class="glyphicon glyphicon-camera" id="camera-icon" data-toggle="modal" data-target="#myModal" type = "hidden"></span>
+                            <img src=@imgSrc type="hidden" id="profile-prof-pic" alt=@Model.User.FIRST_NAME @Model.User.LAST_NAME>
+                        }
+
+                        @if (Model.User.USER_NAME == Session["Username"].ToString())
+                        {
+                        <span class="glyphicon glyphicon-camera" id="camera-icon" data-toggle="modal" data-target="#picModal"></span>
+                        }
+                    </div>
+
+                    <div class="text-center">
+                        <div id="profile-fullname">
+                            @Html.ActionLink(Model.User.FIRST_NAME + " " + Model.User.LAST_NAME, "Index", new { username = Model.User.USER_NAME }, null)
+                        </div>
+                        <div id="profile-username">
+                            (@Model.User.USER_NAME)
+                        </div>                    
+                        <div id="interactButtons">
+                            @{Html.RenderAction("GetInteractButtons", "Interaction", new { id = Model.User.ID });}
+                        </div>
+                    </div>
 
                 </div>
 
-                <div>
-                    <div id="profile-fullname">
-                        @Html.ActionLink(Model.User.FIRST_NAME + " " + Model.User.LAST_NAME, "Index", new { username = Model.User.USER_NAME }, null)
-                    </div>
-                    <div id="profile-username">
-                        (@Model.User.USER_NAME)
-                    </div>                    
-                    <div id="interactButtons">
-                        @{Html.RenderAction("GetInteractButtons", "Reaction", new { id = Model.User.ID });}
-                    </div>
+                <div id="profile-header-sidediv" class="col-md-6">
+
                 </div>
             </div>  
         </div>
@@ -49,19 +63,22 @@
                     <span id="profile-options-post" class="profile-options">Timeline</span>
                     <span id="profile-options-friend" class="profile-options">Friends</span>
 
-                    <span class="pull-right" id="edit-profile-choice"><input type="button" id="saveButton" value="Save" class="btn btn-primary"/>  <input type="button" id="cancelEditButton" value="Cancel" class="btn btn-danger"></span>
                 </div>
 
                 <div id="writePost" class="container">
                     <div id="writePost-header">
                         @if ((int)Session["UserId"] == Model.User.ID)
                         {
-                        <span class="glyphicon glyphicon-pencil"></span><span>Status</span>
-                }
+                            <div class="text-right">
+                                <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Status</span></h3>
+                            </div>
+                        }
 
                         else
                         {
-                        <span class="glyphicon glyphicon-pencil"></span><span>Write something on @Model.User.FIRST_NAME's wall</span>
+                            <div class="text-right">
+                                <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Write something on @Model.User.FIRST_NAME's wall</span></h3>
+                            </div>
                         }
                     </div>
                     @if ((int)Session["UserId"] == Model.User.ID)
@@ -90,23 +107,27 @@
     </div>
 </div>
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="picModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Choose Photo</h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("FileUpload", "Pastebook", FormMethod.Post,
-                    new { enctype = "multipart/form-data" }))
+                new { enctype = "multipart/form-data" }))
                 {
-                    <label for="file">Upload Image:</label>
-                    <input type="file" name="file" id="file" style="width: 100%;" />
-                    <input type="submit" value="Upload" class="submit" />
-                }
-            </div>
+                    <div class="form-group">
+                        <input type="file" name="file" id="file" class="btn btn-default" style="width: 100%;" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Upload" class="submit btn btn-default pull-right" />
+                    </div>
+                    }
+                    </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -121,17 +142,13 @@
 
     <script>
         var createPostURL = '@Url.Action("CreatePost", "Post")'
-        var addLikeURL = '@Url.Action("AddLike", "Reaction")'
-        var addCommentURL = '@Url.Action("AddComment", "Reaction")'
-        var addNotificationURL = '@Url.Action("AddNotification", "Reaction")'
-        var addFriendURL = '@Url.Action("AddFriend", "Reaction")'
-        var acceptFriendURL = '@Url.Action("AcceptFriend", "Reaction")'
-        var interactButtonsUrl = '@Url.Action("GetInteractButtons", "Reaction", new { id = Model.User.ID })'
+        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
+        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
+        var interactButtonsUrl = '@Url.Action("GetInteractButtons", "Interaction", new { id = Model.User.ID })'
         var getTimelinePostUrl = '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.ID })'
-        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Reaction")';
-        var updateProfileURL = '@Url.Action("UpdateProfile", "Pastebook")';
         var getProfileDetails = '@Url.Action("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME })';
-
+        var errorURL = '@Url.Action("ErrorPage","Error")';
+        var updateProfileURL = '@Url.Action("UpdateProfile","Profile")';
     </script>
     <script src="~/Scripts/PastebookScripts/profileScript.js"> </script>
 }

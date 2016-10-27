@@ -6,12 +6,16 @@
     {
         if (Model.ListOfFriends.Where(x => x.USER_ID == (int)Session["UserId"]).Where(x => x.FRIEND_ID == Model.User.ID).SingleOrDefault().REQUEST == "N")
         {
-            <button id="btnAddFriend" class="btn" value=@Model.User.ID disabled>Friend Request Sent</button>
+            <div class="form-group">
+                <button id="btnAddFriend" class="btn" value=@Model.User.ID disabled>Friend Request Sent</button>
+            </div>
         }
 
         else
         {
-            <button id="btnFriendAlready" class="btn" disabled>Friend</button>
+            <div class="form-group">
+                <button id="btnFriendAlready" class="btn" disabled>Friend</button>
+            </div>
         }
     }
 
@@ -19,18 +23,27 @@
     {
         if (Model.ListOfFriends.Where(x => x.USER_ID == Model.User.ID).Where(x => x.FRIEND_ID == (int)Session["UserId"]).SingleOrDefault().REQUEST == "N")
         {
+        <div class="form-group">
             <button id="btnAcceptFriend" class="btn" value=@Model.ListOfFriends.Where(x => x.FRIEND_ID == (int)Session["UserId"]).Where(x => x.USER_ID == Model.User.ID).SingleOrDefault().ID>Accept Friend Request</button>
+        </div>
+
+        <div class="form-group">
+            <button id="btnRejectFriend" class="btn" value=@Model.ListOfFriends.Where(x => x.FRIEND_ID == (int)Session["UserId"]).Where(x => x.USER_ID == Model.User.ID).SingleOrDefault().ID>Reject Friend Request</button>
+        </div>
         }
 
         else
         {
+        <div class="form-group">
             <button id="btnFriendAlready" class="btn" disabled>Friend</button>
+        </div>
         }
     }
 
     else
     {
-        <button id="btnAddFriend" class="btn" value=@Model.User.ID><span id="plus" class="glyphicon glyphicon-plus"></span>Add Friend</button>
+        <div class="form-group">
+            <button id="btnAddFriend" class="btn" value=@Model.User.ID><span id="plus" class="glyphicon glyphicon-plus"></span>Add Friend</button>
+        </div>
+        }
     }
-    <button id="btnBlock" class="btn" value=@Model.User.ID><span class="glyphicon glyphicon-remove"></span>Block</button>
-}

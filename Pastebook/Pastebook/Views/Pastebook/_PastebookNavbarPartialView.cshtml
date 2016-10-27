@@ -5,7 +5,7 @@
         
         @using (Html.BeginForm("Search", "Pastebook", FormMethod.Post, new { @class = "form-inline" }))
         { 
-            <span class="col-md-1"><img src="~/Content/Images/logo-black.png" id="logo-icon"></span>
+            <span class="col-md-1"><a href="@Url.Action("Index", "Pastebook")"><img src="@Url.Content("~/Content/Images/logo-gray.png")" id="logo-icon"></a></span>
                 if (Session["UserFullname"] != null)
                 {
                     <span class="col-md-3" id="searchBar">
@@ -20,40 +20,37 @@
 
             <div class="pull-right">
                 <div class="btn-group">
-                    <a href="@Url.Action("Index", "Home")">
+                    <a href="@Url.Action("Index", "Pastebook")">
                         <span class="glyphicon glyphicon-home icon"></span>
                     </a>
                 </div>
                 @if (Session["UserFullname"] != null)
                 {
                     <div class="btn-group" id="pastebook-nav-bar-friendRequests">
-                        @{Html.RenderAction("GetFriendRequests", "Reaction");}
+                        @{Html.RenderAction("GetFriendRequests", "Interaction");}
                     </div>
 
                     <div class="btn-group" id="pastebook-nav-bar-notification">
-                        @{Html.RenderAction("GetNotifications", "Reaction");}
+                        @{Html.RenderAction("GetNotifications", "Interaction");}
                     </div>
 
-                    <div class="btn-group" id="pastebook-nav-bar-settings">
-                        <span class="glyphicon glyphicon-cog icon" id="settings" data-toggle="dropdown">
-                        </span>
+                    <div class="btn-group">
+                        <button  id="user-option" class = "icon btn btn-xs btn-default" data-toggle="dropdown">
+                            @Session["UserFullname"].ToString()
+                        <span class="caret"></span>
+                        </button>
 
-                        <div class="dropdown-menu" aria-labelledby="settings">
-                            <div class="settings-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</div>
-                            <div class="settings-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</div>
-                            <div class="settings-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</div>
-                        </div>
+                        <ul class="dropdown-menu" aria-labelledby="user-option">
+                            <li class="profile-listitem">@Html.ActionLink("View Profile", "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)</li>
+                            <li class="divider" />
+                            <li class="profile-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</li>
+                            <li class="profile-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
+                            <li class="profile-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</li>
+                            <li class="divider"/>
+                            <li class="profile-listitem">@Html.ActionLink("Logout", "Logout", "Pastebook", null, new { @class = "link" })</li>
+                        </ul>
                     </div>
 
-                    <div class="btn-group" id="profile-link">
-                        <span>
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "Index", "Pastebook", new { username = Session["Username"].ToString() }, null)
-                        </span>
-                    </div>
-
-                    <div class="btn-group" id="logout-link">
-                        @Html.ActionLink("Logout", "Logout", "Home", null, new { @class = "link" })
-                    </div>
                 }
             </div>
         }

@@ -3,31 +3,61 @@
 @foreach (var post in Model.ListOfPost)
 {
     <div class="col-md-12">
-        <div class="pastebookPost">
-            <div class="post-header">
+        <div class="pastebookPost container">
+            <div class="post-header row">
                 @if (post.POSTER_ID == post.PROFILE_OWNER_ID)
                 {
-                    <div>
+                    <div class="col-md-11 post-text-header">
                         <label>
-                            @Html.ActionLink(post.PASTEBOOK_USER.FIRST_NAME + " " + post.PASTEBOOK_USER.LAST_NAME, "Index", "Pastebook", new { username = post.PASTEBOOK_USER.USER_NAME }, null)
+                            @Html.ActionLink(post.PASTEBOOK_USER.FIRST_NAME + " " + post.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = post.PASTEBOOK_USER.USER_NAME }, null)
                         </label>
+                        <div class="date">@post.CREATED_DATE.ToString("MMMM dd, yyyy") at @post.CREATED_DATE.ToShortTimeString()</div>
+
+                    </div>
+
+                    <div class="dropdown col-md-1">
+                        <div class="pull-right">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-post-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-post-menu">
+                                <li>
+                                    @Html.ActionLink("View Post", "Posts", "Pastebook", new { postId = post.ID }, null)
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 }
 
                 else
                 {
-                    <div>
+                    <div class="col-md-11">
                         <label>
-                             @Html.ActionLink(post.PASTEBOOK_USER.FIRST_NAME + " " + post.PASTEBOOK_USER.LAST_NAME, "Index", "Pastebook", new { username = post.PASTEBOOK_USER.USER_NAME }, null)
+                             @Html.ActionLink(post.PASTEBOOK_USER.FIRST_NAME + " " + post.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = post.PASTEBOOK_USER.USER_NAME }, null)
                              <span class="glyphicon glyphicon-play"></span>
-                            @Html.ActionLink(post.PASTEBOOK_USER1.FIRST_NAME + " " + post.PASTEBOOK_USER1.LAST_NAME, "Index", "Pastebook", new { username = post.PASTEBOOK_USER1.USER_NAME }, null)
+                            @Html.ActionLink(post.PASTEBOOK_USER1.FIRST_NAME + " " + post.PASTEBOOK_USER1.LAST_NAME, "UserProfile", "Pastebook", new { username = post.PASTEBOOK_USER1.USER_NAME }, null)
                         </label>
+                        <div class="date">@post.CREATED_DATE.ToString("MMMM dd, yyyy") at @post.CREATED_DATE.ToShortTimeString()</div>
+                    </div>
+
+                    <div class="dropdown col-md-1">
+                        <div class="pull-right">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdown-post-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-post-menu">
+                                <li>@Html.ActionLink("View Post", "Posts", "Pastebook", new { postId = post.ID }, null)
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 }
-                <p class="date">@post.CREATED_DATE.ToString("MMMM dd, yyyy") at @post.CREATED_DATE.ToShortTimeString()</p>
+                
             </div>
-            <div class="post-content">
-                @post.CONTENT
+            <div class="row">
+                <div class="post-content col-md-12">
+                    @post.CONTENT
+                </div>
             </div>
 
             <div class="post-reaction-count clearfix">
@@ -70,7 +100,7 @@
                                             @foreach (var likedBy in post.PASTEBOOK_LIKE)
                                             {
                                                 <div>
-                                                    @Html.ActionLink(likedBy.PASTEBOOK_USER.FIRST_NAME + " " + likedBy.PASTEBOOK_USER.LAST_NAME, "Index", "Pastebook", new { username = likedBy.PASTEBOOK_USER.USER_NAME }, null)
+                                                    @Html.ActionLink(likedBy.PASTEBOOK_USER.FIRST_NAME + " " + likedBy.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = likedBy.PASTEBOOK_USER.USER_NAME }, null)
                                                 </div>
                                             }
                                         </div>
@@ -123,7 +153,7 @@
                     <div class="post-comment">
                         <div class="post-comment-header">
                             <span><label>
-                                      @Html.ActionLink(commentatorsComment.PASTEBOOK_USER.FIRST_NAME + " " + commentatorsComment.PASTEBOOK_USER.LAST_NAME, "Index", "Pastebook", new { username = commentatorsComment.PASTEBOOK_USER.USER_NAME }, null)
+                                      @Html.ActionLink(commentatorsComment.PASTEBOOK_USER.FIRST_NAME + " " + commentatorsComment.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = commentatorsComment.PASTEBOOK_USER.USER_NAME }, null)
                             </label></span> @commentatorsComment.CONTENT
                         </div>
                         <div class="post-comment-content">

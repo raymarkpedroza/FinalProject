@@ -3,15 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Pastebook</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
 </head>
 <body>
     <div id="pastebook-nav-bar">
-        @{Html.RenderAction("GetPastebookNavBar", "Home");}
+        @{Html.RenderAction("GetPastebookNavBar", "Pastebook");}
     </div>
     
     <div class="container body-content">
@@ -33,12 +34,18 @@
 </html>
 
 <script>
-    var getNavBarUrl = '@Url.Action("GetPastebookNavBar", "Home")';
+    var getNavBarUrl = '@Url.Action("GetPastebookNavBar", "Pastebook")';
     var searchURL = '@Url.Action("Search", "Pastebook")';
-    var getLikesURL = '@Url.Action("GetLikes", "Reaction")';
-
+    var getLikesURL = '@Url.Action("GetLikes", "Interaction")';
+    var countNotifUrl = '@Url.Action("GetNotificationsCount", "Interaction")';
+    var getNotificationItemUrl = '@Url.Action("GetNotificationItems", "Interaction")';
+    var addFriendURL = '@Url.Action("AddFriend", "Interaction")'
+    var acceptFriendURL = '@Url.Action("AcceptFriend", "Interaction")'
+    var rejectFriendURL = '@Url.Action("RejectFriendRequest", "Interaction")'
+    var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
+    var errorURL = '@Url.Action("ErrorPage","Error")';
+    var cancelURL = '@Url.Action("Index", "Pastebook")';
+    var sawNotificationURL = '@Url.Action("SawNotification", "Interaction")';
 </script>
 
 <script src="~/Scripts/PastebookScripts/pastebookScript.js"> </script>
-
-

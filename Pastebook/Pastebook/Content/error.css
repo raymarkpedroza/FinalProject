@@ -1,0 +1,17 @@
+﻿#mainError {
+    font-size: 100px;
+    font-weight: 600;
+}
+
+#secondaryError {
+    font-size: 20px;
+}
+
+#warning {
+    font-size: 250px;
+    color: #009688;
+}
+
+.navbar{
+    display:none;
+}

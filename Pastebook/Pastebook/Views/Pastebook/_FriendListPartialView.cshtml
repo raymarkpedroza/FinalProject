@@ -7,7 +7,7 @@
         <div class="friendlist-item-header">
             @if (friendDetails.FriendDetails.PROFILE_PIC == null)
             {
-                <img src="~/Content/Images/pastebook-default.png" id="friend-prof-pic" class="img-circle" alt=@friendDetails.FriendDetails.FIRST_NAME @friendDetails.FriendDetails.LAST_NAME>
+                <img src="@Url.Content("~/Content/Images/pastebook-default.png")" id="friend-prof-pic" class="img-circle" alt=@friendDetails.FriendDetails.FIRST_NAME @friendDetails.FriendDetails.LAST_NAME>
             }
 
             else
@@ -17,7 +17,7 @@
 
                 <img src=@imgSrc id="friend-prof-pic" class="img-circle" alt=@friendDetails.FriendDetails.FIRST_NAME @friendDetails.FriendDetails.LAST_NAME>
             }
-            @Html.ActionLink(friendDetails.FriendDetails.FIRST_NAME + " " + friendDetails.FriendDetails.LAST_NAME, "Index", "Pastebook", new { username = friendDetails.FriendDetails.USER_NAME }, null)
+            @Html.ActionLink(friendDetails.FriendDetails.FIRST_NAME + " " + friendDetails.FriendDetails.LAST_NAME, "UserProfile", "Pastebook", new { username = friendDetails.FriendDetails.USER_NAME }, null)
         </div>
     </div>
 }

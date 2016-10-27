@@ -1,47 +1,51 @@
 ﻿@model Pastebook.Models.EditProfileViewModel
 
+@{
+    ViewBag.Title = "Update User Information";
+}
 
 @using (Html.BeginForm("UpdateInformation", "Profile", FormMethod.Post))
 {
-<div class="form-horizontal container" id="edit-profile">
+<div class="form-horizontal container">
+    <div class="col-md-offset-2 col-md-8" id="edit-profile">
     <h4>Update Information</h4>
     <hr />
-    <h4>Fill up the required fields(*).</h4>
+    <h4>Fill up the required fields(*)</h4>
 
     <div id="edit-basic-info" class="container">
-        <div class="col-md-offset-3 col-md-6">
-            <h4>User Information</h4>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.USER_NAME, htmlAttributes: new { @class = "control-label col-md-4 required-asterisk" })
+                <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Username*</span>
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.USER_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.User.USER_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "username" } })
                     @Html.ValidationMessageFor(model => model.User.USER_NAME, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.FIRST_NAME, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
+                <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Firstname*</span>
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.FIRST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.User.FIRST_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "first name" } })
                     @Html.ValidationMessageFor(model => model.User.FIRST_NAME, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.LAST_NAME, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
+                 <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Lastname*</span>
+
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.LAST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.User.LAST_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "last name" } })
                     @Html.ValidationMessageFor(model => model.User.LAST_NAME, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.BIRTHDAY, htmlAttributes: new { @class = "control-label col-md-4  required-asterisk" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "form-control", id = "dtpBirthday" } })
-                    @Html.ValidationMessageFor(model => model.User.BIRTHDAY, "", new { @class = "text-danger" })
-                </div>
+                <span class="col-md-4"><span class="glyphicon glyphicon-gift"></span> Birthday*</span>
+
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", id = "dtpBirthday", @Value=Model.User.BIRTHDAY.ToString("MM/dd/yyyy"), @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.User.BIRTHDAY, "", new { @class = "text-danger" })
+                    </div>
             </div>
 
             @if (Model.ListOfCountryModel != null)
@@ -60,9 +64,11 @@
                 listOfCountries.Where(x => x.Value == Model.User.COUNTRY_ID.ToString()).SingleOrDefault().Selected = true;
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.User.COUNTRY_ID, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <span class="col-md-4">
+                    <span class="glyphicon glyphicon-home"></span> Country*</span>
+
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "-- Select Country --", new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "select country", new { @class = "text-line" })
                         @Html.ValidationMessageFor(model => model.User.COUNTRY_ID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -73,22 +79,25 @@
 
                 listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
                 listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
+                listOfGenders.Add(new SelectListItem { Text = "Unspecified", Value = "U" });
 
                 listOfGenders.Where(x => x.Value == Model.User.GENDER.ToString()).SingleOrDefault().Selected = true;
             }
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.GENDER, htmlAttributes: new { @class = "control-label col-md-4" })
+                <span class="col-md-4"><span class="fa fa-venus-mars"></span> Gender</span>
                 <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "-- Select Gender --", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "select gender", new { @class = "text-line" })
                     @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.User.MOBILE_NO, htmlAttributes: new { @class = "control-label col-md-4" })
+                @*@Html.LabelFor(model => model.User.MOBILE_NO, htmlAttributes: new { @class = "control-label col-md-4" })*@
+                <span class="col-md-4"><span class="glyphicon glyphicon-phone"></span> Mobile Number</span>
+
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.MOBILE_NO, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.User.MOBILE_NO, new { htmlAttributes = new { @class = "text-line", placeholder = "mobile number" } })
                     @Html.ValidationMessageFor(model => model.User.MOBILE_NO, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -111,14 +120,12 @@
     <script>
         $(document).ready(function () {
             $(function () {
-                $("#dtpBirthday").datepicker({ dateFormat: 'mm/dd/yy', minDate: new Date('01/01/1600'), maxDate: '0' });
-                $("#dtpBirthday").datepicker().datepicker("setDate", new Date());
-                $("#dtpBirthday").keyup(function () {
-                    if ($(this).val().length == 2) {
-                        $(this).val($(this).val() + "/");
-                    } else if ($(this).val().length == 5) {
-                        $(this).val($(this).val() + "/");
-                    }
+                $("#dtpBirthday").datepicker({
+                    dateFormat: 'mm/dd/yy',
+                    minDate: new Date('01/01/1600'),
+                    maxDate: '0',
+                    changeMonth: true,
+                    changeYear: true,
                 });
             });
 

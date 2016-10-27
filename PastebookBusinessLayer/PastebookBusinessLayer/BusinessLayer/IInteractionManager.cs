@@ -18,6 +18,7 @@ namespace PastebookBusinessLayer.BusinessLayer
 
         bool AddFriendRequest(PASTEBOOK_FRIEND friendRequest);
         bool UpdateFriendRequest(PASTEBOOK_FRIEND friendRequest);
+        bool RejectFriendRequest(PASTEBOOK_FRIEND friendRequest);
         bool BlockUser(PASTEBOOK_FRIEND friendRequest);
         PASTEBOOK_FRIEND RetrieveFriendRequest(int friendRequestId);
         List<PASTEBOOK_FRIEND> RetrieveFriends(int userId, out List<int> listOfFriendsId);

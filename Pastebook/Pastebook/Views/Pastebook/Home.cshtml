@@ -1,11 +1,19 @@
 ﻿@model PastebookEF.PASTEBOOK_USER
 
+@{
+    ViewBag.Title = "Home";
+}
+
 <div class="container" id="newsfeed">
     <div class="row">
+
         <div class="col-md-4" id="user-profile">
+            <div id="user-profile-header" class="text-center">
+                <h3>Welcome @Model.USER_NAME!</h3>
+            </div>
             @if (Model.PROFILE_PIC == null)
             {
-                <img src="~/Content/Images/pastebook-default.png" id="prof-pic" alt=@Model.FIRST_NAME @Model.LAST_NAME>
+                <img src="@Url.Content("~/Content/Images/pastebook-default.png")" id="prof-pic" class="col-md-6" alt=@Model.FIRST_NAME @Model.LAST_NAME>
             }
 
             else
@@ -13,25 +21,28 @@
                 var base64 = Convert.ToBase64String(Model.PROFILE_PIC);
                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                <img src=@imgSrc id="prof-pic" alt=@Model.FIRST_NAME @Model.LAST_NAME>
+                <img src=@imgSrc id="prof-pic" alt=@Model.FIRST_NAME @Model.LAST_NAME class="col-md-6">
             }
 
-            <div class="text-center">
+            <div class="col-md-6">
                 <div id="user-fullname">
-                    @Html.ActionLink(Model.FIRST_NAME + " " + Model.LAST_NAME, "Index", "Pastebook", new { username = Session["Username"].ToString() }, null)
+                    @Html.ActionLink(Model.FIRST_NAME + " " + Model.LAST_NAME, "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)
                 </div>
 
                 <div>
                     @Html.ActionLink("View Friends", "Friends", "Pastebook")
                 </div>
-
             </div>
         </div>
+
+
         <div class="col-md-8">
 
             <div id="writePost">
                 <div id="writePost-header">
-                    <span class="glyphicon glyphicon-pencil"></span>Status
+                    <div class="text-right">
+                        <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span>Status</span></h3>
+                    </div>
                 </div>
 
                 <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
@@ -56,14 +67,14 @@
     
     <script>
         var createPostURL = '@Url.Action("CreatePost", "Post")'
-        var addLikeURL = '@Url.Action("AddLike", "Reaction")'
-        var addCommentURL = '@Url.Action("AddComment", "Reaction")'
-        var addNotificationURL = '@Url.Action("AddNotification", "Reaction")'
+        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
+        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
         var getNewsfeedPostsURL = '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.ID })'
-        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Reaction")';
-        var acceptFriendURL = '@Url.Action("AcceptFriend", "Reaction")'
-        var unlikeURL = '@Url.Action("Unlike", "Reaction")';
-        var searchURL = '@Url.Action("Seach", "Pastebook")';
+        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
+        var acceptFriendURL = '@Url.Action("AcceptFriend", "Interaction")'
+        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var searchURL = '@Url.Action("Search", "Pastebook")';
+        var errorURL = '@Url.Action("ErrorPage","Error")';
     </script>
 
     <script src="~/Scripts/PastebookScripts/newsfeedScript.js"> </script>

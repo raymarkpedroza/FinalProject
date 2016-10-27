@@ -59,7 +59,15 @@ namespace PastebookBusinessLayer.BusinessLayer
             listOfFriendId = new List<int>();
             
             listOfFriends = _friendRepo.RetrieveList(x=>x.FRIEND_ID == userId, receiver=> receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER);
-            listOfFriends.AddRange(_friendRepo.RetrieveList(x => x.USER_ID == userId, receiver => receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER));
+
+
+            foreach (var compareFriend in _friendRepo.RetrieveList(x => x.USER_ID == userId, receiver => receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER))
+            {
+                if (!(listOfFriends.Any(x => x.ID == compareFriend.ID)))
+                {
+                    listOfFriends.Add(compareFriend);
+                }
+            }
 
             foreach (var friend in listOfFriends)
             {
@@ -115,6 +123,14 @@ namespace PastebookBusinessLayer.BusinessLayer
             listOfLikes = _likeRepo.RetrieveList(x=>x.POST_ID == postId, liker=>liker.PASTEBOOK_USER);
 
             return listOfLikes;
+        }
+
+        public bool RejectFriendRequest(PASTEBOOK_FRIEND friendRequest)
+        {
+            bool result = false;
+            result = _friendRepo.DeleteRecord(friendRequest);
+
+            return result;
         }
     }
 }
