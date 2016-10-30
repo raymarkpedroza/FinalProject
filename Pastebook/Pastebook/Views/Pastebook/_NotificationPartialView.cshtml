@@ -4,10 +4,7 @@
 <span class="glyphicon glyphicon-bell icon" id="notifications" data-toggle="dropdown">
 </span>
 
-@if (Model.Where(x => x.SEEN == "N").Where(x => x.RECEIVER_ID == (int)Session["UserId"]).Where(x => x.PASTEBOOK_USER1.ID != (int)Session["UserId"]).Count() > 0)
-{
-    <span class="badge badge-notify" id="other-notification" data-toggle="dropdown"> @Model.Where(x => x.SEEN == "N").Where(x => x.RECEIVER_ID == (int)Session["UserId"]).Where(x => x.PASTEBOOK_USER1.ID != (int)Session["UserId"]).Count() </span>
-}
+<span class="badge badge-notify" id="other-notification" data-toggle="dropdown"> @Model.Where(x => x.SEEN == "N").Where(x => x.RECEIVER_ID == (int)Session["UserId"]).Where(x => x.PASTEBOOK_USER1.ID != (int)Session["UserId"]).Count() </span>
 
 <div class="dropdown-menu" aria-labelledby="notifications">
     @if (Model.Count() < 1)

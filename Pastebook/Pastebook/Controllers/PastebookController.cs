@@ -23,7 +23,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 PASTEBOOK_USER model = new PASTEBOOK_USER();
-                model = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
+                model = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
                 return View("~/Views/Pastebook/Home.cshtml", model);
             }
             else
@@ -46,7 +46,7 @@ namespace Pastebook.Controllers
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
-            registerViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
+            registerViewModel.ListOfCountryModel = countryManager.GetAllCountries();
             return View("~/Views/Home/Register.cshtml", registerViewModel);
         }
 
@@ -56,12 +56,12 @@ namespace Pastebook.Controllers
             user.PASSWORD = registerViewModel.Password;
             user.DATE_CREATED = DateTime.Now;
 
-            if (accountManager.CheckUserIfExist_Email(user.EMAIL_ADDRESS))
+            if (accountManager.GetUser(x => x.EMAIL_ADDRESS == user.EMAIL_ADDRESS) != null)
             {
                 ModelState.AddModelError("User.EMAIL_ADDRESS", "Email Already Taken");
             }
 
-            if (accountManager.CheckUserIfExist_Username(user.USER_NAME))
+            if (accountManager.GetUser(x => x.USER_NAME == user.USER_NAME) != null)
             {
                 ModelState.AddModelError("User.USER_NAME", "Username Already Taken");
             }
@@ -73,7 +73,7 @@ namespace Pastebook.Controllers
                 if (user.GENDER == null)
                     user.GENDER = "U";
 
-                accountManager.RegisterUser(user);
+                accountManager.Register(user);
 
                 Session["UserId"] = user.ID;
                 Session["Username"] = user.USER_NAME;
@@ -82,7 +82,7 @@ namespace Pastebook.Controllers
                 return RedirectToAction("Index", "Pastebook");
             }
 
-            registerViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
+            registerViewModel.ListOfCountryModel = countryManager.GetAllCountries();
             return View("~/Views/Home/Register.cshtml", registerViewModel);
         }
 
@@ -100,7 +100,7 @@ namespace Pastebook.Controllers
 
             else
             {
-                ModelState.AddModelError("PASSWORD","Incorrect email address or password");
+                ModelState.AddModelError("PASSWORD", "Incorrect email address or password");
                 return View("~/Views/Home/Index.cshtml");
             }
         }
@@ -138,13 +138,13 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 ProfileViewModel profileViewModel = new ProfileViewModel();
-                profileViewModel.User = accountManager.RetrieveUserByUsername(username);
+                profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
                 profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
                 List<int> listOfFriendId = new List<int>();
-                profileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
-                profileViewModel.ListOfFriends = interactionManager.RetrieveFriends(profileViewModel.User.ID, out listOfFriendId);
-                return View("~/Views/Pastebook/Profile.cshtml",profileViewModel);  
+                profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+                profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
+                return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
             }
             else
                 return RedirectToAction("Index", "Pastebook");
@@ -159,7 +159,7 @@ namespace Pastebook.Controllers
 
             if (Session["Username"] != null)
             {
-                listOfFriend = interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendId);
+                listOfFriend = interactionManager.GetFriendList((int)Session["UserId"]);
 
                 foreach (var friend in listOfFriend)
                 {
@@ -193,7 +193,7 @@ namespace Pastebook.Controllers
                     byte[] array = ms.GetBuffer();
 
                     PASTEBOOK_USER user = new PASTEBOOK_USER();
-                    user = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
+                    user = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
                     user.PROFILE_PIC = array;
 
                     bool result = false;
@@ -209,11 +209,11 @@ namespace Pastebook.Controllers
             ProfileViewModel profileViewModel = new ProfileViewModel();
             List<int> listOfFriendId = new List<int>();
 
-            profileViewModel.User = accountManager.RetrieveUserByUsername(username);
+            profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
             profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
-            profileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
-            profileViewModel.ListOfFriends = interactionManager.RetrieveFriends(profileViewModel.User.ID, out listOfFriendId);
+            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            profileViewModel.ListOfFriends = interactionManager.GetFriendList(profileViewModel.User.ID);
 
             return PartialView("~/Views/Pastebook/_ProfileDetailsPartialView.cshtml", profileViewModel);
         }
@@ -224,7 +224,7 @@ namespace Pastebook.Controllers
             FriendListViewModel friendListViewModel = new FriendListViewModel();
             List<int> listOfFriendId = new List<int>();
 
-            listOfFriend = interactionManager.RetrieveFriends(id, out listOfFriendId);
+            listOfFriend = interactionManager.GetFriendList(id);
 
             foreach (var friend in listOfFriend)
             {
@@ -233,7 +233,7 @@ namespace Pastebook.Controllers
                     friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
                 }
 
-                else if(friend.FRIEND_ID == id)
+                else if (friend.FRIEND_ID == id)
                 {
                     friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER1 });
                 }
@@ -250,7 +250,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 PASTEBOOK_POST post = new PASTEBOOK_POST();
-                post = postManager.RetrievePost(postId);
+                post = postManager.GetPost(postId);
                 return View(post);
             }
             else
@@ -263,7 +263,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
-                searchResults = accountManager.SearchUserByName(search.Name);
+                searchResults = accountManager.SearchUsers(search.Name);
 
                 ResultsViewModel resultsViewModel = new ResultsViewModel();
                 resultsViewModel.searchResults = searchResults;
@@ -272,14 +272,14 @@ namespace Pastebook.Controllers
             }
             else
                 return RedirectToAction("Index", "Pastebook");
-           
+
         }
 
         public JsonResult CheckEmailIfExists(string email)
         {
             bool result = false;
 
-            result = accountManager.CheckUserIfExist_Email(email);
+            result = accountManager.GetUser(x=>x.EMAIL_ADDRESS == email) != null;
 
             return Json(new { result = result });
         }
@@ -288,7 +288,7 @@ namespace Pastebook.Controllers
         {
             bool result = false;
 
-            result = accountManager.CheckUserIfExist_Username(username);
+            result = accountManager.GetUser(x=>x.USER_NAME == username) != null;
 
             return Json(new { result = result });
         }

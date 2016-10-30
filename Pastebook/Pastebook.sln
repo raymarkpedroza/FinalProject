@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pastebook", "Pastebook\Pastebook.csproj", "{858EDA89-F33F-4DD2-BE8E-6654B775B1DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C94780E-6228-43C3-A51B-4B6A724A1DB4} = {6C94780E-6228-43C3-A51B-4B6A724A1DB4}
+		{7DF37156-D299-43F8-B6D2-14448286A42C} = {7DF37156-D299-43F8-B6D2-14448286A42C}
+		{4CB7A7DC-E439-4341-A78B-7B3505F4F18F} = {4CB7A7DC-E439-4341-A78B-7B3505F4F18F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastebookBusinessLayer", "..\PastebookBusinessLayer\PastebookBusinessLayer\PastebookBusinessLayer.csproj", "{4CB7A7DC-E439-4341-A78B-7B3505F4F18F}"
 EndProject

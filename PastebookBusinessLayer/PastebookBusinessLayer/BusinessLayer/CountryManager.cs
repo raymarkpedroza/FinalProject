@@ -4,33 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PastebookEF;
-using PastebookDataAccess.Repositories;
+using PastebookDataAccess;
 
 namespace PastebookBusinessLayer.BusinessLayer
 {
-    public class CountryManager : ICountryManager
+    public class CountryManager
     {
-        private ICountryRepository _countryRepo;
+        ICountryRepository _countryRepository;
 
         public CountryManager()
         {
-            _countryRepo = new CountryRepository();
+            _countryRepository = new CountryRepository();
         }
 
-        public List<REF_COUNTRY> RetrieveAllCountries()
+        public List<REF_COUNTRY> GetAllCountries()
         {
-            List<REF_COUNTRY> listOfCountries = new List<REF_COUNTRY>();
-            listOfCountries = _countryRepo.RetrieveAllRecords();
-
-            return listOfCountries;
+            return _countryRepository.GetAll();
         }
 
-        public REF_COUNTRY RetrieveCountryById(int countryId)
+        public REF_COUNTRY GetCountry(int id)
         {
-            REF_COUNTRY country = new REF_COUNTRY();
-            country = _countryRepo.RetrieveSpecificRecord(x=>x.ID.Equals(countryId));
-
-            return country;
+            return _countryRepository.Get(id);
         }
     }
 }

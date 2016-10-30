@@ -32,27 +32,30 @@ namespace PastebookEF
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Username is required.")]
-        [DisplayName("Username")]
         [StringLength(50, ErrorMessage = "Maximum characters for username is 50")]
+        [RegularExpression("^[a-zA-Z0-9._-]{1,50}",ErrorMessage ="Invalid Username Format")]
+        [DisplayName("Username")]
         public string USER_NAME { get; set; }
 
         [DisplayName("Password")]
         [DataType(DataType.Password)]
-        [StringLength(50, ErrorMessage = "Maximum characters for username is 50")]
+        [StringLength(50, ErrorMessage = "Maximum characters for password is 50")]
         public string PASSWORD { get; set; }
         public string SALT { get; set; }
 
         [Required(ErrorMessage = "Firstname is required.")]
-        [DisplayName("Firstname")]
-        [StringLength(50, ErrorMessage = "Maximum first name for password is 50")]
+        [DisplayName("First Name")]
+        [StringLength(50, ErrorMessage = "Maximum characters for first name is 50")]
+        [RegularExpression("^[a-zA-Z0-9. -]{1,50}", ErrorMessage = "Invalid First Name")]
         public string FIRST_NAME { get; set; }
 
         [Required(ErrorMessage = "Lastname is required.")]
-        [DisplayName("Lastname")]
-        [StringLength(50, ErrorMessage = "Maximum last name for password is 50")]
+        [DisplayName("Last Name")]
+        [StringLength(50, ErrorMessage = "Maximum characters for last name is 50")]
+        [RegularExpression("^[a-zA-Z0-9. -]{1,50}", ErrorMessage = "Invalid Last Name")]
         public string LAST_NAME { get; set; }
 
-        [Required(ErrorMessage = "Birthday is required.")]
+        [Required(ErrorMessage = "Birthday is required")]
         [DataType(DataType.DateTime)]
         [DisplayName("Birthday")]
         public System.DateTime BIRTHDAY { get; set; }

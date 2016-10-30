@@ -32,26 +32,24 @@ namespace Pastebook.Controllers
         public PartialViewResult GetTimelinePosts(int id)
         {
             PostViewModel postView = new PostViewModel();
-            postView.ListOfPost = postManager.RetrieveTimelinePost(id);
+            postView.ListOfPost = postManager.GetTimelinePost(id);
             return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", postView);
         }
 
         public PartialViewResult GetNewsfeedPosts(int id)
         {
             PostViewModel postView = new PostViewModel();
-            List<int> listOfFriendIds = new List<int>();
+            List<int> listOfPoster = new List<int>();
 
             if (Session != null && Session["UserId"] != null)
             {
-                interactionManager.RetrieveFriends((int)Session["UserId"], out listOfFriendIds);
-                postView.ListOfPost = postManager.RetrieveNewsfeedPost(id, listOfFriendIds);
+                listOfPoster = interactionManager.GetFriendList((int)Session["UserId"]).Select(x=>x.FRIEND_ID).ToList();
+                listOfPoster.Add((int)Session["UserId"]);
+                postView.ListOfPost = postManager.GetNewsfeedPost(listOfPoster);
             }
 
             return PartialView("~/Views/Pastebook/_PostPartialView.cshtml", postView);
 
         }
-
-
-
     }
 }

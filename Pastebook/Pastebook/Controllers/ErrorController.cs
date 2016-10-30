@@ -8,7 +8,6 @@ namespace Pastebook.Controllers
 {
     public class ErrorController : Controller
     {
-        // GET: Error
         //[HttpGet, Route("error")]
         public ActionResult ErrorPage()
         {

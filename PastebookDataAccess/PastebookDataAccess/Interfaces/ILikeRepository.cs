@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public interface ILikeRepository:IGenericTransactionDataRepository<PASTEBOOK_LIKE>
+    public interface ILikeRepository : IRepository<PASTEBOOK_LIKE> 
     {
-
+        List<PASTEBOOK_LIKE> GetLikeWithUser(Func<PASTEBOOK_LIKE, bool> predicate);
     }
 }

@@ -4,133 +4,97 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PastebookEF;
-using PastebookDataAccess.Repositories;
+using PastebookDataAccess;
 
 namespace PastebookBusinessLayer.BusinessLayer
 {
-    public class InteractionManager : IInteractionManager
+    public class InteractionManager
     {
-        private ILikeRepository _likeRepo;
-        private ICommentRepository _commentRepo;
-        private IFriendRepository _friendRepo;
+        ILikeRepository _likeRepository;
+        IFriendRepository _friendRepository;
+        ICommentRepository _commentRepository;
 
         public InteractionManager()
         {
-            _likeRepo = new LikeRepository();
-            _commentRepo = new CommentRepository();
-            _friendRepo = new FriendRepository();
+            _likeRepository = new LikeRepository();
+            _friendRepository = new FriendRepository();
+            _commentRepository = new CommentRepository();
+        }
+        #region[Like]
+        public bool Like(PASTEBOOK_LIKE like)
+        {
+            return _likeRepository.Create(like);
         }
 
+        public bool Unlike(PASTEBOOK_LIKE like)
+        {
+            return _likeRepository.Delete(like);
+        }
+
+        public PASTEBOOK_LIKE GetLike(int id)
+        {
+            return _likeRepository.Get(id);
+        }
+
+        public List<PASTEBOOK_LIKE> GetLikeWithUser(Func<PASTEBOOK_LIKE, bool> predicate)
+        {
+            return _likeRepository.GetLikeWithUser(predicate);
+        }
+        #endregion
+
+        #region[Comment]
+        public bool AddComment(PASTEBOOK_COMMENT comment)
+        {
+            return _commentRepository.Create(comment);
+        }
+
+        public PASTEBOOK_COMMENT GetCommentWithUser(Func<PASTEBOOK_COMMENT, bool> predicate)
+        {
+            return _commentRepository.GetCommentWithUser(predicate);
+        }
+
+        public PASTEBOOK_COMMENT GetComment(int id)
+        {
+            return _commentRepository.Get(id);
+        }
+        #endregion
+
+        #region[Friend]
         public bool AddFriendRequest(PASTEBOOK_FRIEND friendRequest)
         {
-            bool result = false;
-            result = _friendRepo.CreateRecord(friendRequest);
-
-            return result;
-        }
-
-        public bool BlockUser(PASTEBOOK_FRIEND friendRequest)
-        {
-            bool result = false;
-            result = _friendRepo.CreateRecord(friendRequest);
-
-            return result;
-        }
-
-        public bool CommentOnPost(PASTEBOOK_COMMENT comment)
-        {
-            bool result = false;
-            result = _commentRepo.CreateRecord(comment);
-
-            return result;
-        }
-
-        public bool LikePost(PASTEBOOK_LIKE like)
-        {
-            bool result = false;
-            result = _likeRepo.CreateRecord(like);
-
-            return result;
-        }
-
-        public List<PASTEBOOK_FRIEND> RetrieveFriends(int userId, out List<int> listOfFriendId)
-        {
-            List<PASTEBOOK_FRIEND> listOfFriends = new List<PASTEBOOK_FRIEND>();
-            listOfFriendId = new List<int>();
-            
-            listOfFriends = _friendRepo.RetrieveList(x=>x.FRIEND_ID == userId, receiver=> receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER);
-
-
-            foreach (var compareFriend in _friendRepo.RetrieveList(x => x.USER_ID == userId, receiver => receiver.PASTEBOOK_USER1, sender => sender.PASTEBOOK_USER))
-            {
-                if (!(listOfFriends.Any(x => x.ID == compareFriend.ID)))
-                {
-                    listOfFriends.Add(compareFriend);
-                }
-            }
-
-            foreach (var friend in listOfFriends)
-            {
-                if (friend.USER_ID == userId && friend.REQUEST == "Y")
-                {
-                    listOfFriendId.Add(friend.FRIEND_ID);
-                }
-
-                else if(friend.FRIEND_ID == userId && friend.REQUEST == "Y")
-                {
-                    listOfFriendId.Add(friend.USER_ID);
-                }
-            }
-
-            return listOfFriends;
-        }
-
-        public PASTEBOOK_LIKE RetrieveLike(int likeId)
-        {
-            PASTEBOOK_LIKE like = new PASTEBOOK_LIKE();
-            like = _likeRepo.RetrieveSpecificRecord(x=>x.ID == likeId);
-
-            return like;
-        }
-
-        public bool UnlikePost(PASTEBOOK_LIKE like)
-        {
-            bool result = false;
-            result = _likeRepo.DeleteRecord(like);
-
-            return result;
-        }
-
-        public bool UpdateFriendRequest(PASTEBOOK_FRIEND friendRequest)
-        {
-            bool result = false;
-            result = _friendRepo.UpdateRecord(friendRequest);
-
-            return result;
-        }
-
-        public PASTEBOOK_FRIEND RetrieveFriendRequest(int friendRequestId)
-        {
-            PASTEBOOK_FRIEND friendRequest = new PASTEBOOK_FRIEND();
-            friendRequest = _friendRepo.RetrieveSpecificRecord(x=>x.ID.Equals(friendRequestId));
-
-            return friendRequest;
-        }
-
-        public List<PASTEBOOK_LIKE> RetrieveLikes(int postId)
-        {
-            List<PASTEBOOK_LIKE> listOfLikes = new List<PASTEBOOK_LIKE>();
-            listOfLikes = _likeRepo.RetrieveList(x=>x.POST_ID == postId, liker=>liker.PASTEBOOK_USER);
-
-            return listOfLikes;
+            return _friendRepository.Create(friendRequest);
         }
 
         public bool RejectFriendRequest(PASTEBOOK_FRIEND friendRequest)
         {
-            bool result = false;
-            result = _friendRepo.DeleteRecord(friendRequest);
-
-            return result;
+            return _friendRepository.Delete(friendRequest);
         }
+
+        public bool AcceptFriendRequest(PASTEBOOK_FRIEND friendRequest)
+        {
+            _friendRepository.Update(friendRequest);
+
+            int tempId = friendRequest.FRIEND_ID;
+            friendRequest.FRIEND_ID = friendRequest.USER_ID;
+            friendRequest.USER_ID = tempId;
+
+            return _friendRepository.Create(friendRequest);
+        }
+
+        public PASTEBOOK_FRIEND GetFriendRequest(int id)
+        {
+            return _friendRepository.Get(id);
+        }
+
+        public List<PASTEBOOK_FRIEND> GetFriendList(int id)
+        {
+            return _friendRepository.GetListOfFriend(id);
+        }
+
+        public List<PASTEBOOK_FRIEND> GetListOfFriendRequest(int id)
+        {
+            return _friendRepository.GetListOfFriendRequest(id);
+        }
+        #endregion
     }
 }

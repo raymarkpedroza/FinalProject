@@ -140,18 +140,16 @@
     margin-bottom:10px;
 }
 
-#user-option{ 
+#user-option:hover{ 
     margin-top:20px;
     margin-right:0px;
-    color:#004D40;
-    background-color:#fff;
+    color:#fff;
     border:none;
     border-radius:3px;
 }
 
-#user-option:active, #user-option:hover{
-    color:#fff;
-    background-color:#004D40;
+#user-option{
+    color:#004D40;
 }
 
 

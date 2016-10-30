@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public interface IFriendRepository: IGenericTransactionDataRepository <PASTEBOOK_FRIEND>
+    public interface IFriendRepository:IRepository<PASTEBOOK_FRIEND>
     {
+        List<PASTEBOOK_FRIEND> GetListOfFriend(int id);
+        List<PASTEBOOK_FRIEND> GetListOfFriendRequest(int id);
     }
 }

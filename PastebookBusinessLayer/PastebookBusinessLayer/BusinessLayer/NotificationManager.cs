@@ -4,73 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PastebookEF;
-using PastebookDataAccess.Repositories;
+using PastebookDataAccess;
 
 namespace PastebookBusinessLayer.BusinessLayer
 {
-    public class NotificationManager : INotificationManager
+    public class NotificationManager
     {
-        INotificationRepository _notificationRepo;
+        INotificationRepository _notificationRepository;
 
         public NotificationManager()
         {
-            _notificationRepo = new NotificationRepository();
-        }
-
-        public List<PASTEBOOK_NOTIFICATION> RetrieveNotificationByUserId(int userId)
-        {
-            List<PASTEBOOK_NOTIFICATION> listOfNotification = new List<PASTEBOOK_NOTIFICATION>();
-            listOfNotification = _notificationRepo.RetrieveList(x=>x.RECEIVER_ID == userId, sender=>sender.PASTEBOOK_USER1, post=>post.PASTEBOOK_POST);
-
-            return listOfNotification;
-        }
-
-        public PASTEBOOK_NOTIFICATION RetrieveNotificationByNotificationId(int notificationId)
-        {
-            PASTEBOOK_NOTIFICATION notification = new PASTEBOOK_NOTIFICATION();
-            notification = _notificationRepo.RetrieveSpecificRecord(x => x.RECEIVER_ID == notificationId, sender => sender.PASTEBOOK_USER1, post => post.PASTEBOOK_POST);
-
-            return notification;
+            _notificationRepository = new NotificationRepository();
         }
 
         public bool CreateNotification(PASTEBOOK_NOTIFICATION notification)
         {
-            bool result = false;
-            result = _notificationRepo.CreateRecord(notification);
-
-            return result;
-        }
-
-        public bool UpdateNotification(PASTEBOOK_NOTIFICATION notification)
-        {
-            bool result = false;
-            result = _notificationRepo.UpdateRecord(notification);
-
-            return result;
+            return _notificationRepository.Create(notification);
         }
 
         public bool DeleteNotification(PASTEBOOK_NOTIFICATION notification)
         {
-            bool result = false;
-            result = _notificationRepo.DeleteRecord(notification);
-
-            return result;
+            return _notificationRepository.Delete(notification);
         }
 
-        public PASTEBOOK_NOTIFICATION RetrieveCommentNotificationByCommentIdAndUserId(int commentId, int userId)
+        public bool UpdateNotification(PASTEBOOK_NOTIFICATION notification)
         {
-            PASTEBOOK_NOTIFICATION notification = new PASTEBOOK_NOTIFICATION();
-            notification = _notificationRepo.RetrieveList(x => x.COMMENT_ID == commentId, sender => sender.PASTEBOOK_USER1, post => post.PASTEBOOK_POST).Where(x=>x.SENDER_ID == userId).FirstOrDefault();
-
-            return notification;
+            return _notificationRepository.Update(notification);
         }
 
-        public PASTEBOOK_NOTIFICATION RetrieveLikeNotificationByPostIdAndUserId(int postId, int userId)
+        public PASTEBOOK_NOTIFICATION GetNotification(int id)
         {
-            PASTEBOOK_NOTIFICATION notification = new PASTEBOOK_NOTIFICATION();
-            notification = _notificationRepo.RetrieveList(x => x.POST_ID == postId, sender => sender.PASTEBOOK_USER1, post => post.PASTEBOOK_POST).Where(x => x.SENDER_ID == userId).FirstOrDefault();
-
-            return notification;
+            return _notificationRepository.Get(id);
         }
+
+        public List<PASTEBOOK_NOTIFICATION> GetListOfUnseenNotification(int id)
+        {
+            return _notificationRepository.Find(notification => notification.RECEIVER_ID == id && notification.SEEN == "N");
+        }
+
+        public List<PASTEBOOK_NOTIFICATION> GetNotificationWithUser(Func<PASTEBOOK_NOTIFICATION, bool> predicate)
+        {
+            return _notificationRepository.GetNotificationWithUsers(predicate);
+        }
+
+        public PASTEBOOK_NOTIFICATION FindNotification(Func <PASTEBOOK_NOTIFICATION, bool> condition)
+        {
+            return _notificationRepository.Find(condition).FirstOrDefault();
+        }
+
     }
 }

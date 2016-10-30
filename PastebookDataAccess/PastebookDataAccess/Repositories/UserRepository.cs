@@ -1,13 +1,24 @@
-﻿using System;
+﻿using PastebookEF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PastebookEF;
+using System.Data.Entity;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public class UserRepository: GenericTransactionDataRepository<PASTEBOOK_USER>, IUserRepository
+    public class UserRepository : Repository<PASTEBOOK_USER>, IUserRepository
     {
+        public List<PASTEBOOK_USER> GetUserWithCountry(Func<PASTEBOOK_USER, bool> predicate)
+        {
+            using (var context = new PASTEBOOKEntities())
+            {
+                return context.PASTEBOOK_USER
+                    .Include(user=>user.REF_COUNTRY)
+                    .Where(predicate)
+                    .ToList();
+            }
+        }
     }
 }

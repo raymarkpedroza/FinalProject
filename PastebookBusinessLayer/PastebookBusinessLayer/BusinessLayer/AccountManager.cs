@@ -5,97 +5,60 @@ using System.Text;
 using System.Threading.Tasks;
 using PastebookEF;
 using System.Security.Cryptography;
-using PastebookDataAccess.Repositories;
+using PastebookDataAccess;
 
 namespace PastebookBusinessLayer.BusinessLayer
 {
-    public class AccountManager : IAccountManager
+    public class AccountManager
     {
-        private IUserRepository _userRepo;
+        IUserRepository _userRepository;
 
         public AccountManager()
         {
-            _userRepo = new UserRepository();
+            _userRepository = new UserRepository();
         }
 
-        public string GeneratePasswordHash(string password, out string salt)
+        #region[Password]
+        public string GenerateHashedPassword(string password, out string salt)
         {
             salt = GetSaltString();
 
-            string saltedPassword = password + salt;
+            string saltedpassword = password + salt;
 
-            return GetPasswordHashAndSalt(saltedPassword);
+            return GetHashedPasswordAndSalt(saltedpassword);
         }
 
-        public byte[] GetBytes(string text)
-        {
-            return Encoding.ASCII.GetBytes(text);
-        }
-
-        public string GetPasswordHashAndSalt(string saltedPassword)
+        public string GetHashedPasswordAndSalt(string saltedPassword)
         {
             SHA256 sha = new SHA256CryptoServiceProvider();
-            byte[] dataBytes = GetBytes(saltedPassword);
+
+            byte[] dataBytes = Encoding.ASCII.GetBytes(saltedPassword);
             byte[] resultBytes = sha.ComputeHash(dataBytes);
 
-            return GetString(resultBytes);
+            return Encoding.ASCII.GetString(resultBytes);
         }
 
         public string GetSaltString()
         {
             RNGCryptoServiceProvider cryptoServiceProvider = new RNGCryptoServiceProvider();
-
             byte[] saltBytes = new byte[24];
-
             cryptoServiceProvider.GetNonZeroBytes(saltBytes);
 
-            string saltString = GetString(saltBytes);
-
-            return saltString;
+            return Encoding.ASCII.GetString(saltBytes);
         }
 
-        public string GetString(byte[] resultBytes)
-        {
-            return Encoding.ASCII.GetString(resultBytes);
-        }
-
-        public PASTEBOOK_USER RetrieveUserByEmail(string email)
-        {
-            PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email));
-
-            return user;
-        }
-
-        public PASTEBOOK_USER RetrieveUserById(int id)
-        {
-            PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x => x.ID.Equals(id), c => c.REF_COUNTRY);
-
-            return user;
-        }
-
-        public PASTEBOOK_USER RetrieveUserByUsername(string username)
-        {
-            PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = _userRepo.RetrieveSpecificRecord(x => x.USER_NAME.Equals(username), c => c.REF_COUNTRY);
-
-            return user;
-        }
-
-        public bool IsPasswordMatch(string password, string salt, string hash)
+        public bool IsPasswordMatch(string password, string salt, string hashedpassword)
         {
             string saltedPassword = password + salt;
-            return hash == GetPasswordHashAndSalt(saltedPassword);
+            return hashedpassword == GetHashedPasswordAndSalt(saltedPassword);
         }
+        #endregion
 
         public bool LoginUser(string email, string password, out PASTEBOOK_USER user)
         {
             bool result = false;
-            string hashPassword = string.Empty;
-            string salt = string.Empty;
 
-            user = _userRepo.RetrieveSpecificRecord(x=>x.EMAIL_ADDRESS.Equals(email));
+            user = _userRepository.Find(x => x.EMAIL_ADDRESS.Equals(email)).FirstOrDefault();
 
             if (user != null)
             {
@@ -105,42 +68,34 @@ namespace PastebookBusinessLayer.BusinessLayer
             return result;
         }
 
-        public bool RegisterUser(PASTEBOOK_USER user)
+        public bool Register(PASTEBOOK_USER user)
         {
-            bool result = false;
             string salt = string.Empty;
-            user.PASSWORD = GeneratePasswordHash(user.PASSWORD, out salt);
-            user.SALT = salt;
-            result = _userRepo.CreateRecord(user);
 
-            return result;
+            user.PASSWORD = GenerateHashedPassword(user.PASSWORD, out salt);
+            user.SALT = salt;
+
+            return _userRepository.Create(user);
         }
 
-        public List<PASTEBOOK_USER> SearchUserByName(string name)
+        public PASTEBOOK_USER GetUser(Func<PASTEBOOK_USER, bool> condition)
         {
-            List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
-            searchResults = _userRepo.RetrieveList(x=>x.FIRST_NAME.ToLower().Equals(name.ToLower()));
-            searchResults.AddRange(_userRepo.RetrieveList(x=>x.LAST_NAME.ToLower().Equals(name.ToLower())));
+            return _userRepository.Find(condition).FirstOrDefault();
+        }
 
-            return searchResults;
+        public PASTEBOOK_USER GetUserWithCountry(Func<PASTEBOOK_USER, bool> condition)
+        {
+            return _userRepository.GetUserWithCountry(condition).FirstOrDefault();
+        }
+
+        public List<PASTEBOOK_USER> SearchUsers(string keyword)
+        {
+            return _userRepository.Find(x => x.FIRST_NAME.ToLower() == keyword.ToLower() || x.LAST_NAME.ToLower() == keyword.ToLower());
         }
 
         public bool UpdateUser(PASTEBOOK_USER user)
         {
-            bool result = false;
-            result = _userRepo.UpdateRecord(user);
-
-            return result;
-        }
-
-        public bool CheckUserIfExist_Email(string email)
-        {
-            return _userRepo.RetrieveList(x=>x.EMAIL_ADDRESS.ToLower() == email.ToLower()).Count() > 0;
-        }
-
-        public bool CheckUserIfExist_Username(string username)
-        {
-            return _userRepo.RetrieveList(x => x.USER_NAME.ToLower() == username.ToLower()).Count() > 0;
+            return _userRepository.Update(user);
         }
     }
 }

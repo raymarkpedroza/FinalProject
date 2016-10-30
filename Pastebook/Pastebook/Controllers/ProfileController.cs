@@ -19,7 +19,7 @@ namespace Pastebook.Controllers
         public ActionResult UpdateProfile(string aboutme)
         {
             PASTEBOOK_USER user = new PASTEBOOK_USER();
-            user = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
+            user = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
             user.ABOUT_ME = aboutme;
             bool result = false;
             result = accountManager.UpdateUser(user);
@@ -34,8 +34,8 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
-                editProfileViewModel.User = accountManager.RetrieveUserById((int)Session["UserId"]);
-                editProfileViewModel.ListOfCountryModel = countryManager.RetrieveAllCountries();
+                editProfileViewModel.User = accountManager.GetUser(x=>x.ID == (int)Session["UserId"]);
+                editProfileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
                 return View("~/Views/Pastebook/UpdateInformation.cshtml", editProfileViewModel);
             }
             else
@@ -50,7 +50,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
-                editProfileViewModel.User = accountManager.RetrieveUserById((int)Session["UserId"]);
+                editProfileViewModel.User = accountManager.GetUser(x=>x.ID == (int)Session["UserId"]);
                 return View("~/Views/Pastebook/UpdateEmail.cshtml", editProfileViewModel);
             }
             else
@@ -65,7 +65,7 @@ namespace Pastebook.Controllers
             if (Session["Username"] != null)
             {
                 EditProfileViewModel editProfileViewModel = new EditProfileViewModel();
-                editProfileViewModel.User = accountManager.RetrieveUserById((int)Session["UserId"]);
+                editProfileViewModel.User = accountManager.GetUser(x=>x.ID == (int)Session["UserId"]);
                 return View("~/Views/Pastebook/ChangePassword.cshtml", editProfileViewModel);
             }
             else
@@ -78,7 +78,7 @@ namespace Pastebook.Controllers
         {
             bool result = false;
             PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
-            originalUser = accountManager.RetrieveUserByEmail(Session["Email"].ToString());
+            originalUser = accountManager.GetUser(x=>x.EMAIL_ADDRESS == Session["Email"].ToString());
 
             originalUser.USER_NAME = user.USER_NAME;
             originalUser.FIRST_NAME = user.FIRST_NAME;
@@ -108,7 +108,7 @@ namespace Pastebook.Controllers
             bool result = false;
             PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
 
-            originalUser = accountManager.RetrieveUserById((int)Session["UserId"]);
+            originalUser = accountManager.GetUser(x=>x.ID == (int)Session["UserId"]);
             originalUser.EMAIL_ADDRESS = user.EMAIL_ADDRESS;
 
             if (!accountManager.IsPasswordMatch(editProfileViewModel.CurrentPassword, originalUser.SALT, originalUser.PASSWORD))
@@ -132,7 +132,7 @@ namespace Pastebook.Controllers
         {
             bool result = false;
             PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
-            originalUser = accountManager.RetrieveUserByUsername(Session["Username"].ToString());
+            originalUser = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
 
             if (!accountManager.IsPasswordMatch(editProfileViewModel.CurrentPassword, originalUser.SALT, originalUser.PASSWORD))
             {
@@ -143,7 +143,7 @@ namespace Pastebook.Controllers
             {
                 originalUser.PASSWORD = editProfileViewModel.Password;
                 string salt = string.Empty;
-                originalUser.PASSWORD = accountManager.GeneratePasswordHash(originalUser.PASSWORD, out salt);
+                originalUser.PASSWORD = accountManager.GenerateHashedPassword(originalUser.PASSWORD, out salt);
                 originalUser.SALT = salt;
                 result = accountManager.UpdateUser(originalUser);
             }

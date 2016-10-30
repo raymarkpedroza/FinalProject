@@ -34,24 +34,25 @@
                         @{Html.RenderAction("GetNotifications", "Interaction");}
                     </div>
 
-                    <div class="btn-group">
-                        <button  id="user-option" class = "icon btn btn-xs btn-default" data-toggle="dropdown">
-                            @Session["UserFullname"].ToString()
-                        <span class="caret"></span>
-                        </button>
+                    <div class="btn-group" id="pastebook-nav-bar-settings">
+                        <span class="glyphicon glyphicon-cog icon" id="pastebook-settings" data-toggle="dropdown"></span>
 
-                        <ul class="dropdown-menu" aria-labelledby="user-option">
-                            <li class="profile-listitem">@Html.ActionLink("View Profile", "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)</li>
+                        <ul class="dropdown-menu" aria-labelledby="pastebook-settings">
                             <li class="divider" />
                             <li class="profile-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</li>
                             <li class="profile-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
                             <li class="profile-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</li>
-                            <li class="divider"/>
+                            <li class="divider" />
                             <li class="profile-listitem">@Html.ActionLink("Logout", "Logout", "Pastebook", null, new { @class = "link" })</li>
                         </ul>
                     </div>
 
-                }
+                    <div class="btn-group">
+                        <span id="user-option icon">
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)
+                        </span>
+                    </div>
+                    }
             </div>
         }
     </div>

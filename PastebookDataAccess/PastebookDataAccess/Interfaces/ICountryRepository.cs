@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public interface ICountryRepository: IGenericTransactionDataRepository<REF_COUNTRY>
+    public interface ICountryRepository:IRepository<REF_COUNTRY>
     {
+
     }
 }

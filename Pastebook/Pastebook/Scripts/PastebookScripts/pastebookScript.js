@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    $('#other-notification').hide();
+
     function RefreshNavBar() {
         setTimeout(function () {
             CountNotif();
@@ -7,26 +9,15 @@
     }
     RefreshNavBar();
 
-    $(".textArea-comment").focus(function (e) {
-        RefreshNavBar();
-    });
-
     function CountNotif() {
-
         $.ajax({
             url: countNotifUrl,
             type: 'GET',
             dataType: 'JSON',
             success: function (result) {
-                if (result.result > 1) {
+                if (result.result > 0) {
+                    $('#other-notification').show();
                     $('#other-notification').text(result.result);
-                    $.ajax({
-                        url: getNavBarUrl,
-                        dataType: 'html',
-                        success: function (result) {
-                            $('#pastebook-nav-bar').load(result);
-                        }
-                    })
                 }
             }
         })
@@ -34,23 +25,13 @@
 
     $("#notifications").click(function () {
         $.ajax({
-            url: getNotificationItemUrl,
-            dataType: 'html',
-            success: function (result) {
-                $('#notificationContainer').load(result);
-            }
-        })
-
-        $.ajax({
             url: sawNotificationURL,
             type: 'POST',
             success: function (data) {
             },
-
-            error: function () {
-                window.location.href = errorURL;
-            }
         })
+        $('#other-notification').hide();
+
     });
 
     $('#likeModal').on('show.bs.modal', function () {

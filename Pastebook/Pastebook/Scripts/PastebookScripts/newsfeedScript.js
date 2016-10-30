@@ -45,7 +45,7 @@
         setTimeout(function () {
             loadNewsfeed();
             RefreshNewsfeed();
-        }, 60000);
+        }, 30000);
     }
     RefreshNewsfeed();
 

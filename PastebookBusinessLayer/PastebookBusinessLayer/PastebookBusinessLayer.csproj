@@ -57,12 +57,7 @@
   <ItemGroup>
     <Compile Include="BusinessLayer\AccountManager.cs" />
     <Compile Include="BusinessLayer\CountryManager.cs" />
-    <Compile Include="BusinessLayer\IAccountManager.cs" />
-    <Compile Include="BusinessLayer\ICountryManager.cs" />
-    <Compile Include="BusinessLayer\INotificationManager.cs" />
     <Compile Include="BusinessLayer\InteractionManager.cs" />
-    <Compile Include="BusinessLayer\IPostManager.cs" />
-    <Compile Include="BusinessLayer\IInteractionManager.cs" />
     <Compile Include="BusinessLayer\NotificationManager.cs" />
     <Compile Include="BusinessLayer\PostManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

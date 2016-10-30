@@ -4,72 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PastebookEF;
-using PastebookDataAccess.Repositories;
+using PastebookDataAccess;
 
 namespace PastebookBusinessLayer.BusinessLayer
 {
-    public class PostManager : IPostManager
+    public class PostManager 
     {
-        private IPostRepository _postRepo;
+        IPostRepository _postRepository;
 
         public PostManager()
         {
-            _postRepo = new PostRepository();
+            _postRepository = new PostRepository();
         }
 
         public bool CreatePost(PASTEBOOK_POST post)
         {
-            bool result = false;
-            result = _postRepo.CreateRecord(post);
-
-            return result;
+            return _postRepository.Create(post);
         }
 
-        public List<PASTEBOOK_POST> RetrieveNewsfeedPost(int id, List<int> listOfFriendIds)
+        public List<PASTEBOOK_POST> GetNewsfeedPost(List<int> listOfPostersId)
         {
-            List<PASTEBOOK_POST> listOfUsersPost = new List<PASTEBOOK_POST>();
-
-            listOfUsersPost = _postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER));
-
-
-            foreach (var comparePost in _postRepo.RetrieveList(x => x.POSTER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)))
-            {
-                if (!(listOfUsersPost.Any(x => x.ID.Equals(comparePost.ID))))
-                {
-                    listOfUsersPost.Add(comparePost);
-                }
-            }
-
-            foreach (var friendId in listOfFriendIds)
-            {
-                listOfUsersPost.AddRange(_postRepo.RetrieveList(x => x.POSTER_ID.Equals(friendId), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)));
-            }
-
-            return listOfUsersPost.OrderByDescending(x=>x.CREATED_DATE).ToList();
+            return _postRepository.GetNewsfeedPost(listOfPostersId);
         }
 
-        public PASTEBOOK_POST RetrievePost(int postId)
+        public List<PASTEBOOK_POST> GetTimelinePost(int id)
         {
-            PASTEBOOK_POST post = new PASTEBOOK_POST();
-            post = _postRepo.RetrieveSpecificRecord(x=>x.ID.Equals(postId), poster=>poster.PASTEBOOK_USER, profileOwner=>profileOwner.PASTEBOOK_USER1, comments=>comments.PASTEBOOK_COMMENT.Select(commentator=>commentator.PASTEBOOK_USER), likes=> likes.PASTEBOOK_LIKE.Select(x=>x.PASTEBOOK_USER));
-
-            return post;
+            return _postRepository.GetTimelinePost(id);
         }
 
-        public List<PASTEBOOK_POST> RetrieveTimelinePost(int id)
+        public PASTEBOOK_POST GetPost(int id)
         {
-            List<PASTEBOOK_POST> listOfUsersPost = new List<PASTEBOOK_POST>();
-            listOfUsersPost = _postRepo.RetrieveList(x => x.PROFILE_OWNER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER));
-
-            foreach (var comparePost in _postRepo.RetrieveList(x => x.POSTER_ID.Equals(id), poster => poster.PASTEBOOK_USER, profileOwner => profileOwner.PASTEBOOK_USER1, comments => comments.PASTEBOOK_COMMENT.Select(commentator => commentator.PASTEBOOK_USER), likes => likes.PASTEBOOK_LIKE.Select(liker => likes.PASTEBOOK_USER)))
-            {
-                if (!(listOfUsersPost.Any(x => x.ID.Equals(comparePost.ID))))
-                {
-                    listOfUsersPost.Add(comparePost);
-                }
-            }
-
-            return listOfUsersPost.OrderByDescending(x => x.CREATED_DATE).Take(100).ToList();
+            return _postRepository.GetPost(id);
         }
     }
 }

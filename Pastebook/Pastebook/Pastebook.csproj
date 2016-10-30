@@ -85,7 +85,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PastebookBusinessLayer">
+    <Reference Include="PastebookBusinessLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\PastebookBusinessLayer\PastebookBusinessLayer\bin\Debug\PastebookBusinessLayer.dll</HintPath>
     </Reference>
     <Reference Include="PastebookEF">

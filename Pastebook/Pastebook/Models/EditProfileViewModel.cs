@@ -1,5 +1,4 @@
-﻿using PastebookBusinessLayer.BusinessLayer;
-using PastebookEF;
+﻿using PastebookEF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

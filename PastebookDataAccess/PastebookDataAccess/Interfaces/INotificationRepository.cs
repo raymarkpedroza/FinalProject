@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public interface INotificationRepository: IGenericTransactionDataRepository<PASTEBOOK_NOTIFICATION>
+    public interface INotificationRepository:IRepository<PASTEBOOK_NOTIFICATION>
     {
+        List<PASTEBOOK_NOTIFICATION> GetNotificationWithUsers(Func<PASTEBOOK_NOTIFICATION, bool> predicate);
     }
 }

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using PastebookEF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PastebookEF;
 
-namespace PastebookDataAccess.Repositories
+namespace PastebookDataAccess
 {
-    public interface ICommentRepository: IGenericTransactionDataRepository <PASTEBOOK_COMMENT>
+    public interface ICommentRepository: IRepository<PASTEBOOK_COMMENT>
     {
+        PASTEBOOK_COMMENT GetCommentWithUser(Func<PASTEBOOK_COMMENT, bool> predicate);
     }
 }
