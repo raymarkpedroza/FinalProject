@@ -3,7 +3,7 @@
 @if (Model.User.ID == (int)Session["UserId"])
 {
     <span class="pull-right" id="edit-icon"><span class="glyphicon glyphicon-edit"></span></span>
-    <span class="pull-right" id="edit-profile-choice"><input type="button" id="saveButton" value="Save" class="btn btn-primary" />  <input type="button" id="cancelEditButton" value="Cancel" class="btn btn-danger"></span>
+    <span class="pull-right" id="edit-profile-choice"><button type="button" id="saveButton" class="btn btn-xs">Save</button> <button type="button" id="cancelEditButton" class="btn btn-xs">Cancel</button></span>
 
 }
 <h3>

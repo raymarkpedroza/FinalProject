@@ -18,7 +18,16 @@
             type: 'GET',
             dataType: 'JSON',
             success: function (result) {
-                $('#other-notification').text(result.result);
+                if (result.result > 1) {
+                    $('#other-notification').text(result.result);
+                    $.ajax({
+                        url: getNavBarUrl,
+                        dataType: 'html',
+                        success: function (result) {
+                            $('#pastebook-nav-bar').load(result);
+                        }
+                    })
+                }
             }
         })
     }
@@ -42,14 +51,6 @@
                 window.location.href = errorURL;
             }
         })
-    });
-
-    $('#logo-icon').hover(function () {
-        $(this).attr('src', blackLogo);
-    });
-
-    $('#logo-icon').mouseout(function () {
-        $(this).attr('src', grayLogo);
     });
 
     $('#likeModal').on('show.bs.modal', function () {

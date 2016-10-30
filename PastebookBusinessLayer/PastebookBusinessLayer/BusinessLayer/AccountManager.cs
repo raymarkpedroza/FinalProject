@@ -34,13 +34,10 @@ namespace PastebookBusinessLayer.BusinessLayer
 
         public string GetPasswordHashAndSalt(string saltedPassword)
         {
-            // Let us use SHA256 algorithm to 
-            // generate the hash from this salted password
             SHA256 sha = new SHA256CryptoServiceProvider();
             byte[] dataBytes = GetBytes(saltedPassword);
             byte[] resultBytes = sha.ComputeHash(dataBytes);
 
-            // return the hash string to the caller
             return GetString(resultBytes);
         }
 
@@ -48,16 +45,12 @@ namespace PastebookBusinessLayer.BusinessLayer
         {
             RNGCryptoServiceProvider cryptoServiceProvider = new RNGCryptoServiceProvider();
 
-            // Lets create a byte array to store the salt bytes
             byte[] saltBytes = new byte[24];
 
-            // lets generate the salt in the byte array
             cryptoServiceProvider.GetNonZeroBytes(saltBytes);
 
-            // Let us get some string representation for this salt
             string saltString = GetString(saltBytes);
 
-            // Now we have our salt string ready lets return it to the caller
             return saltString;
         }
 

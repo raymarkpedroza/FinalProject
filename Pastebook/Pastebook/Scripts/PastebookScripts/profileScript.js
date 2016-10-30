@@ -5,7 +5,6 @@
     $('#cancelEditButton').hide();
 
     $(document).delegate("#saveButton", "click", function () {
-        alert("clicked")
         var data = {
             aboutme: $('#about-me').val()
         }

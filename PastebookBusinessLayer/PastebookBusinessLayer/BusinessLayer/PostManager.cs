@@ -69,7 +69,7 @@ namespace PastebookBusinessLayer.BusinessLayer
                 }
             }
 
-            return listOfUsersPost.OrderByDescending(x => x.CREATED_DATE).ToList();
+            return listOfUsersPost.OrderByDescending(x => x.CREATED_DATE).Take(100).ToList();
         }
     }
 }

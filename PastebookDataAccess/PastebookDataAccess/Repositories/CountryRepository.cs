@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess.Repositories
 {
-    public class CountryRepository: GenericRetrieveDataRepository<REF_COUNTRY>, ICountryRepository
+    public class CountryRepository: GenericTransactionDataRepository<REF_COUNTRY>, ICountryRepository
     {
     }
 }

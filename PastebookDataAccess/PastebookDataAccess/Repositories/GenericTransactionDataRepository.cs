@@ -26,9 +26,8 @@ namespace PastebookDataAccess.Repositories
                     records = dbQuery.ToList<T>();
                 }
             }
-            catch (Exception)
+            catch
             {
-                throw;
             }
             return records;
         }
@@ -50,9 +49,8 @@ namespace PastebookDataAccess.Repositories
                 }
             }
 
-            catch (Exception)
+            catch
             {
-                throw;
             }
 
             return recordList;
@@ -86,9 +84,8 @@ namespace PastebookDataAccess.Repositories
                     result = context.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch 
             {
-                throw;
             }
             return result != 0;
         }
@@ -104,9 +101,8 @@ namespace PastebookDataAccess.Repositories
                     result = context.SaveChanges();
                 }
             }
-            catch (Exception)
+            catch 
             {
-                throw;
             }
             return result != 0;
         }
@@ -123,9 +119,8 @@ namespace PastebookDataAccess.Repositories
                 }
             }
 
-            catch (Exception)
+            catch 
             {
-                throw;
             }
 
             return result != 0;

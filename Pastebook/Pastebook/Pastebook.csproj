@@ -196,6 +196,7 @@
     <Content Include="Content\Images\logo-gray.png" />
     <Content Include="Content\Images\pastebook-default.png" />
     <Content Include="Content\navbar-no-display.js" />
+    <Content Include="Content\pastebook.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

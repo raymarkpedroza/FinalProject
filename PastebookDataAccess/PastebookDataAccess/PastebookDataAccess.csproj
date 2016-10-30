@@ -55,13 +55,11 @@
     <Compile Include="Repositories\CommentRepository.cs" />
     <Compile Include="Repositories\CountryRepository.cs" />
     <Compile Include="Repositories\FriendRepository.cs" />
-    <Compile Include="Repositories\GenericRetrieveDataRepository.cs" />
     <Compile Include="Repositories\GenericTransactionDataRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\ICommentRepository.cs" />
     <Compile Include="Interfaces\ICountryRepository.cs" />
     <Compile Include="Interfaces\IFriendRepository.cs" />
-    <Compile Include="Interfaces\IGenericRetrieveDataRepository.cs" />
     <Compile Include="Interfaces\IGenericTransactionDataRepository.cs" />
     <Compile Include="Interfaces\ILikeRepository.cs" />
     <Compile Include="Interfaces\INotificationRepository.cs" />
