@@ -14,13 +14,13 @@ namespace Pastebook.Models
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Password required.")]
+        [Required(ErrorMessage = "Password is required")]
         [StringLength(50, ErrorMessage = "Maximum characters for password is 50")]
         public string Password { get; set; }
 
         [Display(Name = "Confirm Password")]
-        [Required(ErrorMessage = "Enter Confirm Password")]
-        [Compare("Password", ErrorMessage = "Password and Confirm Password doesn't match.")]
+        [Required(ErrorMessage = "Enter confirm password")]
+        [Compare("Password", ErrorMessage = "Password mismatch")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }

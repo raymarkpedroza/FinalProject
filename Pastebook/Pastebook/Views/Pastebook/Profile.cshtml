@@ -137,9 +137,6 @@
 </div>
 
 @section scripts{
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script>
         var createPostURL = '@Url.Action("CreatePost", "Post")'
         var addLikeURL = '@Url.Action("AddLike", "Interaction")'
@@ -149,6 +146,9 @@
         var getProfileDetails = '@Url.Action("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME })';
         var errorURL = '@Url.Action("ErrorPage","Error")';
         var updateProfileURL = '@Url.Action("UpdateProfile","Profile")';
+        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var checkAboutMeURL = '@Url.Action("CheckAboutMeIfValid", "Profile")';
+        var checkPostValid = '@Url.Action("CheckIfPostValid", "Post")';
     </script>
     <script src="~/Scripts/PastebookScripts/profileScript.js"> </script>
 }

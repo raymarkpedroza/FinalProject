@@ -14,6 +14,23 @@ namespace Pastebook.Controllers
         AccountManager accountManager = new AccountManager();
         CountryManager countryManager = new CountryManager();
         InteractionManager interactionManager = new InteractionManager();
+        ValidationManager validator = new ValidationManager();
+        public JsonResult CheckAboutMeIfValid(string aboutme)
+        {
+            string errorText = string.Empty;
+
+            if (validator.CheckIfOutOfStringLimit(aboutme, 2000))
+            {
+                errorText = "Maximum characters for About Me is 2000";
+            }
+
+            if (validator.CheckIfWhiteSpace(aboutme))
+            {
+                errorText = "Whitespaces are not allowed in your about me description";
+            }
+
+            return Json(new { result = errorText}, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public ActionResult UpdateProfile(string aboutme)

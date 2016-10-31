@@ -1,22 +1,19 @@
 ﻿@model IEnumerable<PastebookEF.PASTEBOOK_NOTIFICATION>
 
-
 <span class="glyphicon glyphicon-bell icon" id="notifications" data-toggle="dropdown">
 </span>
 
 <span class="badge badge-notify" id="other-notification" data-toggle="dropdown"> @Model.Where(x => x.SEEN == "N").Where(x => x.RECEIVER_ID == (int)Session["UserId"]).Where(x => x.PASTEBOOK_USER1.ID != (int)Session["UserId"]).Count() </span>
 
-<div class="dropdown-menu" aria-labelledby="notifications">
+<ul class="dropdown-menu" aria-labelledby="notifications">
     @if (Model.Count() < 1)
     {
-        <div class="notification-listitem">No notification.</div>
+        <li class="notification-listitem">No notification.</li>
     }
 
     else
     {
-        <div id="notificationContainer">
-            @{Html.RenderAction("GetNotificationItems", "Interaction");}
-        </div>
+        Html.RenderAction("GetNotificationItems", "Interaction");
     }
-</div>
+</ul>
 

@@ -14,6 +14,7 @@ namespace Pastebook.Controllers
         PostManager postManager = new PostManager();
         InteractionManager interactionManager = new InteractionManager();
         NotificationManager notifactionManager = new NotificationManager();
+        ValidationManager validationManager = new ValidationManager();
 
         public JsonResult CreatePost(string content, int profileOwner)
         {
@@ -23,10 +24,29 @@ namespace Pastebook.Controllers
             post.PROFILE_OWNER_ID = profileOwner;
             post.CREATED_DATE = DateTime.Now;
 
-            bool result = false;
-            result = postManager.CreatePost(post);
+            return Json(new { result = postManager.CreatePost(post) });
+        }
 
-            return Json(new { result = result });
+        public JsonResult CheckIfPostValid(string content)
+        {
+            string errorText = string.Empty;
+
+            if (validationManager.CheckIfOutOfStringLimit(content, 1000))
+            {
+                errorText = "Maximum characters for posting is 1000 characters";
+            }
+
+            if (validationManager.CheckIfWhiteSpace(content))
+            {
+                errorText = "Posting white spaces is invalid";
+            }
+
+            if (validationManager.CheckIfIsNullOrEmpty(content))
+            {
+                errorText = "Posting empty text is invalid";
+            }
+
+            return Json(new { result = errorText }, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult GetTimelinePosts(int id)

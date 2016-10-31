@@ -31,32 +31,36 @@ namespace PastebookEF
     
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Username is required.")]
+        [Required(ErrorMessage = "Username is required")]
         [StringLength(50, ErrorMessage = "Maximum characters for username is 50")]
-        [RegularExpression("^[a-zA-Z0-9._-]{1,50}",ErrorMessage ="Invalid Username Format")]
+
+        //http://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
+        [RegularExpression("^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$", ErrorMessage = "Invalid username. Username can only start with alphabet character and number. It cannot contains trailing period(.) or underscore(_). Username can end with alphabet character or number.")]
         [DisplayName("Username")]
         public string USER_NAME { get; set; }
 
         [DisplayName("Password")]
+        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         [StringLength(50, ErrorMessage = "Maximum characters for password is 50")]
         public string PASSWORD { get; set; }
         public string SALT { get; set; }
 
-        [Required(ErrorMessage = "Firstname is required.")]
+        [Required(ErrorMessage = "First name is required")]
         [DisplayName("First Name")]
         [StringLength(50, ErrorMessage = "Maximum characters for first name is 50")]
-        [RegularExpression("^[a-zA-Z0-9. -]{1,50}", ErrorMessage = "Invalid First Name")]
+        [RegularExpression("^[a-zA-Z0-9]+([. ]?[a-zA-Z0-9]+[.]?)*$", ErrorMessage = "Invalid first name. First name cannot contain special characters, except period(.), hyphen(-) but it cannot contains trailing period and hyphen. It can end with alphabet character, number or period.")]
         public string FIRST_NAME { get; set; }
 
-        [Required(ErrorMessage = "Lastname is required.")]
+        [Required(ErrorMessage = "Last name is required")]
         [DisplayName("Last Name")]
         [StringLength(50, ErrorMessage = "Maximum characters for last name is 50")]
-        [RegularExpression("^[a-zA-Z0-9. -]{1,50}", ErrorMessage = "Invalid Last Name")]
+        [RegularExpression("^[a-zA-Z0-9]+([. ]?[a-zA-Z0-9]+[.]?)*$", ErrorMessage = "Invalid last name. First name cannot contain special characters, except period(.), hyphen(-) but it cannot contains trailing period and hyphen. It can end with alphabet character, number or period.")]
         public string LAST_NAME { get; set; }
 
         [Required(ErrorMessage = "Birthday is required")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Birthday")]
         public System.DateTime BIRTHDAY { get; set; }
 

@@ -43,7 +43,7 @@
                 <span class="col-md-4"><span class="glyphicon glyphicon-gift"></span> Birthday*</span>
 
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", id = "dtpBirthday", @Value=Model.User.BIRTHDAY.ToString("MM/dd/yyyy"), @readonly = true } })
+                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", @Value=Model.User.BIRTHDAY, @type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") } })
                         @Html.ValidationMessageFor(model => model.User.BIRTHDAY, "", new { @class = "text-danger" })
                     </div>
             </div>
@@ -119,16 +119,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
-            $(function () {
-                $("#dtpBirthday").datepicker({
-                    dateFormat: 'mm/dd/yy',
-                    minDate: new Date('01/01/1600'),
-                    maxDate: '0',
-                    changeMonth: true,
-                    changeYear: true,
-                });
-            });
-
             $("#btnCancel").click(function (event) {
                 event.preventDefault();
                 var url = '@Url.Action("Index", "Home")';

@@ -10,9 +10,9 @@
         <div class="container">
             <div id="registerForm" class="col-md-6 col-md-offset-3">
                 <div id="register-header" class="text-center">
-                    <h3>Account Registration <small class="small">Required fields(*)</small></h3>
+                    <h3>Account Registration</h3>
                 </div>
-
+                <div id="register-header-text">Required fields(*)</div>
                 <div class="form-group">
                     <span class="col-md-4"><span class="glyphicon glyphicon-envelope required-asterisk"></span> Email*</span>
                     <div class="col-md-8">
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="form-group">
-                    <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Firstname*</span>
+                    <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> First name*</span>
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.User.FIRST_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "first name" } })
                         @Html.ValidationMessageFor(model => model.User.FIRST_NAME, "", new { @class = "text-danger" })
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="form-group">
-                    <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Lastname* </span>
+                    <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Last name* </span>
                     
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.User.LAST_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "last name" } })
@@ -68,7 +68,7 @@
                     <span class="col-md-4"><span class="glyphicon glyphicon-gift"></span> Birthday*</span>
                     
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", id = "dtpBirthday", @readonly=true } })
+                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", @type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") } })
                         @Html.ValidationMessageFor(model => model.User.BIRTHDAY, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -144,18 +144,6 @@
     </script>
     <script>
         $(document).ready(function () {
-            $(function () {
-                $("#dtpBirthday").datepicker({
-                    dateFormat: 'mm/dd/yy',
-                    minDate: new Date('01/01/1600'),
-                    maxDate: '0',
-                    changeMonth: true,
-                    changeYear: true,
-            });
-
-                $("#dtpBirthday").datepicker().datepicker("setDate", new Date());
-            });
-
             $("#btnCancel").click(function (event) {
                 var url = '@Url.Action("Index", "Pastebook")';
                 window.location.href = url;

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<PastebookEF.PASTEBOOK_NOTIFICATION>
+
+
+<div class="container">
+    <div class="row">
+        <div id="notification-header">
+            <h1>Notifications</h1>
+        </div>
+            @foreach (var notification in Model)
+            {
+                    if (notification.SENDER_ID != (int)Session["UserId"])
+                    {
+                        <div class="notification-notification-items">
+
+                            @if (notification.NOTIF_TYPE == "L" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
+                            {
+                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " liked a post  you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
+                            }
+
+                            @if (notification.NOTIF_TYPE == "C" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
+                            {
+                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " commented on a post you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
+                            }
+
+
+                            @if (notification.NOTIF_TYPE == "F" && notification.SENDER_ID != (int)Session["UserId"])
+                            {
+                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " sent you a friend request.", "UserProfile", "Pastebook", new { username = notification.PASTEBOOK_USER1.USER_NAME }, null);
+                            }
+                        </div>
+                    }
+            }
+    </div>
+</div>

@@ -38,7 +38,6 @@
                         <span class="glyphicon glyphicon-cog icon" id="pastebook-settings" data-toggle="dropdown"></span>
 
                         <ul class="dropdown-menu" aria-labelledby="pastebook-settings">
-                            <li class="divider" />
                             <li class="profile-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</li>
                             <li class="profile-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
                             <li class="profile-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</li>
@@ -48,8 +47,8 @@
                     </div>
 
                     <div class="btn-group">
-                        <span id="user-option icon">
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)
+                        <span id="user-option">
+                            @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, new { @id="user-option"})
                         </span>
                     </div>
                     }

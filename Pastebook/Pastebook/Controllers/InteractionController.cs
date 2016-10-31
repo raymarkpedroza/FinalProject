@@ -15,6 +15,7 @@ namespace Pastebook.Controllers
         PostManager postManager = new PostManager();
         NotificationManager notificationManager = new NotificationManager();
         AccountManager accountManager = new AccountManager();
+        ValidationManager validator = new ValidationManager();
 
         public JsonResult AddLike(int postId)
         {
@@ -25,16 +26,22 @@ namespace Pastebook.Controllers
             bool result = false;
             result = interactionManager.Like(like);
 
-            PASTEBOOK_NOTIFICATION likePostNotification = new PASTEBOOK_NOTIFICATION();
-            likePostNotification.NOTIF_TYPE = "L";
-            likePostNotification.SEEN = "N";
-            likePostNotification.POST_ID = postId;
-            likePostNotification.CREATED_DATE = DateTime.Now;
-            likePostNotification.RECEIVER_ID = postManager.GetPost(postId).POSTER_ID;
-            likePostNotification.SENDER_ID = (int)Session["UserId"];
-            likePostNotification.COMMENT_ID = null;
+            int posterId = postManager.GetPost(postId).POSTER_ID;
 
-            notificationManager.CreateNotification(likePostNotification);
+            if (posterId != (int)Session["UserId"])
+            {
+                PASTEBOOK_NOTIFICATION likePostNotification = new PASTEBOOK_NOTIFICATION();
+                likePostNotification.NOTIF_TYPE = "L";
+                likePostNotification.SEEN = "N";
+                likePostNotification.POST_ID = postId;
+                likePostNotification.CREATED_DATE = DateTime.Now;
+                likePostNotification.RECEIVER_ID = posterId;
+                likePostNotification.SENDER_ID = (int)Session["UserId"];
+                likePostNotification.COMMENT_ID = null;
+
+                notificationManager.CreateNotification(likePostNotification);
+            }
+
             return Json(new { result = result });
         }
 
@@ -45,8 +52,13 @@ namespace Pastebook.Controllers
             like = interactionManager.GetLike(likeId);
             bool result = false;
 
-            notificationManager.DeleteNotification(notificationManager.FindNotification(x=>x.POST_ID == interactionManager.GetLike(likeId).POST_ID && x.RECEIVER_ID == (int)Session["UserId"]));
+            if (like.LIKED_BY != (int)Session["UserId"])
+            {
+                notificationManager.DeleteNotification(notificationManager.FindNotification(x => x.POST_ID == interactionManager.GetLike(likeId).POST_ID && x.RECEIVER_ID == (int)Session["UserId"]));
+            }
+
             result = interactionManager.Unlike(like);
+
             return Json(new { result = result });
         }
 
@@ -60,18 +72,45 @@ namespace Pastebook.Controllers
             bool result = false;
             result = interactionManager.AddComment(comment);
 
-            PASTEBOOK_NOTIFICATION commentPostNotification = new PASTEBOOK_NOTIFICATION();
-            commentPostNotification.NOTIF_TYPE = "C";
-            commentPostNotification.SEEN = "N";
-            commentPostNotification.POST_ID = postId;
-            commentPostNotification.CREATED_DATE = DateTime.Now;
-            commentPostNotification.RECEIVER_ID = postManager.GetPost(postId).POSTER_ID;
-            commentPostNotification.SENDER_ID = (int)Session["UserId"];
-            commentPostNotification.COMMENT_ID = comment.ID;
+            int posterId = postManager.GetPost(postId).POSTER_ID;
 
-            notificationManager.CreateNotification(commentPostNotification);
+            if (posterId != (int)Session["UserId"])
+            {
+                PASTEBOOK_NOTIFICATION commentPostNotification = new PASTEBOOK_NOTIFICATION();
+                commentPostNotification.NOTIF_TYPE = "C";
+                commentPostNotification.SEEN = "N";
+                commentPostNotification.POST_ID = postId;
+                commentPostNotification.CREATED_DATE = DateTime.Now;
+                commentPostNotification.RECEIVER_ID = posterId;
+                commentPostNotification.SENDER_ID = (int)Session["UserId"];
+                commentPostNotification.COMMENT_ID = comment.ID;
+
+                notificationManager.CreateNotification(commentPostNotification);
+            }
 
             return Json(new { result = result });
+        }
+
+        public JsonResult CheckIfCommentIsValid(string content)
+        {
+            string errorText = string.Empty;
+
+            if (validator.CheckIfWhiteSpace(content))
+            {
+                errorText = "Commenting white spaces is invalid";
+            }
+
+            if (validator.CheckIfIsNullOrEmpty(content))
+            {
+                errorText = "Commenting empty text is invalid";
+            }
+
+            if (validator.CheckIfOutOfStringLimit(content, 1000))
+            {
+                errorText = "Maximum characters for commenting is 1000 characters";
+            }
+
+            return Json(new {result = errorText}, JsonRequestBehavior.AllowGet);
         }
 
         public PartialViewResult GetFriendRequests()
@@ -99,7 +138,7 @@ namespace Pastebook.Controllers
             List<NotificationViewModel> listOfNotificationWithSender = new List<NotificationViewModel>();
             List<PASTEBOOK_NOTIFICATION> listOfNotification = new List<PASTEBOOK_NOTIFICATION>();
 
-            listOfNotification = notificationManager.GetNotificationWithUser(notification => notification.RECEIVER_ID == (int)Session["UserId"]);
+            listOfNotification = notificationManager.GetNotificationWithUser(notification => notification.RECEIVER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"]);
 
             return PartialView("~/Views/Pastebook/_NotificationPartialView.cshtml", listOfNotification);
         }
@@ -151,11 +190,18 @@ namespace Pastebook.Controllers
             friend.IsBLOCKED = "N";
             friend.REQUEST = "N";
 
-            bool result = false;
+            PASTEBOOK_NOTIFICATION addFriendNotification = new PASTEBOOK_NOTIFICATION();
+            addFriendNotification.NOTIF_TYPE = "F";
+            addFriendNotification.SEEN = "N";
+            addFriendNotification.POST_ID = null;
+            addFriendNotification.CREATED_DATE = DateTime.Now;
+            addFriendNotification.RECEIVER_ID = friendId;
+            addFriendNotification.SENDER_ID = (int)Session["UserId"];
+            addFriendNotification.COMMENT_ID = null;
 
-            result = interactionManager.AddFriendRequest(friend);
+            notificationManager.CreateNotification(addFriendNotification);
 
-            return Json(new { result = result });
+            return Json(new { result = interactionManager.AddFriendRequest(friend)});
         }
 
         public JsonResult RejectFriendRequest(int friendId)
@@ -167,6 +213,17 @@ namespace Pastebook.Controllers
             result = interactionManager.RejectFriendRequest(friendRequest);
 
             return Json(new { result = result });
+        }
+
+        [HttpGet, Route("notification/viewallnotification")]
+        public ActionResult Notification()
+        {
+            List<NotificationViewModel> listOfNotificationWithSender = new List<NotificationViewModel>();
+            List<PASTEBOOK_NOTIFICATION> listOfNotification = new List<PASTEBOOK_NOTIFICATION>();
+
+            listOfNotification = notificationManager.GetNotificationWithUser(notification => notification.RECEIVER_ID == (int)Session["UserId"]);
+
+            return View("~/Views/Pastebook/Notifications.cshtml", listOfNotification.ToList());
         }
 
         public JsonResult GetNotificationsCount()
@@ -188,17 +245,6 @@ namespace Pastebook.Controllers
             friendRequest = interactionManager.GetFriendRequest(friendRequestId);
             friendRequest.REQUEST = "Y";
             result = interactionManager.AcceptFriendRequest(friendRequest);
-
-            PASTEBOOK_NOTIFICATION acceptFriendNotification = new PASTEBOOK_NOTIFICATION();
-            acceptFriendNotification.NOTIF_TYPE = "F";
-            acceptFriendNotification.SEEN = "N";
-            acceptFriendNotification.POST_ID = null;
-            acceptFriendNotification.CREATED_DATE = DateTime.Now;
-            acceptFriendNotification.RECEIVER_ID = interactionManager.GetFriendRequest(friendRequestId).USER_ID;
-            acceptFriendNotification.SENDER_ID = (int)Session["UserId"];
-            acceptFriendNotification.COMMENT_ID = null;
-
-            notificationManager.CreateNotification(acceptFriendNotification);
 
             return Json(new { result = result });
         }

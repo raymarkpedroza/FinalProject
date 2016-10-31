@@ -60,6 +60,7 @@
     <Compile Include="BusinessLayer\InteractionManager.cs" />
     <Compile Include="BusinessLayer\NotificationManager.cs" />
     <Compile Include="BusinessLayer\PostManager.cs" />
+    <Compile Include="BusinessLayer\ValidationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -146,18 +146,6 @@
         else {
             $('.post-comments[value=' + this.value + ']').hide();
         }
-
-    });
-
-    $(document).delegate(".comment-count", "click", function () {
-        if ($('.post-comments[value=' + $(this).data("value") + ']').is(':visible') == false) {
-            $('.post-comments[value=' + $(this).data("value") + ']').show();
-        }
-
-        else {
-            $('.post-comments[value=' + $(this).data("value") + ']').hide();
-        }
-
     });
 
     $("#btnCancel").click(function (event) {

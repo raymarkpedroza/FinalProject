@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $(document).delegate(".post-reaction-like", "click", function () {
+
         var data = {
             postId: this.value,
         }
@@ -8,6 +9,10 @@
             data: data,
             type: 'POST',
             success: function (data) {
+                if (data.result)
+                {
+                    $("#errorModal").modal('show')
+                }
             },
 
             error: function () {
@@ -57,28 +62,6 @@
             }
         })
         window.location.reload();
-
-    });
-
-    $(document).delegate(".post-reaction-comment", "click", function () {
-        if ($('.post-comments[value=' + this.value + ']').is(':visible') == false) {
-            $('.post-comments[value=' + this.value + ']').show();
-        }
-
-        else {
-            $('.post-comments[value=' + this.value + ']').hide();
-        }
-
-    });
-
-    $(document).delegate(".comment-count", "click", function () {
-        if ($('.post-comments[value=' + $(this).data("value") + ']').is(':visible') == false) {
-            $('.post-comments[value=' + $(this).data("value") + ']').show();
-        }
-
-        else {
-            $('.post-comments[value=' + $(this).data("value") + ']').hide();
-        }
 
     });
 });

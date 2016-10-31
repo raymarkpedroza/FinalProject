@@ -131,16 +131,15 @@
                     }
             </div>
 
-            <hr>
             <div class="post-reaction">
                 @if (post.PASTEBOOK_LIKE.Any(x => x.LIKED_BY == (int)Session["UserId"]))
                 {
-                    <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@post.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == post.ID).SingleOrDefault().ID><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                    <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@post.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == post.ID).FirstOrDefault().ID><span>Unlike</span></button>
                 }
 
                 else
                 {
-                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@post.ID><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                    <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@post.ID><span>Like</span></button>
                 }
 
                 <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@post.ID><span class="glyphicon glyphicon-comment"></span></button>
@@ -149,7 +148,6 @@
             <div class="post-comments" value=@post.ID>
                 @foreach (var commentatorsComment in post.PASTEBOOK_COMMENT)
                 {
-                    <hr>
                     <div class="post-comment">
                         <div class="post-comment-header">
                             <span><label>
@@ -161,7 +159,6 @@
                         <p class="date">@commentatorsComment.DATE_CREATED.ToString("MMMM dd, yyyy") at @commentatorsComment.DATE_CREATED.ToShortTimeString()</p>
                     </div>
                 }
-                <hr>
                 <div class="write-comment clearfix">
                     <textarea rows="2" cols="20" class="textArea-comment col-md-12" value=@post.ID placeholder="Write comment.."></textarea>
                     <button type="button" class="btn pull-right" id="btnComment" value=@post.ID>Add Comment</button>

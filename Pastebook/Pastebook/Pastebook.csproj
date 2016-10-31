@@ -165,6 +165,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Authorization\PastebookAuthorization.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -258,6 +259,7 @@
     <Content Include="Views\Shared\ErrorPage.cshtml" />
     <Content Include="Views\Shared\ErrorPage404.cshtml" />
     <Content Include="Views\Pastebook\_NotificationItemPartialView.cshtml" />
+    <Content Include="Views\Pastebook\Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
