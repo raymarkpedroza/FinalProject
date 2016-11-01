@@ -70,14 +70,14 @@
                         @if ((int)Session["UserId"] == Model.User.ID)
                         {
                             <div class="text-right">
-                                <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Status</span></h3>
+                                <span class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Status</span></span>
                             </div>
                         }
 
                         else
                         {
                             <div class="text-right">
-                                <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Write something on @Model.User.FIRST_NAME's wall</span></h3>
+                                <span class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Write something on @Model.User.FIRST_NAME's wall</span></span>
                             </div>
                         }
                     </div>
@@ -120,17 +120,19 @@
                 new { enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
-                        <input type="file" name="file" id="file" class="btn btn-default" style="width: 100%;" />
+                        <input type="file" name="file" id="file" class="btn" style="width: 100%;" />
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Upload" class="submit btn btn-default pull-right" />
+                    <div class="form-group clearfix">
+                        <input type="submit" value="Upload" id="upload" class="submit btn btn-default pull-right" />
                     </div>
-                    }
+
+                    <div class="form-group clearfix">
+                        <span id="pictureStatus"></span>
                     </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+
+                }
+                    </div>
         </div>
 
     </div>
@@ -149,6 +151,8 @@
         var unlikeURL = '@Url.Action("Unlike", "Interaction")';
         var checkAboutMeURL = '@Url.Action("CheckAboutMeIfValid", "Profile")';
         var checkPostValid = '@Url.Action("CheckIfPostValid", "Post")';
+        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Interaction")';
+        var result = '@ViewBag.Result';
     </script>
     <script src="~/Scripts/PastebookScripts/profileScript.js"> </script>
 }

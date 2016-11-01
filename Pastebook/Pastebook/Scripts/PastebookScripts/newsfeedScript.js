@@ -45,29 +45,29 @@
                                     $("#newsfeedPost").html(result);
                                     $('#textAreaPost').val('')
 
-                                    $("#successModal-header").text("Success")
-                                    $("#successModal-body").text("Posted")
+                                    $("#successModal-header").text("Success posting")
+                                    $("#successModal-body").text("You've updated your status")
                                     $("#successModal").modal('show')
                                 },
 
                                 error: function () {
-                                    $("#errorModal-header").text("Error")
-                                    $("#errorModal-body").text("S2omething went wrong when processing your request")
+                                    $("#errorModal-header").text("Error posting")
+                                    $("#errorModal-body").text("Error in posting something. Please try again later")
                                     $("#errorModal").modal('show')
                                 }
                             });
                         },
 
                         error: function () {
-                            $("#errorModal-header").text("Error")
-                            $("#errorModal-body").text("Something went wrong when processing your request1")
+                            $("#errorModal-header").text("Error posting")
+                            $("#errorModal-body").text("Something went wrong when posting something. Please try again later")
                             $("#errorModal").modal('show')
                         }
                     })
                 }
 
                 else {
-                    $("#errorModal-header").text("Error")
+                    $("#errorModal-header").text("Error posting")
                     $("#errorModal-body").text(data.result)
                     $("#errorModal").modal('show')
                 }
@@ -108,13 +108,15 @@
                     url: getNewsfeedPostsURL,
                     dataType: "html",
                     success: function (result) {
-                        $("#newsfeedPost").html(result);
+                            $("#newsfeedPost").html(result);
                     }
                 });
             },
 
             error: function () {
-                window.location.href = errorURL;
+                $("#errorModal-header").text("Like error")
+                $("#errorModal-body").text("Error in liking a post. Please try again later")
+                $("#errorModal").modal('show')
             }
         })
 
@@ -139,7 +141,9 @@
             },
 
             error: function () {
-                window.location.href = errorURL;
+                $("#errorModal-header").text("Unlike error")
+                $("#errorModal-body").text("Error in unliking a post. Please try again later")
+                $("#errorModal").modal('show')
             }
         })
 
@@ -181,22 +185,21 @@
                             $(".textArea-comment[value=" + this.value + "]").val('')
                             $('.post-comments[value=' + data.postId + ']').show();
 
-                            $("#successModal-header").text("Success")
-                            $("#successModal-body").text("Comment Added!")
+                            $("#successModal-header").text("Comment success")
+                            $("#successModal-body").text("Your comment is added")
                             $("#successModal").modal('show')
                         },
 
                         error: function () {
-                            $("#errorModal-header").text("Error")
-                            $("#errorModal-body").text("Error commenting")
+                            $("#errorModal-header").text("Comment error")
+                            $("#errorModal-body").text("Error in commenting on a post. Please try again later")
                             $("#errorModal").modal('show')
                         }
                     })
                 }
 
                 else {
-                    $("#errorModal-header").text("Error")
-
+                    $("#errorModal-header").text("Comment Error")
                     $("#errorModal-body").text(data.result)
                     $("#errorModal").modal('show')
                 }

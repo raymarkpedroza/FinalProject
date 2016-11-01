@@ -18,6 +18,7 @@
                 if (result.result > 0) {
                     $('#other-notification').show();
                     $('#other-notification').text(result.result);
+                   
                 }
             }
         })
@@ -28,6 +29,13 @@
             url: sawNotificationURL,
             type: 'POST',
             success: function (data) {
+                $.ajax({
+                    url: getNotificationURL,
+                    dataType: "html",
+                    success: function (result) {
+                        $("#pastebook-nav-bar-notification").html(result);
+                    }
+                });
             },
         })
         $('#other-notification').hide();
@@ -42,68 +50,13 @@
         });
     });
 
-    $(document).delegate(".btnAcceptRequest", "click", function () {
-        var data = {
-            friendRequestId: this.value
+    $('#searchForm').submit(function (e) {
+        if ($('#textboxSearch').val().length < 1) {
+            e.preventDefault();
+            $("#errorModal-header").text("Search error")
+            $("#errorModal-body").text("Searching empty keyword is not allowed")
+            $("#errorModal").modal('show')
         }
-
-        $.ajax({
-            url: acceptFriendURL,
-            data: data,
-            type: 'POST',
-            success: function (data) {
-                $.ajax({
-                    url: getFriendRequestsURL,
-                    dataType: "html",
-                    success: function (result) {
-                        $("#pastebook-nav-bar-friendRequests").html(result);
-                        $.ajax({
-                            url: interactButtonsUrl,
-                            dataType: "html",
-                            success: function (result) {
-                                $("#interactButtons").html(result);
-                            }
-                        })
-                    }
-                })
-            },
-            error: function () {
-                window.location.href = errorURL;
-
-            }
-        })
-    });
-
-    $(document).delegate(".btnIgnoreRequest", "click", function () {
-        var data = {
-            friendId: this.value
-        }
-
-        $.ajax({
-            url: rejectFriendURL,
-            data: data,
-            type: 'POST',
-            success: function (data) {
-                $.ajax({
-                    url: getFriendRequestsURL,
-                    dataType: "html",
-                    success: function (result) {
-                        $("#pastebook-nav-bar-friendRequests").html(result);
-                        $.ajax({
-                            url: interactButtonsUrl,
-                            dataType: "html",
-                            success: function (result) {
-                                $("#interactButtons").html(result);
-                            }
-                        })
-                    }
-                })
-            },
-            error: function () {
-                window.location.href = errorURL;
-
-            }
-        })
     });
 
     $(document).delegate("#btnAcceptFriend", "click", function () {
@@ -116,23 +69,22 @@
             data: data,
             type: 'POST',
             success: function (data) {
-                $.ajax({
-                    url: getFriendRequestsURL,
-                    dataType: "html",
-                    success: function (result) {
-                        $("#pastebook-nav-bar-friendRequests").html(result);
                         $.ajax({
                             url: interactButtonsUrl,
                             dataType: "html",
                             success: function (result) {
                                 $("#interactButtons").html(result);
+
+                                $("#successModal-header").text("Accept friend request success")
+                                $("#successModal-body").text("Friend request accepted")
+                                $("#successModal").modal('show')
                             }
                         })
-                    }
-                })
             },
             error: function () {
-                window.location.href = errorURL;
+                $("#errorModal-header").text("Accept friend request error")
+                $("#errorModal-body").text("Error in accepting friend request. Please try again later")
+                $("#errorModal").modal('show')
 
             }
         })

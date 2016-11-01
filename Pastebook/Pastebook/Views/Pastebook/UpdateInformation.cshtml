@@ -8,17 +8,17 @@
 {
 <div class="form-horizontal container">
     <div class="col-md-offset-2 col-md-8" id="edit-profile">
-    <h4>Update Information</h4>
+    <span class="edit-profile-header">Update Information</span>
     <hr />
-    <h4>Fill up the required fields(*)</h4>
+    <span class="edit-profile-subheader">Fill up the required fields(*)</span>
 
     <div id="edit-basic-info" class="container">
-
             <div class="form-group">
                 <span class="col-md-4"><span class="glyphicon glyphicon-user"></span> Username*</span>
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.User.USER_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "username" } })
+                    @Html.EditorFor(model => model.User.USER_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "username", id="txtUsername" } })
                     @Html.ValidationMessageFor(model => model.User.USER_NAME, "", new { @class = "text-danger" })
+                    <span class="label-danger validation" id="usernameValidation"></span>
                 </div>
             </div>
 
@@ -41,59 +41,40 @@
 
             <div class="form-group">
                 <span class="col-md-4"><span class="glyphicon glyphicon-gift"></span> Birthday*</span>
-
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", @Value=Model.User.BIRTHDAY, @type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") } })
+                        @Html.EditorFor(model => model.User.BIRTHDAY, new { htmlAttributes = new { @class = "text-line", @type = "date", max = DateTime.Now.ToString("yyyy-MM-dd") } })
                         @Html.ValidationMessageFor(model => model.User.BIRTHDAY, "", new { @class = "text-danger" })
                     </div>
             </div>
 
-            @if (Model.ListOfCountryModel != null)
-            {
-                List<SelectListItem> listOfCountries = new List<SelectListItem>();
-
-                foreach (var country in Model.ListOfCountryModel)
-                {
-                    listOfCountries.Add(new SelectListItem
-                    {
-                        Text = country.COUNTRY,
-                        Value = country.ID.ToString()
-                    });
-                }
-
-                listOfCountries.Where(x => x.Value == Model.User.COUNTRY_ID.ToString()).SingleOrDefault().Selected = true;
-
                 <div class="form-group">
                     <span class="col-md-4">
                     <span class="glyphicon glyphicon-home"></span> Country*</span>
-
+                @{
+                    List<SelectListItem> listOfCountries = new List<SelectListItem>();
+                    listOfCountries = (List<SelectListItem>)ViewBag.Countries;
+                    listOfCountries.Where(x => x.Value == Model.User.COUNTRY_ID.ToString()).SingleOrDefault().Selected = true;
+                }
                     <div class="col-md-8">
                         @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "select country", new { @class = "text-line" })
                         @Html.ValidationMessageFor(model => model.User.COUNTRY_ID, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            }
-
-            @{
-                List<SelectListItem> listOfGenders = new List<SelectListItem>();
-
-                listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
-                listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
-                listOfGenders.Add(new SelectListItem { Text = "Unspecified", Value = "U" });
-
-                listOfGenders.Where(x => x.Value == Model.User.GENDER.ToString()).SingleOrDefault().Selected = true;
-            }
 
             <div class="form-group">
                 <span class="col-md-4"><span class="fa fa-venus-mars"></span> Gender</span>
-                <div class="col-md-8">
-                    @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "select gender", new { @class = "text-line" })
-                    @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
-                </div>
+                @{
+                    List<SelectListItem> listOfGender = new List<SelectListItem>();
+                    listOfGender = (List<SelectListItem>)ViewBag.Genders;
+                    listOfGender.Where(x => x.Value == Model.User.GENDER.ToString()).SingleOrDefault().Selected = true;
+                }
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.User.GENDER, listOfGender, "select gender", new { @class = "text-line" })
+                        @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
+                    </div>
             </div>
 
             <div class="form-group">
-                @*@Html.LabelFor(model => model.User.MOBILE_NO, htmlAttributes: new { @class = "control-label col-md-4" })*@
                 <span class="col-md-4"><span class="glyphicon glyphicon-phone"></span> Mobile Number</span>
 
                 <div class="col-md-8">
@@ -115,15 +96,74 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+            var checkUsernameExistUrl = '@Url.Action("CheckIfUsernameExist", "Pastebook")'
+            var checkUsernameYourCurrentUsernameUrl = '@Url.Action("CheckIfUsernameYourCurrentUsername", "Profile")'
+            var result = '@ViewBag.Result';
+    </script>
     <script>
         $(document).ready(function () {
-            $("#btnCancel").click(function (event) {
-                event.preventDefault();
-                var url = '@Url.Action("Index", "Home")';
-                window.location.href = url;
+            if (result) {
+                $("#successModal-header").text("Success")
+                $("#successModal-body").text("User information updated successfully")
+                $("#successModal").modal('show')
+            }
+
+            $("#txtUsername").blur(function () {
+                var data = {
+                    username: $("#txtUsername").val()
+                }
+
+                var username = $("#txtUsername").val();
+                $.ajax({
+                    url: checkUsernameYourCurrentUsernameUrl,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $("#usernameValidation").text("This is your current username");
+                        }
+                        else {
+                            var data = {
+                                username: username
+                            }
+                            $.ajax({
+                                url: checkUsernameExistUrl,
+                                data: data,
+                                type: 'POST',
+                                success: function (data) {
+                                    if (data.result)
+                                        $("#usernameValidation").text("Username already taken.");
+
+                                    else
+                                        $("#usernameValidation").text("");
+                                },
+
+                                error: function () {
+                                    $("#errorModal-header").text("Error")
+                                    $("#errorModal-body").text("Something went wrong when processing request")
+                                    $("#errorModal").modal('show')
+                                }
+                            })
+                        }
+                    },
+
+                    error: function () {
+                        $("#errorModal-header").text("Error")
+                        $("#errorModal-body").text("Something went wrong when processing request")
+                        $("#errorModal").modal('show')
+                    }
+
+                    })
+
+
+            });
+
+            $("#txtUsername").keyup(function () {
+                $("#usernameValidation").text("");
             });
         });
+
+
     </script>
 }

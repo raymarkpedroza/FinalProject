@@ -3,7 +3,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         
-        @using (Html.BeginForm("Search", "Pastebook", FormMethod.Post, new { @class = "form-inline" }))
+        @using (Html.BeginForm("Search", "Pastebook", FormMethod.Post, new { @class = "form-inline" , id="searchForm"}))
         { 
             <span class="col-md-1"><a href="@Url.Action("Index", "Pastebook")"><img src="@Url.Content("~/Content/Images/logo-gray.png")" id="logo-icon"></a></span>
                 if (Session["UserFullname"] != null)
@@ -19,40 +19,46 @@
                 }
 
             <div class="pull-right">
+
                 <div class="btn-group">
                     <a href="@Url.Action("Index", "Pastebook")">
-                        <span class="glyphicon glyphicon-home icon"></span>
+                        <span class="glyphicon glyphicon-home icon" title="Home"></span>
                     </a>
                 </div>
                 @if (Session["UserFullname"] != null)
                 {
-                    <div class="btn-group" id="pastebook-nav-bar-friendRequests">
-                        @{Html.RenderAction("GetFriendRequests", "Interaction");}
-                    </div>
+                    <a href="@Url.Action("Friends", "Pastebook")">
+                        <div class="btn-group" id="pastebook-nav-bar-friends">
+                            <span class="glyphicon glyphicon-user icon friends" title="Friends"></span>
+                        </div>
+                    </a>
+                        <div class="btn-group" id="pastebook-nav-bar-notification">
+                            @{Html.RenderAction("GetNotifications", "Interaction");}
+                        </div>
 
-                    <div class="btn-group" id="pastebook-nav-bar-notification">
-                        @{Html.RenderAction("GetNotifications", "Interaction");}
-                    </div>
+                        <div class="btn-group">
+                            <span id="user-option">
+                                @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, new { @id = "user-option" })
+                            </span>
+                        </div>
 
-                    <div class="btn-group" id="pastebook-nav-bar-settings">
-                        <span class="glyphicon glyphicon-cog icon" id="pastebook-settings" data-toggle="dropdown"></span>
+                        <div class="btn-group" id="pastebook-nav-bar-settings">
+                            <span class="glyphicon glyphicon-cog icon" id="pastebook-settings" data-toggle="dropdown" title="Settings"></span>
 
-                        <ul class="dropdown-menu" aria-labelledby="pastebook-settings">
-                            <li class="profile-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</li>
-                            <li class="profile-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
-                            <li class="profile-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</li>
-                            <li class="divider" />
-                            <li class="profile-listitem">@Html.ActionLink("Logout", "Logout", "Pastebook", null, new { @class = "link" })</li>
-                        </ul>
-                    </div>
+                            <ul class="dropdown-menu" aria-labelledby="pastebook-settings">
+                                <li class="profile-listitem">@Html.ActionLink("Update Email", "UpdateEmail", "Profile")</li>
+                                <li class="profile-listitem">@Html.ActionLink("Change Password", "ChangePassword", "Profile")</li>
+                                <li class="profile-listitem">@Html.ActionLink("Update Information", "UpdateInformation", "Profile")</li>
+                            </ul>
+                        </div>
 
-                    <div class="btn-group">
-                        <span id="user-option">
-                            @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, new { @id="user-option"})
-                        </span>
-                    </div>
-                    }
-            </div>
+                        <a href="@Url.Action("Logout", "Pastebook")">
+                            <div class="btn-group" title="Logout">
+                                <span id="logout">Logout</span>
+                            </div>
+                        </a>
+                }
+        </div>
         }
     </div>
 </div>

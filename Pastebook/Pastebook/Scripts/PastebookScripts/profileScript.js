@@ -3,7 +3,46 @@
     $('#friend-list').hide();
     $('#saveButton').hide();
     $('#cancelEditButton').hide();
+
+    if (result)
+    {
+        $("#successModal-header").text("Profile update success")
+        $("#successModal-body").text("Profile picture updated")
+        $("#successModal").modal('show')
+    }
+
+    $('#camera-icon').click(function () {
+        $('#pictureStatus').hide();
+        $('#upload').hide();
+        $('#file').val("");
+    });
     
+    $('#file').change(function () {
+        $('#upload').hide();
+        var filesize = $('#file')[0].files[0].size;
+        var ext = $('#file').val().split('.').pop().toLowerCase();
+
+        //http://stackoverflow.com/questions/651700/how-to-have-jquery-restrict-file-types-on-upload
+        if ($.inArray(ext, ['png', 'jpg', 'jpeg']) == -1) {
+            $('#pictureStatus').show();
+            $('#pictureStatus').text("Not an image file or invalid file extension. Only .PNG , .JPG and .JPEG are allowed");
+        }
+
+        else
+        {
+            if (filesize > 2097152) {
+                $('#pictureStatus').show();
+                $('#pictureStatus').text("File size is too big. Maximum size is 2mb");
+            }
+
+            else {
+                $('#pictureStatus').hide();
+                $('#upload').show();
+            }
+        }
+
+    });
+
     $(document).delegate("#saveButton", "click", function () {
         var data = {
             aboutme: $('#about-me').val()
@@ -51,15 +90,15 @@
 
                                     }
                                 })
-                                $("#successModal-header").text("Success")
-                                $("#successModal-body").text("About me updated")
+                                $("#successModal-header").text("Profile update success")
+                                $("#successModal-body").text("About Me description updated")
                                 $("#successModal").modal('show')
                             }
                     });
                 }
 
                 else {
-                    $("#errorModal-header").text("Error")
+                    $("#errorModal-header").text("Profile update error")
                     $("#errorModal-body").text(data.result)
                     $("#errorModal").modal('show')
                 }
@@ -154,22 +193,22 @@
                                         $("#timelinePost").html(result);
                                         $('#textAreaPost').val('')
 
-                                        $("#successModal-header").text("Success")
-                                        $("#successModal-body").text("Posted")
+                                        $("#successModal-header").text("Success posting")
+                                        $("#successModal-body").text("Posted successfully")
                                         $("#successModal").modal('show')
                                     },
 
                                     error: function () {
-                                        $("#errorModal-header").text("Error")
-                                        $("#errorModal-body").text("S2omething went wrong when processing your request")
+                                        $("#errorModal-header").text("Error posting")
+                                        $("#errorModal-body").text("Error in posting something")
                                         $("#errorModal").modal('show')
                                     }
                                 });
                             },
 
                             error: function () {
-                                $("#errorModal-header").text("Error")
-                                $("#errorModal-body").text("Something went wrong when processing your request1")
+                                $("#errorModal-header").text("Error posting")
+                                $("#errorModal-body").text("Error in posting something. Please try again later")
                                 $("#errorModal").modal('show')
                             }
                         })
@@ -177,7 +216,7 @@
 
                     else
                     {
-                        $("#errorModal-header").text("Error")
+                        $("#errorModal-header").text("Error posting")
                         $("#errorModal-body").text(data.result)
                         $("#errorModal").modal('show')
                     }
@@ -185,41 +224,6 @@
                 }
 
             });
-            
-          
-
-        });
-
-        $(document).delegate("#btnAcceptFriend", "click", function () {
-            var data = {
-                friendRequestId: this.value
-            }
-
-            $.ajax({
-                url: acceptFriendURL,
-                data: data,
-                type: 'POST',
-                success: function (data) {
-                    $.ajax({
-                        url: getFriendRequestsURL,
-                        dataType: "html",
-                        success: function (result) {
-                            $("#pastebook-nav-bar-friendRequests").html(result);
-                            $.ajax({
-                                url: interactButtonsUrl,
-                                dataType: "html",
-                                success: function (result) {
-                                    $("#interactButtons").html(result);
-                                }
-                            })
-                        }
-                    })
-                },
-                error: function () {
-                    window.location.href = errorURL;
-
-                }
-            })
         });
 
         $(document).delegate("#btnRejectFriend", "click", function () {
@@ -232,30 +236,24 @@
                 data: data,
                 type: 'POST',
                 success: function (data) {
-                    $.ajax({
-                        url: getFriendRequestsURL,
-                        dataType: "html",
-                        success: function (result) {
-                            $("#pastebook-nav-bar-friendRequests").html(result);
                             $.ajax({
                                 url: interactButtonsUrl,
                                 dataType: "html",
                                 success: function (result) {
                                     $("#interactButtons").html(result);
-                                }
-                            })
+
+                                },
+                            });
+                        },
+                        error: function () {
+                            $("#errorModal-header").text("Error rejecting friend request")
+                            $("#errorModal-body").text("Error in rejecting friend request. Please try again later")
+                            $("#errorModal").modal('show')
                         }
                     })
-                },
-                error: function () {
-                    window.location.href = errorURL;
-
-                }
-            })
         });
 
         $(document).delegate("#btnAddFriend", "click", function () {
-
             var data = {
                 friendId: this.value
             }
@@ -270,12 +268,17 @@
                         dataType: "html",
                         success: function (result) {
                             $("#interactButtons").html(result);
+                            $("#successModal-header").text("Send friend request success")
+                            $("#successModal-body").text("Friend request sent")
+                            $("#successModal").modal('show')
                         }
                     });
                 },
 
                 error: function () {
-                    window.location.href = errorURL;
+                    $("#errorModal-header").text("Error sending friend request")
+                    $("#errorModal-body").text("Error in sending friend request. Please try again later")
+                    $("#errorModal").modal('show')
 
                 }
             })
@@ -302,7 +305,9 @@
                 },
 
                 error: function () {
-                    window.location.href = errorURL;
+                    $("#errorModal-header").text("Like Error")
+                    $("#errorModal-body").text("Error in liking a post. Please try again later")
+                    $("#errorModal").modal('show')
 
                 }
             })
@@ -328,42 +333,70 @@
                 },
 
                 error: function () {
-                    window.location.href = errorURL;
+                    $("#errorModal-header").text("Unlike error")
+                    $("#errorModal-body").text("Error in unliking a post. Please try again later")
+                    $("#errorModal").modal('show')
 
                 }
             })
 
         });
 
-
         $(document).delegate("#btnComment", "click", function () {
             var data = {
                 postId: this.value,
                 content: $(".textArea-comment[value=" + this.value + "]").val()
             }
+
+            var postId = this.value
+            var content = $(".textArea-comment[value=" + this.value + "]").val()
+
             $.ajax({
-                url: addCommentURL,
+                url: checkCommentValid,
                 data: data,
                 type: 'POST',
                 success: function (data) {
-
-                    $.ajax({
-                        url: getTimelinePostUrl,
-                        dataType: "html",
-                        success: function (result) {
-                            $("#timelinePost").html(result);
+                    if (data.result == 0) {
+                        var data = {
+                            postId: postId,
+                            content: content
                         }
-                    });
+                        $.ajax({
+                            url: addCommentURL,
+                            data: data,
+                            type: 'POST',
+                            success: function (data) {
 
-                    $(".textArea-comment[value=" + this.value + "]").val('')
-                    $('.post-comments[value=' + data.postId + ']').show();
-                },
+                                $.ajax({
+                                    url: getTimelinePostUrl,
+                                    dataType: "html",
+                                    success: function (result) {
+                                        $("#timelinePost").html(result);
+                                    }
+                                });
 
-                error: function () {
-                    window.location.href = errorURL;
+                                $(".textArea-comment[value=" + this.value + "]").val('')
+                                $('.post-comments[value=' + data.postId + ']').show();
 
+                                $("#successModal-header").text("Comment success")
+                                $("#successModal-body").text("Your comment is added")
+                                $("#successModal").modal('show')
+                            },
+
+                            error: function () {
+                                $("#errorModal-header").text("Comment error")
+                                $("#errorModal-body").text("Error commenting on a post. Please try again later")
+                                $("#errorModal").modal('show')
+                            }
+                        })
+                    }
+
+                    else {
+                        $("#errorModal-header").text("Comment error")
+                        $("#errorModal-body").text(data.result)
+                        $("#errorModal").modal('show')
+                    }
                 }
-            })
-
+            });
         });
 });

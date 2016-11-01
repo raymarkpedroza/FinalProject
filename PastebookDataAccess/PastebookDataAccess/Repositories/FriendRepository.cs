@@ -30,6 +30,7 @@ namespace PastebookDataAccess
                     .Include(friend => friend.PASTEBOOK_USER)
                     .Include(friend => friend.PASTEBOOK_USER1)
                     .Where(friend => friend.USER_ID == id && friend.REQUEST == "Y")
+                    .OrderBy(friend => friend.PASTEBOOK_USER1.FIRST_NAME)
                     .ToList();
             }
         }

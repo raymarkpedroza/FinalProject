@@ -8,16 +8,17 @@
 {
 <div class="form-horizontal container"> 
     <div class="col-md-offset-2 col-md-8" id="edit-profile">
-        <h4>Update Email</h4>
+        <span class="edit-profile-header">Update Email</span>
     <hr />
-    <h4>Fill up the required fields(*).</h4>
+    <span class="edit-profile-subheader">Fill up the required fields(*).</span>
 
         <div id="edit-email" class="container">
                 <div class="form-group">
                     <span class="col-md-4"><span class="glyphicon glyphicon-envelope"></span> Email*</span>
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "text-line", placeholder = "email" } })
+                        @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "text-line", placeholder = "email", id="txtEmail" } })
                         @Html.ValidationMessageFor(model => model.User.EMAIL_ADDRESS, "", new { @class = "text-danger" })
+                        <span class="label-danger validation" id="emailValidation"></span>
                     </div>
                 </div>
 
@@ -38,4 +39,75 @@
         </div>
     </div>
 </div>
+}
+
+@section Scripts{ 
+    <script>
+        var checkEmailExistUrl = '@Url.Action("CheckEmailIfExists", "Pastebook")'
+        var checkEmailIfCurrentUrl = '@Url.Action("CheckIfEmailYourCurrentEmail","Profile")'
+        var result = '@ViewBag.Result';
+    </script>
+
+<script>
+    $(document).ready(function () {
+        if (result)
+        {
+            $("#successModal-header").text("Success")
+            $("#successModal-body").text("Email updated successfully")
+            $("#successModal").modal('show')
+        }
+
+            $("#txtEmail").blur(function () {
+                var data = {
+                    email: $("#txtEmail").val()
+                }
+
+                var email = $("#txtEmail").val();
+                $.ajax({
+                    url: checkEmailIfCurrentUrl,
+                    data: data,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $("#emailValidation").text("This is your current email address");
+                        }
+                        else {
+                            var data = {
+                                email: email
+                            }
+
+                            $.ajax({
+                                url: checkEmailExistUrl,
+                                data: data,
+                                type: 'POST',
+                                success: function (data) {
+                                    if (data.result)
+                                        $("#emailValidation").text("Email already taken.");
+
+                                    else
+                                        $("#emailValidation").text("");
+                                },
+
+                                error: function () {
+                                    $("#errorModal-header").text("Error")
+                                    $("#errorModal-body").text("Something went wrong when processing request")
+                                    $("#errorModal").modal('show')
+                                }
+                            })
+                        }
+                    },
+                    error: function () {
+                        $("#errorModal-header").text("Error")
+                        $("#errorModal-body").text("Something went wrong when processing request")
+                        $("#errorModal").modal('show')
+                    }
+                })
+               
+            });
+
+            $("#txtEmail").keyup(function () {
+                $("#emailValidation").text("");
+            });
+        });
+    </script>
 }

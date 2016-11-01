@@ -176,7 +176,6 @@
     </Compile>
     <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\FriendListViewModel.cs" />
-    <Compile Include="Models\FriendRequestViewModel.cs" />
     <Compile Include="Models\FriendUserModel.cs" />
     <Compile Include="Models\NotificationViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
@@ -247,7 +246,6 @@
     <Content Include="Views\Pastebook\_InteractButtonsPartialView.cshtml" />
     <Content Include="Views\Pastebook\_PastebookNavbarPartialView.cshtml" />
     <Content Include="Views\Pastebook\_NotificationPartialView.cshtml" />
-    <Content Include="Views\Pastebook\_FriendRequestPartialView.cshtml" />
     <Content Include="Views\Pastebook\_FriendListPartialView.cshtml" />
     <Content Include="Views\Pastebook\Friends.cshtml" />
     <Content Include="Views\Pastebook\Posts.cshtml" />

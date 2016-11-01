@@ -42,7 +42,7 @@
 }
 
 .icon{
-    font-size: 20px;
+    font-size: 15px;
     margin-right: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
@@ -57,6 +57,13 @@
 #textboxSearch {
     margin-top:10px;
     color:#424242;
+}
+
+#results, #noResults {
+    font-size:30px;
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
 }
 
 .text-right {
@@ -75,26 +82,11 @@
     margin-bottom: 10px;
 }
 
-#logout-link{
-    margin-right: 20px;
-    margin-top: 10px;
-}
-
-.dropdown-menu {
-    position:absolute;
-    padding-left:10px;
-    padding-right:10px;
+#notification-dropdown {
     height:auto;
     max-height: 200px;
     overflow: auto;
-    overflow-x: hidden;
-    background-color:#fff;
-}
-
-.dropdown-menu>li>a {
-    word-wrap: break-word;
-    white-space: normal;
-    width: 250px;
+    background-color:#fff; 
 }
 
 #friend-request-notification {
@@ -167,6 +159,18 @@
     text-decoration:none;
 }
 
+#logout {
+    color:#E1F5FE;
+    font-size:20px;
+    margin-top:20px;
+    margin-right:5px;
+    text-decoration:none;
+}
+
+#logout:hover{ 
+    color:#fff;
+}
+
 .dropdown-menu > li > a:hover {
     color:#fff;
     background-color:#0277BD;
@@ -194,9 +198,30 @@
 }
 
 #profile-header {
-    background-color:#424242;
+    background-color:#212121;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 10px 0px;
+}
+
+.profile-details-header {
+    font-size:25px;
+    display:block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.edit-profile-header {
+    font-size:30px;
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.edit-profile-subheader {
+    font-size:15px;
+    display:block;
+    margin-top:5px;
+    margin-bottom:5px;
 }
 
 #edit-icon {
@@ -357,6 +382,14 @@
     width:50px;
 }
 
+
+.friend-header {
+    font-size:30px;
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
 #friend-friend-prof-pic {
     margin-top:5px;
     margin-left:-5px;
@@ -433,6 +466,12 @@
     border-radius:100%;
 }
 
+.welcome-header {
+    font-size:30px;
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
+}
 #user-fullname {
     margin-top:10px;
 }
@@ -548,6 +587,13 @@ a:hover {
     margin:-10px -10px;
     margin-bottom:10px;
     padding-top:1px;
+}
+
+.write-post-text {
+    font-size: 30px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 #writePost-header-text {
@@ -773,13 +819,22 @@ label.required-asterisk:before
 }
 
 #successModal .modal-header {
-    background-color:#0277BD;
+    background-color:#4CAF50;
     color:#fff;
 }
 
 #errorModal .modal-header {
     background-color:#C62828;
     color:#fff;
+}
+
+.glyphicon-remove-circle {
+    font-size:20px;
+}
+
+.glyphicon-ok {
+    font-size:20px;
+    color:#4CAF50;
 }
 
 button {
@@ -824,6 +879,16 @@ button:hover {
   border: 5px solid #eee;
 }
 
+.modal-title {
+    font-size:18px;
+    display:block;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.validation {
+    background-color:#f5f5f5 !important;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 /*input,
 select,

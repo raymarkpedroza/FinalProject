@@ -12,7 +12,7 @@
         @if (Model.searchResults.Count() > 0)
         {
             <div>
-                <h3 id="noResults">Displaying results for "@Model.searchQuery" (@Model.searchResults.Count found)</h3>
+                <span id="results">Displaying results for "@Model.searchQuery" (@Model.searchResults.Count found)</span>
             </div>
 
             foreach (var searchResults in Model.searchResults)
@@ -42,7 +42,7 @@
         else
         {
             <div>
-                <h3 id="noResults">No results found for @Model.searchQuery!</h3>
+                <span id="noResults">No results found for @Model.searchQuery!</span>
             </div>
         }
 

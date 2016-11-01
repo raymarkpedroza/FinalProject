@@ -6,9 +6,9 @@
     <span class="pull-right" id="edit-profile-choice"><button type="button" id="saveButton" class="btn btn-xs">Save</button> <button type="button" id="cancelEditButton" class="btn btn-xs">Cancel</button></span>
 
 }
-<h3>
+<span class="profile-details-header">
     Introduction
-</h3>
+</span>
 <span class="viewmode">
     @if (Model.User.ID == (int)Session["UserId"])
     {
@@ -29,9 +29,9 @@
 </span>
 <hr>
 
-<h3>
+<span class="profile-details-header">
     Personal Information
-</h3>
+</span>
 
 <div id="profile-user-gender">
     @Html.LabelFor(model => model.User.GENDER):
@@ -65,9 +65,9 @@
 
 <hr>
 
-<h3>
+<span class="profile-details-header">
     Contact Information
-</h3>
+</span>
 
 <div id="profile-user-contactnumber">
     @Html.LabelFor(model => model.User.MOBILE_NO):
@@ -81,9 +81,9 @@
 
 <hr>
 
-<h3>
+<span class="profile-details-header">
     Pastebook Information
-</h3>
+</span>
 
 <div id="profile-user-contactnumber">
     @Html.LabelFor(model => model.User.DATE_CREATED):

@@ -72,13 +72,7 @@ namespace PastebookBusinessLayer.BusinessLayer
 
         public bool AcceptFriendRequest(PASTEBOOK_FRIEND friendRequest)
         {
-            _friendRepository.Update(friendRequest);
-
-            int tempId = friendRequest.FRIEND_ID;
-            friendRequest.FRIEND_ID = friendRequest.USER_ID;
-            friendRequest.USER_ID = tempId;
-
-            return _friendRepository.Create(friendRequest);
+            return _friendRepository.Update(friendRequest);
         }
 
         public PASTEBOOK_FRIEND GetFriendRequest(int id)

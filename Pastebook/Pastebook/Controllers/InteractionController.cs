@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PastebookBusinessLayer.BusinessLayer;
+using System.Text.RegularExpressions;
 
 namespace Pastebook.Controllers
 {
@@ -66,7 +67,7 @@ namespace Pastebook.Controllers
         {
             PASTEBOOK_COMMENT comment = new PASTEBOOK_COMMENT();
             comment.POST_ID = postId;
-            comment.CONTENT = content;
+            comment.CONTENT = content.Trim();
             comment.DATE_CREATED = DateTime.Now;
             comment.POSTER_ID = (int)Session["UserId"];
             bool result = false;
@@ -97,12 +98,12 @@ namespace Pastebook.Controllers
 
             if (validator.CheckIfWhiteSpace(content))
             {
-                errorText = "Commenting white spaces is invalid";
+                errorText = "Commenting white spaces is not allowed";
             }
 
             if (validator.CheckIfIsNullOrEmpty(content))
             {
-                errorText = "Commenting empty text is invalid";
+                errorText = "Commenting empty content is not allowed";
             }
 
             if (validator.CheckIfOutOfStringLimit(content, 1000))
@@ -111,18 +112,6 @@ namespace Pastebook.Controllers
             }
 
             return Json(new {result = errorText}, JsonRequestBehavior.AllowGet);
-        }
-
-        public PartialViewResult GetFriendRequests()
-        {
-            List<FriendRequestViewModel> listOfFriendRequestsWithRequester = new List<FriendRequestViewModel>();
-            List<PASTEBOOK_FRIEND> listOfFriendRequests = new List<PASTEBOOK_FRIEND>();
-            List<int> listOfFriendId = new List<int>();
-
-            listOfFriendRequests = interactionManager.GetListOfFriendRequest((int)Session["UserId"]);
-
-
-            return PartialView("~/Views/Pastebook/_FriendRequestPartialView.cshtml", listOfFriendRequests);
         }
 
         public PartialViewResult GetLikes(int postId)
@@ -245,6 +234,18 @@ namespace Pastebook.Controllers
             friendRequest = interactionManager.GetFriendRequest(friendRequestId);
             friendRequest.REQUEST = "Y";
             result = interactionManager.AcceptFriendRequest(friendRequest);
+
+
+            PASTEBOOK_FRIEND newFriend = new PASTEBOOK_FRIEND();
+
+            newFriend.FRIEND_ID = friendRequest.USER_ID;
+            newFriend.USER_ID = friendRequest.FRIEND_ID;
+            newFriend.REQUEST = "Y";
+            newFriend.CREATED_DATE = DateTime.Now;
+            newFriend.IsBLOCKED = "N";
+
+            result = interactionManager.AddFriendRequest(newFriend);
+
 
             return Json(new { result = result });
         }

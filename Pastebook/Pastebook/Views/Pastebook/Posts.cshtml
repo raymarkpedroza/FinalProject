@@ -108,12 +108,12 @@
         <div class="post-reaction">
             @if (Model.PASTEBOOK_LIKE.Any(x => x.LIKED_BY == (int)Session["UserId"]))
             {
-                <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@Model.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == Model.ID).FirstOrDefault().ID><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@Model.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == Model.ID).FirstOrDefault().ID><span>Unlike</span></button>
             }
 
             else
             {
-                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.ID><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                <button type="button" class="btn post-reaction-like post-reaction-buttons" value=@Model.ID><span>Like</span></button>
             }
 
             <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@Model.ID><span class="glyphicon glyphicon-comment"></span></button>
@@ -150,6 +150,7 @@
         var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
         var unlikeURL = '@Url.Action("Unlike", "Interaction")';
         var errorURL = '@Url.Action("ErrorPage","Error")';
+        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Interaction")';
 
     </script>
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PastebookBusinessLayer.BusinessLayer;
+using System.Text.RegularExpressions;
 
 namespace Pastebook.Controllers
 {
@@ -19,7 +20,7 @@ namespace Pastebook.Controllers
         public JsonResult CreatePost(string content, int profileOwner)
         {
             PASTEBOOK_POST post = new PASTEBOOK_POST();
-            post.CONTENT = content;
+            post.CONTENT = content.Trim();
             post.POSTER_ID = (int)Session["UserId"];
             post.PROFILE_OWNER_ID = profileOwner;
             post.CREATED_DATE = DateTime.Now;
@@ -38,12 +39,12 @@ namespace Pastebook.Controllers
 
             if (validationManager.CheckIfWhiteSpace(content))
             {
-                errorText = "Posting white spaces is invalid";
+                errorText = "Posting white spaces is not allowed";
             }
 
             if (validationManager.CheckIfIsNullOrEmpty(content))
             {
-                errorText = "Posting empty text is invalid";
+                errorText = "Posting empty content is not allowed";
             }
 
             return Json(new { result = errorText }, JsonRequestBehavior.AllowGet);

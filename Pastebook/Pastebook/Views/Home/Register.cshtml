@@ -10,7 +10,7 @@
         <div class="container">
             <div id="registerForm" class="col-md-6 col-md-offset-3">
                 <div id="register-header" class="text-center">
-                    <h3>Account Registration</h3>
+                    <h1>Account Registration</h1>
                 </div>
                 <div id="register-header-text">Required fields(*)</div>
                 <div class="form-group">
@@ -18,7 +18,7 @@
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.User.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "text-line", placeholder = "email" , id="txtEmail"} })
                         @Html.ValidationMessageFor(model => model.User.EMAIL_ADDRESS, "", new { @class = "text-danger" })
-                        <span class="label-danger" id="emailValidation"></span>
+                        <span class="label-danger validation" id="emailValidation"></span>
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@
                     <div class="col-md-8">
                         @Html.EditorFor(model => model.User.USER_NAME, new { htmlAttributes = new { @class = "text-line", placeholder = "username", id="txtUsername" } })
                         @Html.ValidationMessageFor(model => model.User.USER_NAME, "", new { @class = "text-danger" })
-                        <span class="label-danger" id="usernameValidation"></span>
+                        <span class="label-danger validation" id="usernameValidation"></span>
                     </div>
                 </div>
 
@@ -74,45 +74,22 @@
                 </div>
 
 
-                @{
-                    List<SelectListItem> listOfGenders = new List<SelectListItem>();
-
-                    listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
-                    listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
-                }
-
                 <div class="form-group">
                     <span class="col-md-4"><span class="fa fa-venus-mars"></span> Gender</span>
                     <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.User.GENDER, listOfGenders, "select gender", new { @class = "text-line" })
+                        @Html.DropDownListFor(model => model.User.GENDER, (List<SelectListItem>)ViewBag.Genders, "select gender", new { @class = "text-line" })
                         @Html.ValidationMessageFor(model => model.User.GENDER, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-
-                @if (Model.ListOfCountryModel != null)
-                {
-                    List<SelectListItem> listOfCountries = new List<SelectListItem>();
-
-                    foreach (var country in Model.ListOfCountryModel)
-                    {
-                        listOfCountries.Add(new SelectListItem
-                        {
-                            Text = country.COUNTRY,
-                            Value = country.ID.ToString()
-                        });
-                    }
-
-                    <div class="form-group">
-                        <span class="col-md-4"><span class="glyphicon glyphicon-home"></span> Country </span>
+                <div class="form-group">
+                    <span class="col-md-4"><span class="glyphicon glyphicon-home"></span> Country </span>
                         
-                        <div class="col-md-8">
-                            @Html.DropDownListFor(model => model.User.COUNTRY_ID, listOfCountries, "select country", new { @class = "text-line" })
-                            @Html.ValidationMessageFor(model => model.User.COUNTRY_ID, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.User.COUNTRY_ID, (List<SelectListItem>)ViewBag.Countries, "select country", new { @class = "text-line" })
+                        @Html.ValidationMessageFor(model => model.User.COUNTRY_ID, "", new { @class = "text-danger" })
                     </div>
-
-                }
+                </div>
 
                 <div class="form-group">
                     <span class="col-md-4"><span class="glyphicon glyphicon-phone"></span> Mobile Number</span>
@@ -135,13 +112,11 @@
 }
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script>
         var checkUsernameExistUrl = '@Url.Action("CheckIfUsernameExist", "Pastebook")'
         var checkEmailExistUrl = '@Url.Action("CheckEmailIfExists", "Pastebook")'
     </script>
+
     <script>
         $(document).ready(function () {
             $("#btnCancel").click(function (event) {
@@ -167,7 +142,9 @@
                     },
 
                     error: function () {
-                        alert('Something went wrong.')
+                        $("#errorModal-header").text("Check email if it exists error")
+                        $("#errorModal-body").text("Something went wrong when checking if the email exists")
+                        $("#errorModal").modal('show')
                     }
                 })
             });
@@ -194,7 +171,9 @@
                     },
 
                     error: function () {
-                        alert('Something went wrong.')
+                        $("#errorModal-header").text("Check username if it exists error")
+                        $("#errorModal-body").text("Something went wrong when checking if the username exists")
+                        $("#errorModal").modal('show')
                     }
                 })
             });

@@ -10,7 +10,7 @@
     </div>
 
     <div>
-        <h3>Your Friends (@Model.ListOfFriendsWithDetails.Where(friendRequest=> friendRequest.Friend.REQUEST == "Y").Count())</h3>
+        <span class="friend-header">Your Friends (@Model.ListOfFriendsWithDetails.Where(friendRequest=> friendRequest.Friend.REQUEST == "Y").Count())</span>
     </div>
 <div class="row" id="friend-row">
     @foreach (var friendDetails in Model.ListOfFriendsWithDetails)

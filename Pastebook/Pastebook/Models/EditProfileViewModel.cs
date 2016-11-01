@@ -20,7 +20,7 @@ namespace Pastebook.Models
 
         [Display(Name = "Confirm Password")]
         [Required(ErrorMessage = "Enter Confirm Password")]
-        [Compare("Password", ErrorMessage = "Password and Confirm Password doesn't match.")]
+        [Compare("Password", ErrorMessage = "Password mismatch")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 

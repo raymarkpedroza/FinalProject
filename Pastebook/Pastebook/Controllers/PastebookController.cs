@@ -23,33 +23,48 @@ namespace Pastebook.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //if (Session["Username"] != null)
-            //{
-                PASTEBOOK_USER model = new PASTEBOOK_USER();
-                model = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
-                return View("~/Views/Pastebook/Home.cshtml", model);
-            //}
-            //else
-            //    return RedirectToAction("Login", "Pastebook");
+            PASTEBOOK_USER model = new PASTEBOOK_USER();
+            model = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
+            return View("~/Views/Pastebook/Home.cshtml", model);
         }
 
         [HttpGet, Route("account/login/")]
         public ActionResult Login()
         {
-            //if (Session["Username"] != null)
-            //{
-            //return RedirectToAction("Index", "Pastebook");
-            //}
+            if (Session["Username"] != null)
+            {
+                return RedirectToAction("Index", "Pastebook");
+            }
 
-            //else
-            return View("~/Views/Home/Index.cshtml");
+            else
+                return View("~/Views/Home/Index.cshtml");
         }
 
         [HttpGet, Route("account/register/")]
         public ActionResult Register()
         {
             RegisterViewModel registerViewModel = new RegisterViewModel();
-            registerViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+
+            List<SelectListItem> listOfGenders = new List<SelectListItem>();
+
+            listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
+            listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
+
+
+            List<SelectListItem> listOfCountries = new List<SelectListItem>();
+
+            foreach (var country in countryManager.GetAllCountries())
+            {
+                listOfCountries.Add(new SelectListItem
+                {
+                    Text = country.COUNTRY,
+                    Value = country.ID.ToString()
+                });
+            }
+
+            ViewBag.Genders = listOfGenders;
+            ViewBag.Countries = listOfCountries;
+
             return View("~/Views/Home/Register.cshtml", registerViewModel);
         }
 
@@ -58,62 +73,6 @@ namespace Pastebook.Controllers
         {
             user.PASSWORD = registerViewModel.Password;
             user.DATE_CREATED = DateTime.Now;
-
-            #region[CheckIfNullOrEmpty]
-            //checked submitted data if not null 
-            if (validationManager.CheckIfIsNullOrEmpty(user.USER_NAME))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Username is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(user.EMAIL_ADDRESS))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Email address is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(user.FIRST_NAME))
-            {
-                ModelState.AddModelError("User.USER_NAME", "First name is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(user.LAST_NAME))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Last name is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(registerViewModel.Password))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Password is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(registerViewModel.ConfirmPassword))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Confirm Password is required");
-            }
-
-            if (validationManager.CheckIfIsNullOrEmpty(user.BIRTHDAY.ToString()))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Birthday is required");
-            }
-            #endregion
-
-            #region[CheckIfExceedMaximumStringLength]
-            //check submitted data if exceeds maximum character allowed
-            if (validationManager.CheckIfOutOfStringLimit(user.USER_NAME, 50))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Username character limit is 50");
-            }
-
-            if (validationManager.CheckIfOutOfStringLimit(user.LAST_NAME, 50))
-            {
-                ModelState.AddModelError("User.USER_NAME", "Last name character limit is 50");
-            }
-
-            if (validationManager.CheckIfOutOfStringLimit(user.FIRST_NAME, 50))
-            {
-                ModelState.AddModelError("User.USER_NAME", "First name character limit is 50");
-            }
-            #endregion
 
             #region[CheckIfTaken]
             //check if user name and email is taken
@@ -144,7 +103,26 @@ namespace Pastebook.Controllers
             }
             #endregion
 
-            registerViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            List<SelectListItem> listOfGenders = new List<SelectListItem>();
+
+            listOfGenders.Add(new SelectListItem { Text = "Male", Value = "M" });
+            listOfGenders.Add(new SelectListItem { Text = "Female", Value = "F" });
+
+
+            List<SelectListItem> listOfCountries = new List<SelectListItem>();
+
+            foreach (var country in countryManager.GetAllCountries())
+            {
+                listOfCountries.Add(new SelectListItem
+                {
+                    Text = country.COUNTRY,
+                    Value = country.ID.ToString()
+                });
+            }
+
+            ViewBag.Genders = listOfGenders;
+            ViewBag.Countries = listOfCountries;
+
             return View("~/Views/Home/Register.cshtml", registerViewModel);
         }
 
@@ -179,37 +157,17 @@ namespace Pastebook.Controllers
             return PartialView("~/Views/Pastebook/_PastebookNavbarPartialView.cshtml");
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         [PastebookAuthorize]
         [HttpGet, Route("{username}/")]
         public ActionResult UserProfile(string username)
         {
-            //if (Session["Username"] != null)
-            //{
-                ProfileViewModel profileViewModel = new ProfileViewModel();
-                profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
-                profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
+            ProfileViewModel profileViewModel = new ProfileViewModel();
+            profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
+            profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
-                List<int> listOfFriendId = new List<int>();
-                profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
-                profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
-                return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
-            //}
-            //else
-            //    return RedirectToAction("Index", "Pastebook");
+            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
+            return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
         }
 
         [PastebookAuthorize]
@@ -220,28 +178,17 @@ namespace Pastebook.Controllers
             FriendListViewModel friendListViewModel = new FriendListViewModel();
             List<int> listOfFriendId = new List<int>();
 
-            //if (Session["Username"] != null)
-            //{
-                listOfFriend = interactionManager.GetFriendList((int)Session["UserId"]);
+            listOfFriend = interactionManager.GetFriendList((int)Session["UserId"]);
 
-                foreach (var friend in listOfFriend)
+            foreach (var friend in listOfFriend)
+            {
+                if (friend.USER_ID == (int)Session["UserId"])
                 {
-                    if (friend.USER_ID == (int)Session["UserId"])
-                    {
-                        friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
-                    }
-
-                    else if (friend.FRIEND_ID == (int)Session["UserId"])
-                    {
-                        friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER1 });
-                    }
+                    friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
                 }
+            }
 
-                friendListViewModel.ListOfFriendsWithDetails.OrderBy(x => x.FriendDetails.FIRST_NAME);
-                return View(friendListViewModel);
-            //}
-            //else
-            //    return RedirectToAction("Index", "Pastebook");
+            return View(friendListViewModel);
         }
 
         public ActionResult FileUpload(HttpPostedFileBase file)
@@ -264,7 +211,15 @@ namespace Pastebook.Controllers
                 }
             }
 
-            return RedirectToAction("UserProfile", "Pastebook", new { username = Session["Username"].ToString() });
+            ProfileViewModel profileViewModel = new ProfileViewModel();
+            profileViewModel.User = accountManager.GetUserWithCountry(x => x.USER_NAME == Session["Username"].ToString());
+            profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
+
+            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
+            ViewBag.Result = true;
+
+            return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
         }
 
         public PartialViewResult GetProfileDetails(string username)
@@ -295,11 +250,6 @@ namespace Pastebook.Controllers
                 {
                     friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
                 }
-
-                //else if (friend.FRIEND_ID == id)
-                //{
-                //    friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER1 });
-                //}
             }
 
             friendListViewModel.ListOfFriendsWithDetails.OrderBy(x => x.FriendDetails.FIRST_NAME);
@@ -311,32 +261,24 @@ namespace Pastebook.Controllers
         [Route("posts/{postId:int}/")]
         public ActionResult Posts(int postId)
         {
-            //if (Session["Username"] != null)
-            //{
-                PASTEBOOK_POST post = new PASTEBOOK_POST();
-                post = postManager.GetPost(postId);
-                return View(post);
-            //}
-            //else
-            //    return RedirectToAction("Index", "Pastebook");
+            PASTEBOOK_POST post = new PASTEBOOK_POST();
+            post = postManager.GetPost(postId);
+            return View(post);
         }
 
         [Route("search/")]
         public ActionResult Search(SearchModel search)
         {
-            //if (Session["Username"] != null)
-            //{
-                List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
+            List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
+            ResultsViewModel resultsViewModel = new ResultsViewModel();
+            if (!validationManager.CheckIfIsNullOrEmpty(search.Name))
+            {
                 searchResults = accountManager.SearchUsers(search.Name);
-
-                ResultsViewModel resultsViewModel = new ResultsViewModel();
                 resultsViewModel.searchResults = searchResults;
                 resultsViewModel.searchQuery = search.Name;
-                return View(resultsViewModel);
-            //}
-            //else
-            //    return RedirectToAction("Index", "Pastebook");
+            }
 
+            return View(resultsViewModel);
         }
 
         public JsonResult CheckEmailIfExists(string email)
