@@ -8,8 +8,8 @@ namespace Pastebook.Models
 {
     public class NotificationViewModel
     {
-        public PASTEBOOK_NOTIFICATION Notification = new PASTEBOOK_NOTIFICATION();
-        public List<PASTEBOOK_POST> ListOfPosts = new List<PASTEBOOK_POST>();
-        public PASTEBOOK_USER Sender = new PASTEBOOK_USER();
+        public NOTIFICATION Notification = new NOTIFICATION();
+        public List<POST> ListOfPosts = new List<POST>();
+        public USER Sender = new USER();
     }
 }

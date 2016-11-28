@@ -12,13 +12,13 @@ namespace PastebookEF
     using System;
     using System.Collections.Generic;
     
-    public partial class PASTEBOOK_LIKE
+    public partial class LIKE
     {
         public int ID { get; set; }
         public int POST_ID { get; set; }
         public int LIKED_BY { get; set; }
     
-        public virtual PASTEBOOK_USER PASTEBOOK_USER { get; set; }
-        public virtual PASTEBOOK_POST PASTEBOOK_POST { get; set; }
+        public virtual USER USER { get; set; }
+        public virtual POST POST { get; set; }
     }
 }

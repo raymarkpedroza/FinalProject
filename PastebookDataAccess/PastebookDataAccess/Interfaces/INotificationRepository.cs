@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess
 {
-    public interface INotificationRepository:IRepository<PASTEBOOK_NOTIFICATION>
+    public interface INotificationRepository:IRepository<NOTIFICATION>
     {
-        List<PASTEBOOK_NOTIFICATION> GetNotificationWithUsers(Func<PASTEBOOK_NOTIFICATION, bool> predicate);
+        List<NOTIFICATION> GetNotificationWithUsers(Func<NOTIFICATION, bool> predicate);
     }
 }

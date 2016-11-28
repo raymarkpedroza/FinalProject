@@ -14,36 +14,34 @@ namespace PastebookEF
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public partial class PASTEBOOK_USER
+    public partial class USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PASTEBOOK_USER()
+        public USER()
         {
-            this.PASTEBOOK_COMMENT = new HashSet<PASTEBOOK_COMMENT>();
-            this.PASTEBOOK_FRIEND = new HashSet<PASTEBOOK_FRIEND>();
-            this.PASTEBOOK_FRIEND1 = new HashSet<PASTEBOOK_FRIEND>();
-            this.PASTEBOOK_LIKE = new HashSet<PASTEBOOK_LIKE>();
-            this.PASTEBOOK_NOTIFICATION = new HashSet<PASTEBOOK_NOTIFICATION>();
-            this.PASTEBOOK_NOTIFICATION1 = new HashSet<PASTEBOOK_NOTIFICATION>();
-            this.PASTEBOOK_POST = new HashSet<PASTEBOOK_POST>();
-            this.PASTEBOOK_POST1 = new HashSet<PASTEBOOK_POST>();
+            this.COMMENTs = new HashSet<COMMENT>();
+            this.FRIENDs = new HashSet<FRIEND>();
+            this.FRIENDs1 = new HashSet<FRIEND>();
+            this.LIKEs = new HashSet<LIKE>();
+            this.NOTIFICATIONs = new HashSet<NOTIFICATION>();
+            this.NOTIFICATIONs1 = new HashSet<NOTIFICATION>();
+            this.POSTs = new HashSet<POST>();
+            this.POSTs1 = new HashSet<POST>();
         }
     
         public int ID { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
         [StringLength(50, ErrorMessage = "Maximum characters for username is 50")]
-
-        //http://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
         [RegularExpression("^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$", ErrorMessage = "Invalid username. Username can only start with alphabet character and number. It cannot contains trailing period(.) or underscore(_). Username can end with alphabet character or number.")]
         [DisplayName("Username")]
         public string USER_NAME { get; set; }
 
         [DisplayName("Password")]
-        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         [StringLength(50, ErrorMessage = "Maximum characters for password is 50")]
         public string PASSWORD { get; set; }
+
         public string SALT { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
@@ -59,8 +57,6 @@ namespace PastebookEF
         public string LAST_NAME { get; set; }
 
         [Required(ErrorMessage = "Birthday is required")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Birthday")]
         public System.DateTime BIRTHDAY { get; set; }
 
@@ -69,7 +65,6 @@ namespace PastebookEF
 
         [DataType(DataType.PhoneNumber)]
         [Phone]
-        [DisplayName("Mobile Number")]
         public string MOBILE_NO { get; set; }
 
         [DisplayName("Gender")]
@@ -88,21 +83,21 @@ namespace PastebookEF
         public string EMAIL_ADDRESS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_COMMENT> PASTEBOOK_COMMENT { get; set; }
+        public virtual ICollection<COMMENT> COMMENTs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_FRIEND> PASTEBOOK_FRIEND { get; set; }
+        public virtual ICollection<FRIEND> FRIENDs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_FRIEND> PASTEBOOK_FRIEND1 { get; set; }
+        public virtual ICollection<FRIEND> FRIENDs1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_LIKE> PASTEBOOK_LIKE { get; set; }
+        public virtual ICollection<LIKE> LIKEs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION { get; set; }
+        public virtual ICollection<NOTIFICATION> NOTIFICATIONs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION1 { get; set; }
+        public virtual ICollection<NOTIFICATION> NOTIFICATIONs1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_POST> PASTEBOOK_POST { get; set; }
+        public virtual ICollection<POST> POSTs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_POST> PASTEBOOK_POST1 { get; set; }
+        public virtual ICollection<POST> POSTs1 { get; set; }
         public virtual REF_COUNTRY REF_COUNTRY { get; set; }
     }
 }

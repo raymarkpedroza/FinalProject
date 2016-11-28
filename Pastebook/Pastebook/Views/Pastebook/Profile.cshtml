@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div id="profile-header" class="container">
-                <div class="col-md-6 text-center container" >
+                <div class="col-md-12 text-center" >
                     <div id="profile-profile-picture col-md-6">
                         @if (Model.User.PROFILE_PIC == null)
                         {
@@ -37,22 +37,22 @@
                             (@Model.User.USER_NAME)
                         </div>                    
                         <div id="interactButtons">
-                            @{Html.RenderAction("GetInteractButtons", "Interaction", new { id = Model.User.ID });}
+                            @{Html.RenderAction("GetInteractButtons", "Friend", new { id = Model.User.ID });}
                         </div>
                     </div>
 
                 </div>
 
-                <div id="profile-header-sidediv" class="col-md-6">
+                @*<div id="profile-header-sidediv" class="col-md-6">
 
-                </div>
+                </div>*@
             </div>  
         </div>
 
         <div class="row">
             <div id="profile-content">
                 <div class="col-md-4" id="profile-user-details">
-                    @{Html.RenderAction("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME });}
+                    @{Html.RenderAction("GetProfileDetails", "Profile", new { username = Model.User.USER_NAME });}
                 </div>
             </div>
 
@@ -66,21 +66,7 @@
                 </div>
 
                 <div id="writePost" class="container">
-                    <div id="writePost-header">
-                        @if ((int)Session["UserId"] == Model.User.ID)
-                        {
-                            <div class="text-right">
-                                <span class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Status</span></span>
-                            </div>
-                        }
-
-                        else
-                        {
-                            <div class="text-right">
-                                <span class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span class="writePost-header-text">Write something on @Model.User.FIRST_NAME's wall</span></span>
-                            </div>
-                        }
-                    </div>
+                    
                     @if ((int)Session["UserId"] == Model.User.ID)
                     {
                         <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
@@ -99,7 +85,7 @@
 
                 <div id="friend-list" class="container">
                     <div id="profile-friend-list-header">@Model.User.FIRST_NAME's friends</div>
-                    @{Html.RenderAction("GetFriendList", "Pastebook", new { id = Model.User.ID });}
+                    @{Html.RenderAction("GetFriendList", "Friend", new { id = Model.User.ID });}
                 </div>
                 </div>
             }
@@ -141,17 +127,17 @@
 @section scripts{
     <script>
         var createPostURL = '@Url.Action("CreatePost", "Post")'
-        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
-        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
-        var interactButtonsUrl = '@Url.Action("GetInteractButtons", "Interaction", new { id = Model.User.ID })'
+        var addLikeURL = '@Url.Action("AddLike", "Like")'
+        var addCommentURL = '@Url.Action("AddComment", "Comment")'
+        var interactButtonsUrl = '@Url.Action("GetInteractButtons", "Friend", new { id = Model.User.ID })'
         var getTimelinePostUrl = '@Url.Action("GetTimelinePosts", "Post", new { id = Model.User.ID })'
-        var getProfileDetails = '@Url.Action("GetProfileDetails", "Pastebook", new { username = Model.User.USER_NAME })';
+        var getProfileDetails = '@Url.Action("GetProfileDetails", "Profile", new { username = Model.User.USER_NAME })';
         var errorURL = '@Url.Action("ErrorPage","Error")';
         var updateProfileURL = '@Url.Action("UpdateProfile","Profile")';
-        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var unlikeURL = '@Url.Action("Unlike", "Like")';
         var checkAboutMeURL = '@Url.Action("CheckAboutMeIfValid", "Profile")';
         var checkPostValid = '@Url.Action("CheckIfPostValid", "Post")';
-        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Interaction")';
+        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Comment")';
         var result = '@ViewBag.Result';
     </script>
     <script src="~/Scripts/PastebookScripts/profileScript.js"> </script>

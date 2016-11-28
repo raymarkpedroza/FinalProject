@@ -13,10 +13,10 @@ namespace PastebookEF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PASTEBOOKEntities : DbContext
+    public partial class PastebookEntities : DbContext
     {
-        public PASTEBOOKEntities()
-            : base("name=PASTEBOOKEntities")
+        public PastebookEntities()
+            : base("name=PastebookEntities")
         {
         }
     
@@ -25,12 +25,13 @@ namespace PastebookEF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<PASTEBOOK_COMMENT> PASTEBOOK_COMMENT { get; set; }
-        public virtual DbSet<PASTEBOOK_FRIEND> PASTEBOOK_FRIEND { get; set; }
-        public virtual DbSet<PASTEBOOK_LIKE> PASTEBOOK_LIKE { get; set; }
-        public virtual DbSet<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION { get; set; }
-        public virtual DbSet<PASTEBOOK_POST> PASTEBOOK_POST { get; set; }
-        public virtual DbSet<PASTEBOOK_USER> PASTEBOOK_USER { get; set; }
+        public virtual DbSet<COMMENT> COMMENTs { get; set; }
+        public virtual DbSet<FRIEND> FRIENDs { get; set; }
+        public virtual DbSet<LIKE> LIKEs { get; set; }
+        public virtual DbSet<NOTIFICATION> NOTIFICATIONs { get; set; }
+        public virtual DbSet<POST> POSTs { get; set; }
         public virtual DbSet<REF_COUNTRY> REF_COUNTRY { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<USER> USERs { get; set; }
     }
 }

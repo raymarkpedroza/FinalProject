@@ -8,7 +8,7 @@ namespace Pastebook.Models
 {
     public class ResultsViewModel
     {
-        public List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
+        public List<USER> searchResults = new List<USER>();
         public string searchQuery { get; set; }
     }
 }

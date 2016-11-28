@@ -12,16 +12,16 @@ namespace PastebookEF
     using System;
     using System.Collections.Generic;
     
-    public partial class PASTEBOOK_FRIEND
+    public partial class FRIEND
     {
         public int ID { get; set; }
         public int USER_ID { get; set; }
         public int FRIEND_ID { get; set; }
         public string REQUEST { get; set; }
-        public string IsBLOCKED { get; set; }
+        public string BLOCKED { get; set; }
         public System.DateTime CREATED_DATE { get; set; }
     
-        public virtual PASTEBOOK_USER PASTEBOOK_USER { get; set; }
-        public virtual PASTEBOOK_USER PASTEBOOK_USER1 { get; set; }
+        public virtual USER USER { get; set; }
+        public virtual USER USER1 { get; set; }
     }
 }

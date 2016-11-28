@@ -8,8 +8,8 @@ namespace Pastebook.Models
 {
     public class ProfileViewModel
     {
-        public PASTEBOOK_USER User = new PASTEBOOK_USER();
-        public List<PASTEBOOK_FRIEND> ListOfFriends = new List<PASTEBOOK_FRIEND>();
+        public USER User = new USER();
+        public List<FRIEND> ListOfFriends = new List<FRIEND>();
         public List<REF_COUNTRY> ListOfCountryModel = new List<REF_COUNTRY>();
         public string CountryName { get; set; }
     }

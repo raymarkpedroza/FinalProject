@@ -17,13 +17,13 @@ namespace PastebookEF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public REF_COUNTRY()
         {
-            this.PASTEBOOK_USER = new HashSet<PASTEBOOK_USER>();
+            this.USERs = new HashSet<USER>();
         }
     
         public int ID { get; set; }
         public string COUNTRY { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_USER> PASTEBOOK_USER { get; set; }
+        public virtual ICollection<USER> USERs { get; set; }
     }
 }

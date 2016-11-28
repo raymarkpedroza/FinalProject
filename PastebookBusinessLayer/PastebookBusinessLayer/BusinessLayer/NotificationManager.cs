@@ -17,37 +17,37 @@ namespace PastebookBusinessLayer.BusinessLayer
             _notificationRepository = new NotificationRepository();
         }
 
-        public bool CreateNotification(PASTEBOOK_NOTIFICATION notification)
+        public bool CreateNotification(NOTIFICATION notification)
         {
             return _notificationRepository.Create(notification);
         }
 
-        public bool DeleteNotification(PASTEBOOK_NOTIFICATION notification)
+        public bool DeleteNotification(NOTIFICATION notification)
         {
             return _notificationRepository.Delete(notification);
         }
 
-        public bool UpdateNotification(PASTEBOOK_NOTIFICATION notification)
+        public bool UpdateNotification(NOTIFICATION notification)
         {
             return _notificationRepository.Update(notification);
         }
 
-        public PASTEBOOK_NOTIFICATION GetNotification(int id)
+        public NOTIFICATION GetNotification(int id)
         {
             return _notificationRepository.Get(id);
         }
 
-        public List<PASTEBOOK_NOTIFICATION> GetListOfUnseenNotification(int id)
+        public List<NOTIFICATION> GetListOfUnseenNotification(int id)
         {
             return _notificationRepository.Find(notification => notification.RECEIVER_ID == id && notification.SEEN == "N");
         }
 
-        public List<PASTEBOOK_NOTIFICATION> GetNotificationWithUser(Func<PASTEBOOK_NOTIFICATION, bool> predicate)
+        public List<NOTIFICATION> GetNotificationWithUser(Func<NOTIFICATION, bool> predicate)
         {
             return _notificationRepository.GetNotificationWithUsers(predicate);
         }
 
-        public PASTEBOOK_NOTIFICATION FindNotification(Func <PASTEBOOK_NOTIFICATION, bool> condition)
+        public NOTIFICATION FindNotification(Func <NOTIFICATION, bool> condition)
         {
             return _notificationRepository.Find(condition).FirstOrDefault();
         }

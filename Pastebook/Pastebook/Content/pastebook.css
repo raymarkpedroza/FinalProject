@@ -1,13 +1,13 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #fff;
+    background-color: #0277BD;
 }
 
 /*register*/
 #registerForm {
     background-color:#fff;
-    margin-top:40px;
+    /*margin-top:40px;*/
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
@@ -32,8 +32,8 @@
 
 /*nav bar*/
 .navbar-inverse {
-    background-color: #0277BD;
-    border-color: #aaa;
+    background-color: #fff;
+    border-color:#0277BD;
 }
 
 #logo-icon {
@@ -46,12 +46,12 @@
     margin-right: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
-    color: #E1F5FE;
+    color: #0277BD;
     cursor:pointer;
 }
 
 .icon:hover{
-    color: #fff;
+    color: #01579B;
 }
 
 #textboxSearch {
@@ -148,11 +148,11 @@
 }
 
 #user-option:hover{ 
-    color:#fff;
+    color:#0277BD;
 }
 
 #user-option{
-    color:#E1F5FE;
+    color:#01579B;
     font-size:20px;
     margin-top:20px;
     margin-right:5px;
@@ -160,7 +160,7 @@
 }
 
 #logout {
-    color:#E1F5FE;
+    color:#01579B;
     font-size:20px;
     margin-top:20px;
     margin-right:5px;
@@ -168,7 +168,7 @@
 }
 
 #logout:hover{ 
-    color:#fff;
+    color:#0277BD;
 }
 
 .dropdown-menu > li > a:hover {
@@ -181,15 +181,6 @@
 
 /*profile*/
 
-#profile-header-sidediv {
-    height:345px;
-    background-color:#0277BD;
-    margin-top:-10px;
-    margin-bottom:-10px;
-    color:#fff;
-    padding-top:1px;
-}
-
 #user-profile {
     /*background: linear-gradient(to bottom, black 0%,black 50%,#000000 50%,white 50%,white 100%);*/ 
     background-color:#fff;
@@ -198,7 +189,7 @@
 }
 
 #profile-header {
-    background-color:#212121;
+    background-color:#fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding: 10px 0px;
 }
@@ -234,8 +225,8 @@
 }
 
 .profile-options {
-    background-color:#0277BD;
-    color:#fff;
+    background-color:#fff;
+    color:#0277BD;
     font-size:16px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     padding:10px 10px;
@@ -244,7 +235,7 @@
 
 .profile-options:hover {
     color:#fff;
-    background-color:#424242;
+    background-color:#0277BD;
     cursor:pointer;
 }
 
@@ -267,8 +258,8 @@
 
 #camera-icon {
     position: absolute;
-    top: 30px;
-    left: 220px;
+    top: 75px;
+    left: 455px;
     font-size:40px;
     opacity: 0.5;
     color: #000;
@@ -283,8 +274,8 @@
     margin-top:10px;
     margin-left:10px;
 
-    height: 100px;
-    width:130px;
+    height: 250px;
+    width:200px;
     border-radius:100%;
 }
 
@@ -354,6 +345,12 @@
 
 #profile-content {
     margin-top:10px;
+}
+
+#pictureStatus {
+    color:#fff;
+    background-color:#B71C1C;
+    padding: 2px 2px;
 }
 
 /*profile:end*/
@@ -608,6 +605,7 @@ a:hover {
 .post-reaction {
     margin-top:10px;
 }
+
 .post-reaction-like {
     background-color:#0277BD;
     color:#fff;
@@ -643,7 +641,7 @@ a:hover {
 }
 
 .post-reaction-buttons:hover {
-    background-color:#fff;
+    background-color:#f5f5f5;
     color:#0277BD;
 }
 
@@ -653,7 +651,7 @@ a:hover {
 }
 
 .post-reaction-unlike:hover {
-    background-color:#fff;
+    background-color:#f5f5f5;
     color:#0277BD;
 }
 
@@ -689,11 +687,11 @@ a:hover {
 
 
 .link {
-    color:#aaa;
+    color:#0277BD;
 }
 
 .link:hover {
-    color:#9e9e9e;
+    color:#01579B;
 }
 
 #newsfeed, #profile {
@@ -710,7 +708,7 @@ label.required-asterisk:before
 #login-form {
     margin-top:30px;
     border: 1px solid #aaa;
-    background-color: #E1F5FE;
+    background-color: #fff;
     padding-bottom: 10px;
     padding-top: 0px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -718,8 +716,8 @@ label.required-asterisk:before
 
 #login-header {
     height:70px;
-    background-color:#0277BD;
-    margin:-20px -15px;
+    background-color:#01579B;
+    margin:-25px -15px;
     margin-bottom:10px;
     color:#fff;
     padding-top:1px;
@@ -745,6 +743,17 @@ label.required-asterisk:before
 #loginText {
     margin-left:20px;
 }
+
+
+#home-text-container {
+    background-color:#0277BD;
+    padding:10px 10px;
+    color:#fff;
+}
+
+#home-text {
+    font-size:81px;
+}
 /*login:end*/
 
 /*buttons*/
@@ -769,16 +778,35 @@ label.required-asterisk:before
 
 #btnCancel:hover {
     margin-right:10px;
-    color:#fff;
-    background-color:#EF5350;
+    color:#fff !important;
+    background-color:#EF5350 !important;
 }
 /*buttons:end*/
 
 /*notifications page*/
 .notification-notification-items {
-    border-top:1px #aaa solid;
     margin-top:10px;
-    padding-top:10px;
+    font-size:20px;
+}
+
+.notification-color {
+    background-color:#fff;
+    padding:10px 10px;
+}
+
+.notification-color:hover {
+    background-color:#01579B;
+    color:#fff;
+}
+
+.notification-color:hover a{
+    background-color:#01579B;
+    color:#fff;
+}
+
+.notification-color > a:hover {
+    background-color:#01579B;
+    color:#fff;
 }
 /*notifications page:end*/
 
@@ -854,8 +882,9 @@ button:hover {
 }
 
 #login-form, #registerForm, #writePost, #user-profile, .pastebookPost, #profile-user-details, #edit-profile {
-    border-radius:10px;
-    background-color:#f5f5f5;
+    border-radius:3px;
+    background-color:#fff;
+    padding-top:20px;
 }
 
 #login-header, #register-header, #writePost-header, #user-profile-header {
@@ -887,6 +916,11 @@ button:hover {
 }
 
 .validation {
+    background-color:#f5f5f5 !important;
+}
+
+input:hover {
+    color:#0277BD !important;
     background-color:#f5f5f5 !important;
 }
 /* Set width on the form input elements since they're 100% wide by default */

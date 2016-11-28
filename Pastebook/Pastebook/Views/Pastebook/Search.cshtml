@@ -32,7 +32,7 @@
                             <img src=@imgSrc id="friend-friend-prof-pic" class="img-circle" alt=@searchResults.FIRST_NAME @searchResults.LAST_NAME>
                         }
                         <div id="friend-name" class="text-center">
-                            @Html.ActionLink(searchResults.FIRST_NAME + " " + searchResults.LAST_NAME, "UserProfile", "Pastebook", new { username = searchResults.USER_NAME }, null)
+                            @Html.ActionLink(searchResults.FIRST_NAME + " " + searchResults.LAST_NAME, "UserProfile", "Profile", new { username = searchResults.USER_NAME }, null)
                         </div>
                     </div>
                 </div>

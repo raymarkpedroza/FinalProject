@@ -31,16 +31,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\..\Pastebook\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\Pastebook\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COMMENT.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FRIEND.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LIKE.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NOTIFICATION.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PastebookModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -66,26 +79,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PastebookModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="PASTEBOOK_COMMENT.cs">
-      <DependentUpon>PastebookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PASTEBOOK_FRIEND.cs">
-      <DependentUpon>PastebookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PASTEBOOK_LIKE.cs">
-      <DependentUpon>PastebookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PASTEBOOK_NOTIFICATION.cs">
-      <DependentUpon>PastebookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PASTEBOOK_POST.cs">
-      <DependentUpon>PastebookModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PASTEBOOK_USER.cs">
+    <Compile Include="POST.cs">
       <DependentUpon>PastebookModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="REF_COUNTRY.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>PastebookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER.cs">
       <DependentUpon>PastebookModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>

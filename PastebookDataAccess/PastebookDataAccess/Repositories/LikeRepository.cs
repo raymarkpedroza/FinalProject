@@ -8,14 +8,14 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class LikeRepository : Repository<PASTEBOOK_LIKE>, ILikeRepository
+    public class LikeRepository : Repository<LIKE>, ILikeRepository
     {
-        public List<PASTEBOOK_LIKE> GetLikeWithUser(Func<PASTEBOOK_LIKE, bool> predicate)
+        public List<LIKE> GetLikeWithUser(Func<LIKE, bool> predicate)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_LIKE
-                    .Include(like => like.PASTEBOOK_USER)
+                return context.LIKEs
+                    .Include(like => like.USER)
                     .Where(predicate)
                     .ToList();
             }

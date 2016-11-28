@@ -8,14 +8,14 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class CommentRepository : Repository<PASTEBOOK_COMMENT>, ICommentRepository
+    public class CommentRepository : Repository<COMMENT>, ICommentRepository
     {
-        public PASTEBOOK_COMMENT GetCommentWithUser(Func<PASTEBOOK_COMMENT, bool> predicate)
+        public COMMENT GetCommentWithUser(Func<COMMENT, bool> predicate)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_COMMENT
-                    .Include(comment => comment.PASTEBOOK_USER)
+                return context.COMMENTs
+                    .Include(comment => comment.USER)
                     .Where(predicate)
                     .FirstOrDefault();
             }

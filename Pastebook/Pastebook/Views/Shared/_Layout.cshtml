@@ -17,10 +17,6 @@
     
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Pastebook</p>
-        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -35,17 +31,17 @@
 <script>
     var getNavBarUrl = '@Url.Action("GetPastebookNavBar", "Pastebook")';
     var searchURL = '@Url.Action("Search", "Pastebook")';
-    var getLikesURL = '@Url.Action("GetLikes", "Interaction")';
-    var countNotifUrl = '@Url.Action("GetNotificationsCount", "Interaction")';
-    var getNotificationItemUrl = '@Url.Action("GetNotificationItems", "Interaction")';
-    var addFriendURL = '@Url.Action("AddFriend", "Interaction")'
-    var acceptFriendURL = '@Url.Action("AcceptFriend", "Interaction")'
-    var rejectFriendURL = '@Url.Action("RejectFriendRequest", "Interaction")'
-    var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
+    var getLikesURL = '@Url.Action("GetLikes", "Like")';
+    var countNotifUrl = '@Url.Action("GetNotificationsCount", "Notification")';
+    var getNotificationItemUrl = '@Url.Action("GetNotificationItems", "Notification")';
+    var addFriendURL = '@Url.Action("AddFriend", "Friend")'
+    var acceptFriendURL = '@Url.Action("AcceptFriend", "Friend")'
+    var rejectFriendURL = '@Url.Action("RejectFriendRequest", "Friend")'
+    var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Friend")';
     var errorURL = '@Url.Action("ErrorPage","Error")';
     var cancelURL = '@Url.Action("Index", "Pastebook")';
-    var sawNotificationURL = '@Url.Action("SawNotification", "Interaction")';
-    var getNotificationURL = '@Url.Action("GetNotifications","Interaction")';
+    var sawNotificationURL = '@Url.Action("SawNotification", "Notification")';
+    var getNotificationURL = '@Url.Action("GetNotifications", "Notification")';
 
 </script>
 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using PastebookEF;
 namespace PastebookDataAccess
 {
-    public interface IPostRepository: IRepository<PASTEBOOK_POST>
+    public interface IPostRepository: IRepository<POST>
     {
-        List<PASTEBOOK_POST> GetNewsfeedPost(List<int> listOfPosterId);
-        List<PASTEBOOK_POST> GetTimelinePost(int id);
-        PASTEBOOK_POST GetPost(int id);
+        List<POST> GetNewsfeedPost(List<int> listOfPosterId);
+        List<POST> GetTimelinePost(int id);
+        POST GetPost(int id);
     }
 }

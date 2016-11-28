@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess
 {
-    public interface ICommentRepository: IRepository<PASTEBOOK_COMMENT>
+    public interface ICommentRepository: IRepository<COMMENT>
     {
-        PASTEBOOK_COMMENT GetCommentWithUser(Func<PASTEBOOK_COMMENT, bool> predicate);
+        COMMENT GetCommentWithUser(Func<COMMENT, bool> predicate);
     }
 }

@@ -8,7 +8,7 @@ namespace Pastebook.Models
 {
     public class FriendUserModel
     {
-        public PASTEBOOK_FRIEND Friend = new PASTEBOOK_FRIEND();
-        public PASTEBOOK_USER FriendDetails = new PASTEBOOK_USER();
+        public FRIEND Friend = new FRIEND();
+        public USER FriendDetails = new USER();
     }
 }

@@ -27,18 +27,18 @@
                 </div>
                 @if (Session["UserFullname"] != null)
                 {
-                    <a href="@Url.Action("Friends", "Pastebook")">
+                    <a href="@Url.Action("Friends", "Friend")">
                         <div class="btn-group" id="pastebook-nav-bar-friends">
                             <span class="glyphicon glyphicon-user icon friends" title="Friends"></span>
                         </div>
                     </a>
                         <div class="btn-group" id="pastebook-nav-bar-notification">
-                            @{Html.RenderAction("GetNotifications", "Interaction");}
+                            @{Html.RenderAction("GetNotifications", "Notification");}
                         </div>
 
                         <div class="btn-group">
                             <span id="user-option">
-                                @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, new { @id = "user-option" })
+                                @Html.ActionLink(Session["UserFullname"].ToString(), "UserProfile", "Profile", new { username = Session["Username"].ToString() }, new { @id = "user-option" })
                             </span>
                         </div>
 

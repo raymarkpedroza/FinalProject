@@ -54,7 +54,7 @@ namespace PastebookBusinessLayer.BusinessLayer
         }
         #endregion
 
-        public bool LoginUser(string email, string password, out PASTEBOOK_USER user)
+        public bool LoginUser(string email, string password, out USER user)
         {
             bool result = false;
 
@@ -68,7 +68,7 @@ namespace PastebookBusinessLayer.BusinessLayer
             return result;
         }
 
-        public bool Register(PASTEBOOK_USER user)
+        public bool Register(USER user)
         {
             string salt = string.Empty;
 
@@ -78,22 +78,22 @@ namespace PastebookBusinessLayer.BusinessLayer
             return _userRepository.Create(user);
         }
 
-        public PASTEBOOK_USER GetUser(Func<PASTEBOOK_USER, bool> condition)
+        public USER GetUser(Func<USER, bool> condition)
         {
             return _userRepository.Find(condition).FirstOrDefault();
         }
 
-        public PASTEBOOK_USER GetUserWithCountry(Func<PASTEBOOK_USER, bool> condition)
+        public USER GetUserWithCountry(Func<USER, bool> condition)
         {
             return _userRepository.GetUserWithCountry(condition).FirstOrDefault();
         }
 
-        public List<PASTEBOOK_USER> SearchUsers(string keyword)
+        public List<USER> SearchUsers(string keyword)
         {
             return _userRepository.Find(x => x.FIRST_NAME.ToLower() == keyword.ToLower() || x.LAST_NAME.ToLower() == keyword.ToLower());
         }
 
-        public bool UpdateUser(PASTEBOOK_USER user)
+        public bool UpdateUser(USER user)
         {
             return _userRepository.Update(user);
         }

@@ -8,13 +8,13 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class UserRepository : Repository<PASTEBOOK_USER>, IUserRepository
+    public class UserRepository : Repository<USER>, IUserRepository
     {
-        public List<PASTEBOOK_USER> GetUserWithCountry(Func<PASTEBOOK_USER, bool> predicate)
+        public List<USER> GetUserWithCountry(Func<USER, bool> predicate)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_USER
+                return context.USERs
                     .Include(user=>user.REF_COUNTRY)
                     .Where(predicate)
                     .ToList();

@@ -8,17 +8,17 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class NotificationRepository : Repository<PASTEBOOK_NOTIFICATION>, INotificationRepository
+    public class NotificationRepository : Repository<NOTIFICATION>, INotificationRepository
     {
-        public List<PASTEBOOK_NOTIFICATION> GetNotificationWithUsers(Func<PASTEBOOK_NOTIFICATION, bool> predicate)
+        public List<NOTIFICATION> GetNotificationWithUsers(Func<NOTIFICATION, bool> predicate)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_NOTIFICATION
-                    .Include(notification => notification.PASTEBOOK_POST)
-                    .Include(notification => notification.PASTEBOOK_USER)
-                    .Include(notification => notification.PASTEBOOK_USER1)
-                    .Include(notification => notification.PASTEBOOK_COMMENT)
+                return context.NOTIFICATIONs
+                    .Include(notification => notification.POST)
+                    .Include(notification => notification.USER)
+                    .Include(notification => notification.USER1)
+                    .Include(notification => notification.COMMENT)
                     .Where(predicate)
                     .OrderByDescending(x => x.CREATED_DATE)
                     .ToList();

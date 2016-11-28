@@ -13,7 +13,7 @@ namespace PastebookDataAccess
     {
         public T Get(int id)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 return context.Set<T>().Find(id);
             }
@@ -21,7 +21,7 @@ namespace PastebookDataAccess
 
         public List<T> Find(Func<T, bool> predicate)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 return context.Set<T>().Where(predicate).ToList();
             }
@@ -29,7 +29,7 @@ namespace PastebookDataAccess
 
         public List<T> GetAll()
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 return context.Set<T>().ToList<T>();
             }
@@ -37,7 +37,7 @@ namespace PastebookDataAccess
 
         public bool Create(T record)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 context.Entry(record).State = EntityState.Added;
                 return context.SaveChanges() != 0;
@@ -46,7 +46,7 @@ namespace PastebookDataAccess
 
         public bool Update(T record)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 context.Entry(record).State = EntityState.Modified;
                 return context.SaveChanges() != 0;
@@ -55,7 +55,7 @@ namespace PastebookDataAccess
 
         public bool Delete(T record)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
                 context.Entry(record).State = EntityState.Deleted;
                 return context.SaveChanges() != 0;

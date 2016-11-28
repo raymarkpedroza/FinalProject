@@ -1,4 +1,4 @@
-﻿@model PastebookEF.PASTEBOOK_USER
+﻿@model PastebookEF.USER
 
 @{
     ViewBag.Title = "Home";
@@ -7,9 +7,9 @@
 <div class="container" id="newsfeed">
     <div class="row">
         <div class="col-md-4" id="user-profile">
-            <div id="user-profile-header" class="text-center">
+            @*<div id="user-profile-header" class="text-center">
                 <span class="welcome-header">Welcome @Model.USER_NAME!</span>
-            </div>
+            </div>*@
             @if (Model.PROFILE_PIC == null)
             {
                 <img src="@Url.Content("~/Content/Images/pastebook-default.png")" id="prof-pic" class="col-md-6" alt=@Model.FIRST_NAME @Model.LAST_NAME>
@@ -25,11 +25,15 @@
 
             <div class="col-md-6">
                 <div id="user-fullname">
-                    @Html.ActionLink(Model.FIRST_NAME + " " + Model.LAST_NAME, "UserProfile", "Pastebook", new { username = Session["Username"].ToString() }, null)
+                    @Html.ActionLink("[PROFILE]", "UserProfile", "Profile", new { username = Session["Username"].ToString() }, null)
                 </div>
 
                 <div>
-                    @Html.ActionLink("View Friends", "Friends", "Pastebook")
+                    @Html.ActionLink("[FRIENDS]", "Friends", "Friend")
+                </div>
+                
+                <div>
+                    @Html.ActionLink("[NOTIFICATIONS]", "Notification", "Notification")
                 </div>
             </div>
         </div>
@@ -38,11 +42,11 @@
         <div class="col-md-8">
 
             <div id="writePost">
-                <div id="writePost-header">
+                @*<div id="writePost-header">
                     <div class="text-right">
                         <h3 class="write-post-text"><span class="glyphicon glyphicon-pencil"></span><span>Status</span></h3>
                     </div>
-                </div>
+                </div>*@
 
                 <textarea rows="5" cols="70" id="textAreaPost" placeholder="What's on your mind?" class="col-md-12"></textarea>
                     <div class="clearfix"><button type="button" value=@Model.ID class="btn pull-right" id="btnPost"/>Post</div>
@@ -55,7 +59,7 @@
                 <div>
                     <a id="backToTimeline">Back To Timeline</a>
                 </div>
-                @{Html.RenderAction("GetFriendList", "Pastebook", new { id = Model.ID });}
+                @{Html.RenderAction("GetFriendList", "Friend", new { id = Model.ID });}
             </div>
 
         </div>
@@ -66,16 +70,16 @@
     
     <script>
         var createPostURL = '@Url.Action("CreatePost", "Post")'
-        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
-        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
+        var addLikeURL = '@Url.Action("AddLike", "Like")'
+        var addCommentURL = '@Url.Action("AddComment", "Comment")'
         var getNewsfeedPostsURL = '@Url.Action("GetNewsfeedPosts", "Post", new { id = Model.ID })'
-        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
-        var acceptFriendURL = '@Url.Action("AcceptFriend", "Interaction")'
-        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Friend")';
+        var acceptFriendURL = '@Url.Action("AcceptFriend", "Friend")'
+        var unlikeURL = '@Url.Action("Unlike", "Like")';
         var searchURL = '@Url.Action("Search", "Pastebook")';
         var errorURL = '@Url.Action("ErrorPage","Error")';
         var checkPostValid = '@Url.Action("CheckIfPostValid", "Post")';
-        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Interaction")';
+        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Comment")';
     </script>
 
     <script src="~/Scripts/PastebookScripts/newsfeedScript.js"> </script>

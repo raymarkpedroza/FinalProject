@@ -8,7 +8,7 @@ namespace Pastebook.Models
 {
     public class UserCommentModel
     {
-        public PASTEBOOK_USER Commenter = new PASTEBOOK_USER();
-        public PASTEBOOK_COMMENT Comment = new PASTEBOOK_COMMENT();
+        public USER Commenter = new USER();
+        public COMMENT Comment = new COMMENT();
     }
 }

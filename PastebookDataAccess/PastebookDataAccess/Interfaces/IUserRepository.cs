@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess
 {
-    public interface IUserRepository : IRepository<PASTEBOOK_USER>
+    public interface IUserRepository : IRepository<USER>
     {
-        List<PASTEBOOK_USER> GetUserWithCountry(Func<PASTEBOOK_USER, bool> predicate);
+        List<USER> GetUserWithCountry(Func<USER, bool> predicate);
     }
 }

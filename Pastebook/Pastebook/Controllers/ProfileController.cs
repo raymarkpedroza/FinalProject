@@ -13,8 +13,42 @@ namespace Pastebook.Controllers
     {
         AccountManager accountManager = new AccountManager();
         CountryManager countryManager = new CountryManager();
-        InteractionManager interactionManager = new InteractionManager();
+        CommentManager interactionManager = new CommentManager();
         ValidationManager validator = new ValidationManager();
+        FriendManager friendManager = new FriendManager();
+
+        [PastebookAuthorize]
+        [HttpGet, Route("{username}/")]
+        public ActionResult UserProfile(string username)
+        {
+            ProfileViewModel profileViewModel = new ProfileViewModel();
+            profileViewModel.User = accountManager.GetUserWithCountry(x => x.USER_NAME == username);
+            if (!Equals(profileViewModel.User.COUNTRY_ID, null))
+            {
+                profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
+            }
+            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            profileViewModel.ListOfFriends = friendManager.GetListOfFriendRequest(profileViewModel.User.ID);
+            return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
+        }
+
+        public PartialViewResult GetProfileDetails(string username)
+        {
+            ProfileViewModel profileViewModel = new ProfileViewModel();
+            List<int> listOfFriendId = new List<int>();
+
+            profileViewModel.User = accountManager.GetUserWithCountry(x => x.USER_NAME == username);
+            if (!Equals(profileViewModel.User.COUNTRY_ID, null))
+            {
+                profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
+            }
+            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
+            profileViewModel.ListOfFriends = friendManager.GetFriendList(profileViewModel.User.ID);
+
+            return PartialView("~/Views/Pastebook/_ProfileDetailsPartialView.cshtml", profileViewModel);
+        }
+
+
         public JsonResult CheckAboutMeIfValid(string aboutme)
         {
             string errorText = string.Empty;
@@ -30,7 +64,7 @@ namespace Pastebook.Controllers
         [HttpPost]
         public ActionResult UpdateProfile(string aboutme)
         {
-            PASTEBOOK_USER user = new PASTEBOOK_USER();
+            USER user = new USER();
             user = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
             user.ABOUT_ME = aboutme;
             bool result = false;
@@ -90,11 +124,11 @@ namespace Pastebook.Controllers
 
         [HttpPost]
         [Route("settings/updateinformation")]
-        public ActionResult UpdateInformation(PASTEBOOK_USER user)
+        public ActionResult UpdateInformation(USER user)
         {
             bool result = false;
             int errorCount = 0;
-            PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
+            USER originalUser = new USER();
             originalUser = accountManager.GetUser(x=>x.EMAIL_ADDRESS == Session["Email"].ToString());
 
             originalUser.USER_NAME = user.USER_NAME;
@@ -153,11 +187,11 @@ namespace Pastebook.Controllers
 
         [HttpPost]
         [Route("settings/updateemail")]
-        public ActionResult UpdateEmail(PASTEBOOK_USER user, EditProfileViewModel editProfileViewModel)
+        public ActionResult UpdateEmail(USER user, EditProfileViewModel editProfileViewModel)
         {
             bool result = false;
             int errorCount = 0;
-            PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
+            USER originalUser = new USER();
 
             originalUser = accountManager.GetUser(x=>x.ID == (int)Session["UserId"]);
             originalUser.EMAIL_ADDRESS = user.EMAIL_ADDRESS;
@@ -195,10 +229,10 @@ namespace Pastebook.Controllers
 
         [HttpPost]
         [Route("settings/changepassword")]
-        public ActionResult ChangePassword(PASTEBOOK_USER user, EditProfileViewModel editProfileViewModel)
+        public ActionResult ChangePassword(USER user, EditProfileViewModel editProfileViewModel)
         {
             bool result = false;
-            PASTEBOOK_USER originalUser = new PASTEBOOK_USER();
+            USER originalUser = new USER();
             int errorCount = 0;
             originalUser = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
 
@@ -244,7 +278,7 @@ namespace Pastebook.Controllers
 
         public JsonResult CheckIfPasswordYourCurrentPassword(string password)
         {
-            PASTEBOOK_USER user = accountManager.GetUser(x => x.USER_NAME == Session["Username"].ToString());
+            USER user = accountManager.GetUser(x => x.USER_NAME == Session["Username"].ToString());
 
             return Json(new {result = accountManager.IsPasswordMatch(password, user.SALT, user.PASSWORD)}, JsonRequestBehavior.AllowGet);
         }

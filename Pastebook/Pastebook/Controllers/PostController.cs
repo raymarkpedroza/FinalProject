@@ -13,13 +13,25 @@ namespace Pastebook.Controllers
     public class PostController : Controller
     {
         PostManager postManager = new PostManager();
-        InteractionManager interactionManager = new InteractionManager();
+        CommentManager commentManager = new CommentManager();
         NotificationManager notifactionManager = new NotificationManager();
         ValidationManager validationManager = new ValidationManager();
+        FriendManager friendManager = new FriendManager();
+
+
+
+        [PastebookAuthorize]
+        [Route("posts/{postId:int}/")]
+        public ActionResult Posts(int postId)
+        {
+            POST post = new POST();
+            post = postManager.GetPost(postId);
+            return View("~/Views/Pastebook/Posts.cshtml",post);
+        }
 
         public JsonResult CreatePost(string content, int profileOwner)
         {
-            PASTEBOOK_POST post = new PASTEBOOK_POST();
+            POST post = new POST();
             post.CONTENT = content.Trim();
             post.POSTER_ID = (int)Session["UserId"];
             post.PROFILE_OWNER_ID = profileOwner;
@@ -64,7 +76,7 @@ namespace Pastebook.Controllers
 
             if (Session != null && Session["UserId"] != null)
             {
-                listOfPoster = interactionManager.GetFriendList((int)Session["UserId"]).Select(x=>x.FRIEND_ID).ToList();
+                listOfPoster = friendManager.GetFriendList((int)Session["UserId"]).Select(x=>x.FRIEND_ID).ToList();
                 listOfPoster.Add((int)Session["UserId"]);
                 postView.ListOfPost = postManager.GetNewsfeedPost(listOfPoster);
             }

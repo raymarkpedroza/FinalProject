@@ -8,48 +8,48 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class PostRepository : Repository<PASTEBOOK_POST>, IPostRepository
+    public class PostRepository : Repository<POST>, IPostRepository
     {
-        public List<PASTEBOOK_POST> GetNewsfeedPost(List<int> listOfPosterId)
+        public List<POST> GetNewsfeedPost(List<int> listOfPosterId)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_POST
-                    .Include(post => post.PASTEBOOK_USER)
-                    .Include(post => post.PASTEBOOK_USER1)
-                    .Include(post => post.PASTEBOOK_COMMENT
-                        .Select(comment => comment.PASTEBOOK_USER))
-                    .Include(post => post.PASTEBOOK_LIKE
-                        .Select(like => like.PASTEBOOK_USER))
+                return context.POSTs
+                    .Include(post => post.USER)
+                    .Include(post => post.USER1)
+                    .Include(post => post.COMMENTs
+                        .Select(comment => comment.USER))
+                    .Include(post => post.LIKEs
+                        .Select(like => like.USER))
                     .Where(post => listOfPosterId.Contains(post.POSTER_ID))
                     .OrderByDescending(post => post.CREATED_DATE)
                     .ToList();
             }
         }
 
-        public PASTEBOOK_POST GetPost(int id)
+        public POST GetPost(int id)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_POST
-                    .Include(post => post.PASTEBOOK_USER)
-                    .Include(post => post.PASTEBOOK_USER1)
-                    .Include(post => post.PASTEBOOK_COMMENT.Select(comment => comment.PASTEBOOK_USER))
-                    .Include(post => post.PASTEBOOK_LIKE.Select(like => like.PASTEBOOK_USER))
+                return context.POSTs
+                    .Include(post => post.USER)
+                    .Include(post => post.USER1)
+                    .Include(post => post.COMMENTs.Select(comment => comment.USER))
+                    .Include(post => post.LIKEs.Select(like => like.USER))
                     .Where(post => post.ID.Equals(id))
                     .SingleOrDefault();
             }
         }
 
-        public List<PASTEBOOK_POST> GetTimelinePost(int id)
+        public List<POST> GetTimelinePost(int id)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_POST
-                    .Include(post => post.PASTEBOOK_USER)
-                    .Include(post => post.PASTEBOOK_USER1)
-                    .Include(post => post.PASTEBOOK_COMMENT.Select(comment => comment.PASTEBOOK_USER))
-                    .Include(post => post.PASTEBOOK_LIKE.Select(like => like.PASTEBOOK_USER))
+                return context.POSTs
+                    .Include(post => post.USER)
+                    .Include(post => post.USER1)
+                    .Include(post => post.COMMENTs.Select(comment => comment.USER))
+                    .Include(post => post.LIKEs.Select(like => like.USER))
                     .Where(post => post.PROFILE_OWNER_ID.Equals(id))
                     .OrderByDescending(post => post.CREATED_DATE)
                     .ToList();

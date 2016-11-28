@@ -51,13 +51,15 @@
         }
 </div>
 
+@if(!Equals(Model.User.COUNTRY_ID, null))
+{ 
 <div id="profile-user-country">
 
     @Html.LabelFor(model => model.User.COUNTRY_ID):
     @Html.DisplayFor(model => model.CountryName, Model.CountryName)
    
 </div>
-
+}
 <div id="profile-user-birthday">
     @Html.LabelFor(model => model.User.BIRTHDAY):
     @Model.User.BIRTHDAY.ToString("MMMM dd, yyyy")
@@ -69,11 +71,13 @@
     Contact Information
 </span>
 
+@if (!Equals(Model.User.MOBILE_NO, null))
+{
 <div id="profile-user-contactnumber">
     @Html.LabelFor(model => model.User.MOBILE_NO):
     @Html.DisplayFor(model => model.User.MOBILE_NO, Model.User.MOBILE_NO)
 </div>
-
+}
 <div id="profile-user-email">
     @Html.LabelFor(model => model.User.EMAIL_ADDRESS):
     @Html.DisplayFor(model => model.User.EMAIL_ADDRESS, Model.User.EMAIL_ADDRESS)
@@ -85,7 +89,7 @@
     Pastebook Information
 </span>
 
-<div id="profile-user-contactnumber">
+<div id="profile-user-date-created">
     @Html.LabelFor(model => model.User.DATE_CREATED):
     @Model.User.DATE_CREATED.ToString("MMMM dd, yyyy")
 </div>

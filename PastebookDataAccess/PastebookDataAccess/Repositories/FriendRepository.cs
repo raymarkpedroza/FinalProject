@@ -8,29 +8,29 @@ using System.Data.Entity;
 
 namespace PastebookDataAccess
 {
-    public class FriendRepository : Repository<PASTEBOOK_FRIEND>, IFriendRepository
+    public class FriendRepository : Repository<FRIEND>, IFriendRepository
     {
-        public List<PASTEBOOK_FRIEND> GetListOfFriendRequest(int id)
+        public List<FRIEND> GetListOfFriendRequest(int id)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_FRIEND
-                    .Include(friend => friend.PASTEBOOK_USER)
-                    .Include(friend => friend.PASTEBOOK_USER1)
+                return context.FRIENDs
+                    .Include(friend => friend.USER)
+                    .Include(friend => friend.USER1)
                     .Where(friend => friend.USER_ID == id || friend.FRIEND_ID == id)
                     .ToList();
             }
         }
 
-        public List<PASTEBOOK_FRIEND> GetListOfFriend(int id)
+        public List<FRIEND> GetListOfFriend(int id)
         {
-            using (var context = new PASTEBOOKEntities())
+            using (var context = new PastebookEntities())
             {
-                return context.PASTEBOOK_FRIEND
-                    .Include(friend => friend.PASTEBOOK_USER)
-                    .Include(friend => friend.PASTEBOOK_USER1)
+                return context.FRIENDs
+                    .Include(friend => friend.USER)
+                    .Include(friend => friend.USER1)
                     .Where(friend => friend.USER_ID == id && friend.REQUEST == "Y")
-                    .OrderBy(friend => friend.PASTEBOOK_USER1.FIRST_NAME)
+                    .OrderBy(friend => friend.USER1.FIRST_NAME)
                     .ToList();
             }
         }

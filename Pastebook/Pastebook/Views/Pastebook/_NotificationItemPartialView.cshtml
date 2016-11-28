@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PastebookEF.PASTEBOOK_NOTIFICATION>
+﻿@model IEnumerable<PastebookEF.NOTIFICATION>
 
 <li class="notification-listitem">
-    @Html.ActionLink("View All Notification", "Notification", "Interaction")
+    @Html.ActionLink("View All Notification", "Notification", "Notification")
 </li>
 
 <li class="divider">
@@ -9,24 +9,20 @@
 @foreach (var notification in Model)
 {
 <li class="notification-listitem">
-    @if (notification.SENDER_ID != (int)Session["UserId"])
-    {
-        if (notification.NOTIF_TYPE == "L" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
+        @if (notification.NOTIF_TYPE == "L")
         {
-            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " liked a post  you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
+            @Html.ActionLink(notification.USER1.FIRST_NAME + " " + notification.USER1.LAST_NAME + " liked a post  you posted.", "Posts", "Post", new { postId = notification.POST_ID }, null);
         }
 
-        if (notification.NOTIF_TYPE == "C" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
+        @if (notification.NOTIF_TYPE == "C")
         {
-            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " commented on a post you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
+            @Html.ActionLink(notification.USER1.FIRST_NAME + " " + notification.USER1.LAST_NAME + " commented on a post you posted.", "Posts", "Post", new { postId = notification.POST_ID }, null);
         }
 
-
-        if (notification.NOTIF_TYPE == "F" && notification.SENDER_ID != (int)Session["UserId"])
+        @if (notification.NOTIF_TYPE == "F")
         {
-            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + "  sent you a friend request.", "UserProfile", "Pastebook", new { username = notification.PASTEBOOK_USER1.USER_NAME }, null);
+            @Html.ActionLink(notification.USER1.FIRST_NAME + " " + notification.USER1.LAST_NAME + "  sent you a friend request.", "UserProfile", "Profile", new { username = notification.USER1.USER_NAME }, null);
         }
-    }
 </li>
 }
 

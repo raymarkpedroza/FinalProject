@@ -1,4 +1,4 @@
-﻿@model PastebookEF.PASTEBOOK_POST
+﻿@model PastebookEF.POST
 
 @{
     ViewBag.Title = "Post";
@@ -11,7 +11,7 @@
             {
                 <div class="col-md-12 post-text-header">
                     <label>
-                        @Html.ActionLink(Model.PASTEBOOK_USER.FIRST_NAME + " " + Model.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER.USER_NAME }, null)
+                        @Html.ActionLink(Model.USER.FIRST_NAME + " " + Model.USER.LAST_NAME, "UserProfile", "Profile", new { username = Model.USER.USER_NAME }, null)
                     </label>
                     <div class="date">@Model.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.CREATED_DATE.ToShortTimeString()</div>
 
@@ -22,9 +22,9 @@
             {
                 <div class="col-md-12">
                     <label>
-                        @Html.ActionLink(Model.PASTEBOOK_USER.FIRST_NAME + " " + Model.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER.USER_NAME }, null)
+                        @Html.ActionLink(Model.USER.FIRST_NAME + " " + Model.USER.LAST_NAME, "UserProfile", "Profile", new { username = Model.USER.USER_NAME }, null)
                         <span class="glyphicon glyphicon-play"></span>
-                        @Html.ActionLink(Model.PASTEBOOK_USER1.FIRST_NAME + " " + Model.PASTEBOOK_USER1.LAST_NAME, "UserProfile", "Pastebook", new { username = Model.PASTEBOOK_USER1.USER_NAME }, null)
+                        @Html.ActionLink(Model.USER1.FIRST_NAME + " " + Model.USER1.LAST_NAME, "UserProfile", "Profile", new { username = Model.USER1.USER_NAME }, null)
                     </label>
                     <div class="date">@Model.CREATED_DATE.ToString("MMMM dd, yyyy") at @Model.CREATED_DATE.ToShortTimeString()</div>
                 </div>
@@ -38,31 +38,31 @@
         </div>
 
         <div class="post-reaction-count clearfix">
-            @if (Model.PASTEBOOK_LIKE.Count() > 0)
+            @if (Model.LIKEs.Count() > 0)
             {
                 <span class="glyphicon glyphicon-thumbs-up like"></span>
-                if (Model.PASTEBOOK_LIKE.Count() > 3)
+                if (Model.LIKEs.Count() > 3)
                 {
                     <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
-                        @Model.PASTEBOOK_LIKE.Count()
+                        @Model.LIKEs.Count()
                     </span>
                 }
 
                 else
                 {
-                    foreach (var like in Model.PASTEBOOK_LIKE)
+                    foreach (var like in Model.LIKEs)
                     {
-                        if (like == Model.PASTEBOOK_LIKE.Last())
+                        if (like == Model.LIKEs.Last())
                         {
                             <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
-                                @like.PASTEBOOK_USER.FIRST_NAME @like.PASTEBOOK_USER.LAST_NAME
+                                @like.USER.FIRST_NAME @like.USER.LAST_NAME
                             </span>
                         }
 
                         else
                         {
                             <span class="post-like-count" data-toggle="modal" data-target=#@Model.ID>
-                                @like.PASTEBOOK_USER.FIRST_NAME @like.PASTEBOOK_USER.LAST_NAME,
+                                @like.USER.FIRST_NAME @like.USER.LAST_NAME,
                             </span>
                         }
                         <div class="likeModal modal fade" role="dialog" id=@Model.ID>
@@ -74,10 +74,10 @@
                                         <h4 class="modal-title">Liked by</h4>
                                     </div>
                                     <div class="modal-body">
-                                        @foreach (var likedBy in Model.PASTEBOOK_LIKE)
+                                        @foreach (var likedBy in Model.LIKEs)
                                         {
                                             <div>
-                                                @Html.ActionLink(likedBy.PASTEBOOK_USER.FIRST_NAME + " " + likedBy.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = likedBy.PASTEBOOK_USER.USER_NAME }, null)
+                                                @Html.ActionLink(likedBy.USER.FIRST_NAME + " " + likedBy.USER.LAST_NAME, "UserProfile", "Profile", new { username = likedBy.USER.USER_NAME }, null)
                                             </div>
                                         }
                                     </div>
@@ -91,24 +91,24 @@
                 }
             }
 
-            @if (Model.PASTEBOOK_COMMENT.Count() > 0)
+            @if (Model.COMMENTs.Count() > 0)
             {
-                if (Model.PASTEBOOK_COMMENT.Count() == 1)
+                if (Model.COMMENTs.Count() == 1)
                 {
-                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.PASTEBOOK_COMMENT.Count() Comment</a></span>
+                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.COMMENTs.Count() Comment</a></span>
                 }
 
                 else
                 {
-                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.PASTEBOOK_COMMENT.Count() Comments</a></span>
+                    <span class="pull-right"><a class="comment-count" data-value=@Model.ID>@Model.COMMENTs.Count() Comments</a></span>
                 }
             }
         </div>
 
         <div class="post-reaction">
-            @if (Model.PASTEBOOK_LIKE.Any(x => x.LIKED_BY == (int)Session["UserId"]))
+            @if (Model.LIKEs.Any(x => x.LIKED_BY == (int)Session["UserId"]))
             {
-                <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@Model.PASTEBOOK_LIKE.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == Model.ID).FirstOrDefault().ID><span>Unlike</span></button>
+                <button type="button" class="btn post-reaction-unlike post-reaction-buttons" value=@Model.LIKEs.Where(x => x.LIKED_BY == (int)Session["UserId"]).Where(x=>x.POST_ID == Model.ID).FirstOrDefault().ID><span>Unlike</span></button>
             }
 
             else
@@ -119,13 +119,13 @@
             <button type="button" class="btn post-reaction-comment post-reaction-buttons" value=@Model.ID><span class="glyphicon glyphicon-comment"></span></button>
 
         <div class="post-comments" value=@Model.ID>
-            @foreach (var commentatorsComment in Model.PASTEBOOK_COMMENT)
+            @foreach (var commentatorsComment in Model.COMMENTs)
             {
                 <div class="post-comment">
                     <div class="post-comment-header">
                         <span>
                             <label>
-                                @Html.ActionLink(commentatorsComment.PASTEBOOK_USER.FIRST_NAME + " " + commentatorsComment.PASTEBOOK_USER.LAST_NAME, "UserProfile", "Pastebook", new { username = commentatorsComment.PASTEBOOK_USER.USER_NAME }, null)
+                                @Html.ActionLink(commentatorsComment.USER.FIRST_NAME + " " + commentatorsComment.USER.LAST_NAME, "UserProfile", "Pastebook", new { username = commentatorsComment.USER.USER_NAME }, null)
                             </label>
                         </span> @commentatorsComment.CONTENT
                     </div>
@@ -145,12 +145,12 @@
 @section scripts{
 
     <script>
-        var addLikeURL = '@Url.Action("AddLike", "Interaction")'
-        var addCommentURL = '@Url.Action("AddComment", "Interaction")'
-        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Interaction")';
-        var unlikeURL = '@Url.Action("Unlike", "Interaction")';
+        var addLikeURL = '@Url.Action("AddLike", "Like")'
+        var addCommentURL = '@Url.Action("AddComment", "Comment")'
+        var getFriendRequestsURL = '@Url.Action("GetFriendRequests", "Friend")';
+        var unlikeURL = '@Url.Action("Unlike", "Like")';
         var errorURL = '@Url.Action("ErrorPage","Error")';
-        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Interaction")';
+        var checkCommentValid = '@Url.Action("CheckIfCommentIsValid", "Comment")';
 
     </script>
 

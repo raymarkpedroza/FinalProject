@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess
 {
-    public interface ILikeRepository : IRepository<PASTEBOOK_LIKE> 
+    public interface ILikeRepository : IRepository<LIKE> 
     {
-        List<PASTEBOOK_LIKE> GetLikeWithUser(Func<PASTEBOOK_LIKE, bool> predicate);
+        List<LIKE> GetLikeWithUser(Func<LIKE, bool> predicate);
     }
 }

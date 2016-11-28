@@ -4,8 +4,8 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PASTEBOOKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="PASTEBOOK_COMMENT">
+      <Schema Namespace="PastebookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COMMENT">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -15,7 +15,7 @@
           <Property Name="CONTENT" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="DATE_CREATED" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_FRIEND">
+        <EntityType Name="FRIEND">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -23,10 +23,10 @@
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="FRIEND_ID" Type="int" Nullable="false" />
           <Property Name="REQUEST" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="IsBLOCKED" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="BLOCKED" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="CREATED_DATE" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_LIKE">
+        <EntityType Name="LIKE">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -34,20 +34,20 @@
           <Property Name="POST_ID" Type="int" Nullable="false" />
           <Property Name="LIKED_BY" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_NOTIFICATION">
+        <EntityType Name="NOTIFICATION">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NOTIF_TYPE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="RECEIVER_ID" Type="int" Nullable="false" />
+          <Property Name="NOTIF_TYPE" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="SENDER_ID" Type="int" Nullable="false" />
           <Property Name="CREATED_DATE" Type="datetime" Nullable="false" />
           <Property Name="COMMENT_ID" Type="int" />
           <Property Name="POST_ID" Type="int" />
           <Property Name="SEEN" Type="varchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_POST">
+        <EntityType Name="POST">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -57,7 +57,24 @@
           <Property Name="PROFILE_OWNER_ID" Type="int" Nullable="false" />
           <Property Name="POSTER_ID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_USER">
+        <EntityType Name="REF_COUNTRY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUNTRY" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="USER">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -76,235 +93,230 @@
           <Property Name="ABOUT_ME" Type="varchar" MaxLength="2000" />
           <Property Name="EMAIL_ADDRESS" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="REF_COUNTRY">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="COUNTRY" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <Association Name="FK__PASTEBOOK__COMME__2E1BDC42">
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_COMMENT_ID">
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="0..1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_COMMENT">
+            <Principal Role="COMMENT">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="COMMENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__COUNT__0AD2A005">
+        <Association Name="FK_COMMENT_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POST">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="COMMENT">
+              <PropertyRef Name="POST_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COUNTRY_ID">
           <End Role="REF_COUNTRY" Type="Self.REF_COUNTRY" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="*" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REF_COUNTRY">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_USER">
+            <Dependent Role="USER">
               <PropertyRef Name="COUNTRY_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__FRIEN__21B6055D">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_FRIEND" Type="Self.PASTEBOOK_FRIEND" Multiplicity="*" />
+        <Association Name="FK_FRIEND_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="FRIEND" Type="Self.FRIEND" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_FRIEND">
+            <Dependent Role="FRIEND">
               <PropertyRef Name="FRIEND_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__LIKED__276EDEB3">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_LIKE" Type="Self.PASTEBOOK_LIKE" Multiplicity="*" />
+        <Association Name="FK_LIKE_BY">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="LIKE" Type="Self.LIKE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_LIKE">
+            <Dependent Role="LIKE">
               <PropertyRef Name="LIKED_BY" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___15502E78">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="1" />
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="*" />
+        <Association Name="FK_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="0..1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="POST">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_COMMENT">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="POST_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___267ABA7A">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="1" />
-          <End Role="PASTEBOOK_LIKE" Type="Self.PASTEBOOK_LIKE" Multiplicity="*" />
+        <Association Name="FK_POST_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="LIKE" Type="Self.LIKE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="POST">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_LIKE">
+            <Dependent Role="LIKE">
               <PropertyRef Name="POST_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___2F10007B">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_POSTER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="POST" Type="Self.POST" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
-              <PropertyRef Name="POST_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PASTEBOOK__POSTE__108B795B">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PASTEBOOK_POST">
+            <Dependent Role="POST">
               <PropertyRef Name="POSTER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POSTE__164452B1">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="*" />
+        <Association Name="FK_POSTER_POSTER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_COMMENT">
+            <Dependent Role="COMMENT">
               <PropertyRef Name="POSTER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__PROFI__0F975522">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="*" />
+        <Association Name="FK_PROFILE_OWNER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="POST" Type="Self.POST" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_POST">
+            <Dependent Role="POST">
               <PropertyRef Name="PROFILE_OWNER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__RECEI__2C3393D0">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_RECEIVER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="RECEIVER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__SENDE__2D27B809">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_SENDER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="SENDER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__USER___20C1E124">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_FRIEND" Type="Self.PASTEBOOK_FRIEND" Multiplicity="*" />
+        <Association Name="FK_USER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="FRIEND" Type="Self.FRIEND" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_FRIEND">
+            <Dependent Role="FRIEND">
               <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PASTEBOOKModelStoreContainer">
-          <EntitySet Name="PASTEBOOK_COMMENT" EntityType="Self.PASTEBOOK_COMMENT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PASTEBOOK_FRIEND" EntityType="Self.PASTEBOOK_FRIEND" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PASTEBOOK_LIKE" EntityType="Self.PASTEBOOK_LIKE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PASTEBOOK_NOTIFICATION" EntityType="Self.PASTEBOOK_NOTIFICATION" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PASTEBOOK_POST" EntityType="Self.PASTEBOOK_POST" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PASTEBOOK_USER" EntityType="Self.PASTEBOOK_USER" Schema="dbo" store:Type="Tables" />
+        <EntityContainer Name="PastebookModelStoreContainer">
+          <EntitySet Name="COMMENT" EntityType="Self.COMMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FRIEND" EntityType="Self.FRIEND" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LIKE" EntityType="Self.LIKE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOTIFICATION" EntityType="Self.NOTIFICATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POST" EntityType="Self.POST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REF_COUNTRY" EntityType="Self.REF_COUNTRY" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__PASTEBOOK__COMME__2E1BDC42" Association="Self.FK__PASTEBOOK__COMME__2E1BDC42">
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_COMMENT_ID" Association="Self.FK_COMMENT_ID">
+            <End Role="COMMENT" EntitySet="COMMENT" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__COUNT__0AD2A005" Association="Self.FK__PASTEBOOK__COUNT__0AD2A005">
+          <AssociationSet Name="FK_COMMENT_POST_ID" Association="Self.FK_COMMENT_POST_ID">
+            <End Role="POST" EntitySet="POST" />
+            <End Role="COMMENT" EntitySet="COMMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COUNTRY_ID" Association="Self.FK_COUNTRY_ID">
             <End Role="REF_COUNTRY" EntitySet="REF_COUNTRY" />
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
+            <End Role="USER" EntitySet="USER" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__FRIEN__21B6055D" Association="Self.FK__PASTEBOOK__FRIEN__21B6055D">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_FRIEND" EntitySet="PASTEBOOK_FRIEND" />
+          <AssociationSet Name="FK_FRIEND_ID" Association="Self.FK_FRIEND_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="FRIEND" EntitySet="FRIEND" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__LIKED__276EDEB3" Association="Self.FK__PASTEBOOK__LIKED__276EDEB3">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_LIKE" EntitySet="PASTEBOOK_LIKE" />
+          <AssociationSet Name="FK_LIKE_BY" Association="Self.FK_LIKE_BY">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="LIKE" EntitySet="LIKE" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___15502E78" Association="Self.FK__PASTEBOOK__POST___15502E78">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
+          <AssociationSet Name="FK_POST_ID" Association="Self.FK_POST_ID">
+            <End Role="POST" EntitySet="POST" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___267ABA7A" Association="Self.FK__PASTEBOOK__POST___267ABA7A">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_LIKE" EntitySet="PASTEBOOK_LIKE" />
+          <AssociationSet Name="FK_POST_POST_ID" Association="Self.FK_POST_POST_ID">
+            <End Role="POST" EntitySet="POST" />
+            <End Role="LIKE" EntitySet="LIKE" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___2F10007B" Association="Self.FK__PASTEBOOK__POST___2F10007B">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <AssociationSet Name="FK_POSTER_ID" Association="Self.FK_POSTER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="POST" EntitySet="POST" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POSTE__108B795B" Association="Self.FK__PASTEBOOK__POSTE__108B795B">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
+          <AssociationSet Name="FK_POSTER_POSTER_ID" Association="Self.FK_POSTER_POSTER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="COMMENT" EntitySet="COMMENT" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POSTE__164452B1" Association="Self.FK__PASTEBOOK__POSTE__164452B1">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
+          <AssociationSet Name="FK_PROFILE_OWNER_ID" Association="Self.FK_PROFILE_OWNER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="POST" EntitySet="POST" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__PROFI__0F975522" Association="Self.FK__PASTEBOOK__PROFI__0F975522">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
+          <AssociationSet Name="FK_RECEIVER_ID" Association="Self.FK_RECEIVER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__RECEI__2C3393D0" Association="Self.FK__PASTEBOOK__RECEI__2C3393D0">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <AssociationSet Name="FK_SENDER_ID" Association="Self.FK_SENDER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__SENDE__2D27B809" Association="Self.FK__PASTEBOOK__SENDE__2D27B809">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__USER___20C1E124" Association="Self.FK__PASTEBOOK__USER___20C1E124">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_FRIEND" EntitySet="PASTEBOOK_FRIEND" />
+          <AssociationSet Name="FK_USER_ID" Association="Self.FK_USER_ID">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="FRIEND" EntitySet="FRIEND" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PASTEBOOKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="PASTEBOOK_COMMENT">
+      <Schema Namespace="PastebookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COMMENT">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -313,11 +325,11 @@
           <Property Name="POSTER_ID" Type="Int32" Nullable="false" />
           <Property Name="CONTENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DATE_CREATED" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PASTEBOOK_NOTIFICATION" Relationship="Self.FK__PASTEBOOK__COMME__2E1BDC42" FromRole="PASTEBOOK_COMMENT" ToRole="PASTEBOOK_NOTIFICATION" />
-          <NavigationProperty Name="PASTEBOOK_POST" Relationship="Self.FK__PASTEBOOK__POST___15502E78" FromRole="PASTEBOOK_COMMENT" ToRole="PASTEBOOK_POST" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__POSTE__164452B1" FromRole="PASTEBOOK_COMMENT" ToRole="PASTEBOOK_USER" />
+          <NavigationProperty Name="NOTIFICATIONs" Relationship="Self.FK_COMMENT_ID" FromRole="COMMENT" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="POST" Relationship="Self.FK_COMMENT_POST_ID" FromRole="COMMENT" ToRole="POST" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_POSTER_POSTER_ID" FromRole="COMMENT" ToRole="USER" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_FRIEND">
+        <EntityType Name="FRIEND">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -325,39 +337,39 @@
           <Property Name="USER_ID" Type="Int32" Nullable="false" />
           <Property Name="FRIEND_ID" Type="Int32" Nullable="false" />
           <Property Name="REQUEST" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="IsBLOCKED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BLOCKED" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CREATED_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__FRIEN__21B6055D" FromRole="PASTEBOOK_FRIEND" ToRole="PASTEBOOK_USER" />
-          <NavigationProperty Name="PASTEBOOK_USER1" Relationship="Self.FK__PASTEBOOK__USER___20C1E124" FromRole="PASTEBOOK_FRIEND" ToRole="PASTEBOOK_USER" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_FRIEND_ID" FromRole="FRIEND" ToRole="USER" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_USER_ID" FromRole="FRIEND" ToRole="USER" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_LIKE">
+        <EntityType Name="LIKE">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="POST_ID" Type="Int32" Nullable="false" />
           <Property Name="LIKED_BY" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__LIKED__276EDEB3" FromRole="PASTEBOOK_LIKE" ToRole="PASTEBOOK_USER" />
-          <NavigationProperty Name="PASTEBOOK_POST" Relationship="Self.FK__PASTEBOOK__POST___267ABA7A" FromRole="PASTEBOOK_LIKE" ToRole="PASTEBOOK_POST" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_LIKE_BY" FromRole="LIKE" ToRole="USER" />
+          <NavigationProperty Name="POST" Relationship="Self.FK_POST_POST_ID" FromRole="LIKE" ToRole="POST" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_NOTIFICATION">
+        <EntityType Name="NOTIFICATION">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOTIF_TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="RECEIVER_ID" Type="Int32" Nullable="false" />
+          <Property Name="NOTIF_TYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="SENDER_ID" Type="Int32" Nullable="false" />
           <Property Name="CREATED_DATE" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="COMMENT_ID" Type="Int32" />
           <Property Name="POST_ID" Type="Int32" />
           <Property Name="SEEN" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PASTEBOOK_COMMENT" Relationship="Self.FK__PASTEBOOK__COMME__2E1BDC42" FromRole="PASTEBOOK_NOTIFICATION" ToRole="PASTEBOOK_COMMENT" />
-          <NavigationProperty Name="PASTEBOOK_POST" Relationship="Self.FK__PASTEBOOK__POST___2F10007B" FromRole="PASTEBOOK_NOTIFICATION" ToRole="PASTEBOOK_POST" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__RECEI__2C3393D0" FromRole="PASTEBOOK_NOTIFICATION" ToRole="PASTEBOOK_USER" />
-          <NavigationProperty Name="PASTEBOOK_USER1" Relationship="Self.FK__PASTEBOOK__SENDE__2D27B809" FromRole="PASTEBOOK_NOTIFICATION" ToRole="PASTEBOOK_USER" />
+          <NavigationProperty Name="COMMENT" Relationship="Self.FK_COMMENT_ID" FromRole="NOTIFICATION" ToRole="COMMENT" />
+          <NavigationProperty Name="POST" Relationship="Self.FK_POST_ID" FromRole="NOTIFICATION" ToRole="POST" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_RECEIVER_ID" FromRole="NOTIFICATION" ToRole="USER" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_SENDER_ID" FromRole="NOTIFICATION" ToRole="USER" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_POST">
+        <EntityType Name="POST">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -366,13 +378,31 @@
           <Property Name="CONTENT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PROFILE_OWNER_ID" Type="Int32" Nullable="false" />
           <Property Name="POSTER_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="PASTEBOOK_COMMENT" Relationship="Self.FK__PASTEBOOK__POST___15502E78" FromRole="PASTEBOOK_POST" ToRole="PASTEBOOK_COMMENT" />
-          <NavigationProperty Name="PASTEBOOK_LIKE" Relationship="Self.FK__PASTEBOOK__POST___267ABA7A" FromRole="PASTEBOOK_POST" ToRole="PASTEBOOK_LIKE" />
-          <NavigationProperty Name="PASTEBOOK_NOTIFICATION" Relationship="Self.FK__PASTEBOOK__POST___2F10007B" FromRole="PASTEBOOK_POST" ToRole="PASTEBOOK_NOTIFICATION" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__POSTE__108B795B" FromRole="PASTEBOOK_POST" ToRole="PASTEBOOK_USER" />
-          <NavigationProperty Name="PASTEBOOK_USER1" Relationship="Self.FK__PASTEBOOK__PROFI__0F975522" FromRole="PASTEBOOK_POST" ToRole="PASTEBOOK_USER" />
+          <NavigationProperty Name="COMMENTs" Relationship="Self.FK_COMMENT_POST_ID" FromRole="POST" ToRole="COMMENT" />
+          <NavigationProperty Name="LIKEs" Relationship="Self.FK_POST_POST_ID" FromRole="POST" ToRole="LIKE" />
+          <NavigationProperty Name="NOTIFICATIONs" Relationship="Self.FK_POST_ID" FromRole="POST" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="USER" Relationship="Self.FK_POSTER_ID" FromRole="POST" ToRole="USER" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK_PROFILE_OWNER_ID" FromRole="POST" ToRole="USER" />
         </EntityType>
-        <EntityType Name="PASTEBOOK_USER">
+        <EntityType Name="REF_COUNTRY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUNTRY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USERs" Relationship="Self.FK_COUNTRY_ID" FromRole="REF_COUNTRY" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="USER">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -390,239 +420,232 @@
           <Property Name="DATE_CREATED" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ABOUT_ME" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="EMAIL_ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PASTEBOOK_COMMENT" Relationship="Self.FK__PASTEBOOK__POSTE__164452B1" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_COMMENT" />
-          <NavigationProperty Name="PASTEBOOK_FRIEND" Relationship="Self.FK__PASTEBOOK__FRIEN__21B6055D" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_FRIEND" />
-          <NavigationProperty Name="PASTEBOOK_FRIEND1" Relationship="Self.FK__PASTEBOOK__USER___20C1E124" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_FRIEND" />
-          <NavigationProperty Name="PASTEBOOK_LIKE" Relationship="Self.FK__PASTEBOOK__LIKED__276EDEB3" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_LIKE" />
-          <NavigationProperty Name="PASTEBOOK_NOTIFICATION" Relationship="Self.FK__PASTEBOOK__RECEI__2C3393D0" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_NOTIFICATION" />
-          <NavigationProperty Name="PASTEBOOK_NOTIFICATION1" Relationship="Self.FK__PASTEBOOK__SENDE__2D27B809" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_NOTIFICATION" />
-          <NavigationProperty Name="PASTEBOOK_POST" Relationship="Self.FK__PASTEBOOK__POSTE__108B795B" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_POST" />
-          <NavigationProperty Name="PASTEBOOK_POST1" Relationship="Self.FK__PASTEBOOK__PROFI__0F975522" FromRole="PASTEBOOK_USER" ToRole="PASTEBOOK_POST" />
-          <NavigationProperty Name="REF_COUNTRY" Relationship="Self.FK__PASTEBOOK__COUNT__0AD2A005" FromRole="PASTEBOOK_USER" ToRole="REF_COUNTRY" />
+          <NavigationProperty Name="COMMENTs" Relationship="Self.FK_POSTER_POSTER_ID" FromRole="USER" ToRole="COMMENT" />
+          <NavigationProperty Name="FRIENDs" Relationship="Self.FK_FRIEND_ID" FromRole="USER" ToRole="FRIEND" />
+          <NavigationProperty Name="FRIENDs1" Relationship="Self.FK_USER_ID" FromRole="USER" ToRole="FRIEND" />
+          <NavigationProperty Name="LIKEs" Relationship="Self.FK_LIKE_BY" FromRole="USER" ToRole="LIKE" />
+          <NavigationProperty Name="NOTIFICATIONs" Relationship="Self.FK_RECEIVER_ID" FromRole="USER" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="NOTIFICATIONs1" Relationship="Self.FK_SENDER_ID" FromRole="USER" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="POSTs" Relationship="Self.FK_POSTER_ID" FromRole="USER" ToRole="POST" />
+          <NavigationProperty Name="POSTs1" Relationship="Self.FK_PROFILE_OWNER_ID" FromRole="USER" ToRole="POST" />
+          <NavigationProperty Name="REF_COUNTRY" Relationship="Self.FK_COUNTRY_ID" FromRole="USER" ToRole="REF_COUNTRY" />
         </EntityType>
-        <EntityType Name="REF_COUNTRY">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COUNTRY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PASTEBOOK_USER" Relationship="Self.FK__PASTEBOOK__COUNT__0AD2A005" FromRole="REF_COUNTRY" ToRole="PASTEBOOK_USER" />
-        </EntityType>
-        <Association Name="FK__PASTEBOOK__COMME__2E1BDC42">
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_COMMENT_ID">
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="0..1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_COMMENT">
+            <Principal Role="COMMENT">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="COMMENT_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___15502E78">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="1" />
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="*" />
+        <Association Name="FK_COMMENT_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="POST">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_COMMENT">
+            <Dependent Role="COMMENT">
               <PropertyRef Name="POST_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POSTE__164452B1">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_COMMENT" Type="Self.PASTEBOOK_COMMENT" Multiplicity="*" />
+        <Association Name="FK_POSTER_POSTER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="COMMENT" Type="Self.COMMENT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_COMMENT">
+            <Dependent Role="COMMENT">
               <PropertyRef Name="POSTER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__FRIEN__21B6055D">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_FRIEND" Type="Self.PASTEBOOK_FRIEND" Multiplicity="*" />
+        <Association Name="FK_FRIEND_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="FRIEND" Type="Self.FRIEND" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_FRIEND">
+            <Dependent Role="FRIEND">
               <PropertyRef Name="FRIEND_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__USER___20C1E124">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_FRIEND" Type="Self.PASTEBOOK_FRIEND" Multiplicity="*" />
+        <Association Name="FK_USER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="FRIEND" Type="Self.FRIEND" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_FRIEND">
+            <Dependent Role="FRIEND">
               <PropertyRef Name="USER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__LIKED__276EDEB3">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_LIKE" Type="Self.PASTEBOOK_LIKE" Multiplicity="*" />
+        <Association Name="FK_LIKE_BY">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="LIKE" Type="Self.LIKE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_LIKE">
+            <Dependent Role="LIKE">
               <PropertyRef Name="LIKED_BY" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___267ABA7A">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="1" />
-          <End Role="PASTEBOOK_LIKE" Type="Self.PASTEBOOK_LIKE" Multiplicity="*" />
+        <Association Name="FK_POST_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="1" />
+          <End Role="LIKE" Type="Self.LIKE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="POST">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_LIKE">
+            <Dependent Role="LIKE">
               <PropertyRef Name="POST_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POST___2F10007B">
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_POST_ID">
+          <End Role="POST" Type="Self.POST" Multiplicity="0..1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_POST">
+            <Principal Role="POST">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="POST_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__RECEI__2C3393D0">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_RECEIVER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="RECEIVER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__SENDE__2D27B809">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_NOTIFICATION" Type="Self.PASTEBOOK_NOTIFICATION" Multiplicity="*" />
+        <Association Name="FK_SENDER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_NOTIFICATION">
+            <Dependent Role="NOTIFICATION">
               <PropertyRef Name="SENDER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__POSTE__108B795B">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="*" />
+        <Association Name="FK_POSTER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="POST" Type="Self.POST" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_POST">
+            <Dependent Role="POST">
               <PropertyRef Name="POSTER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__PROFI__0F975522">
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="1" />
-          <End Role="PASTEBOOK_POST" Type="Self.PASTEBOOK_POST" Multiplicity="*" />
+        <Association Name="FK_PROFILE_OWNER_ID">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="POST" Type="Self.POST" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PASTEBOOK_USER">
+            <Principal Role="USER">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_POST">
+            <Dependent Role="POST">
               <PropertyRef Name="PROFILE_OWNER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PASTEBOOK__COUNT__0AD2A005">
+        <Association Name="FK_COUNTRY_ID">
           <End Role="REF_COUNTRY" Type="Self.REF_COUNTRY" Multiplicity="0..1" />
-          <End Role="PASTEBOOK_USER" Type="Self.PASTEBOOK_USER" Multiplicity="*" />
+          <End Role="USER" Type="Self.USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REF_COUNTRY">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PASTEBOOK_USER">
+            <Dependent Role="USER">
               <PropertyRef Name="COUNTRY_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PASTEBOOKEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="PASTEBOOK_COMMENT" EntityType="Self.PASTEBOOK_COMMENT" />
-          <EntitySet Name="PASTEBOOK_FRIEND" EntityType="Self.PASTEBOOK_FRIEND" />
-          <EntitySet Name="PASTEBOOK_LIKE" EntityType="Self.PASTEBOOK_LIKE" />
-          <EntitySet Name="PASTEBOOK_NOTIFICATION" EntityType="Self.PASTEBOOK_NOTIFICATION" />
-          <EntitySet Name="PASTEBOOK_POST" EntityType="Self.PASTEBOOK_POST" />
-          <EntitySet Name="PASTEBOOK_USER" EntityType="Self.PASTEBOOK_USER" />
+        <EntityContainer Name="PastebookEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COMMENTs" EntityType="Self.COMMENT" />
+          <EntitySet Name="FRIENDs" EntityType="Self.FRIEND" />
+          <EntitySet Name="LIKEs" EntityType="Self.LIKE" />
+          <EntitySet Name="NOTIFICATIONs" EntityType="Self.NOTIFICATION" />
+          <EntitySet Name="POSTs" EntityType="Self.POST" />
           <EntitySet Name="REF_COUNTRY" EntityType="Self.REF_COUNTRY" />
-          <AssociationSet Name="FK__PASTEBOOK__COMME__2E1BDC42" Association="Self.FK__PASTEBOOK__COMME__2E1BDC42">
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <AssociationSet Name="FK_COMMENT_ID" Association="Self.FK_COMMENT_ID">
+            <End Role="COMMENT" EntitySet="COMMENTs" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATIONs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___15502E78" Association="Self.FK__PASTEBOOK__POST___15502E78">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
+          <AssociationSet Name="FK_COMMENT_POST_ID" Association="Self.FK_COMMENT_POST_ID">
+            <End Role="POST" EntitySet="POSTs" />
+            <End Role="COMMENT" EntitySet="COMMENTs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POSTE__164452B1" Association="Self.FK__PASTEBOOK__POSTE__164452B1">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_COMMENT" EntitySet="PASTEBOOK_COMMENT" />
+          <AssociationSet Name="FK_POSTER_POSTER_ID" Association="Self.FK_POSTER_POSTER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="COMMENT" EntitySet="COMMENTs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__FRIEN__21B6055D" Association="Self.FK__PASTEBOOK__FRIEN__21B6055D">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_FRIEND" EntitySet="PASTEBOOK_FRIEND" />
+          <AssociationSet Name="FK_FRIEND_ID" Association="Self.FK_FRIEND_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="FRIEND" EntitySet="FRIENDs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__USER___20C1E124" Association="Self.FK__PASTEBOOK__USER___20C1E124">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_FRIEND" EntitySet="PASTEBOOK_FRIEND" />
+          <AssociationSet Name="FK_USER_ID" Association="Self.FK_USER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="FRIEND" EntitySet="FRIENDs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__LIKED__276EDEB3" Association="Self.FK__PASTEBOOK__LIKED__276EDEB3">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_LIKE" EntitySet="PASTEBOOK_LIKE" />
+          <AssociationSet Name="FK_LIKE_BY" Association="Self.FK_LIKE_BY">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="LIKE" EntitySet="LIKEs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___267ABA7A" Association="Self.FK__PASTEBOOK__POST___267ABA7A">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_LIKE" EntitySet="PASTEBOOK_LIKE" />
+          <AssociationSet Name="FK_POST_POST_ID" Association="Self.FK_POST_POST_ID">
+            <End Role="POST" EntitySet="POSTs" />
+            <End Role="LIKE" EntitySet="LIKEs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POST___2F10007B" Association="Self.FK__PASTEBOOK__POST___2F10007B">
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <AssociationSet Name="FK_POST_ID" Association="Self.FK_POST_ID">
+            <End Role="POST" EntitySet="POSTs" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATIONs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__RECEI__2C3393D0" Association="Self.FK__PASTEBOOK__RECEI__2C3393D0">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <AssociationSet Name="FK_RECEIVER_ID" Association="Self.FK_RECEIVER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATIONs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__SENDE__2D27B809" Association="Self.FK__PASTEBOOK__SENDE__2D27B809">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_NOTIFICATION" EntitySet="PASTEBOOK_NOTIFICATION" />
+          <AssociationSet Name="FK_SENDER_ID" Association="Self.FK_SENDER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATIONs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__POSTE__108B795B" Association="Self.FK__PASTEBOOK__POSTE__108B795B">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
+          <AssociationSet Name="FK_POSTER_ID" Association="Self.FK_POSTER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="POST" EntitySet="POSTs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__PROFI__0F975522" Association="Self.FK__PASTEBOOK__PROFI__0F975522">
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
-            <End Role="PASTEBOOK_POST" EntitySet="PASTEBOOK_POST" />
+          <AssociationSet Name="FK_PROFILE_OWNER_ID" Association="Self.FK_PROFILE_OWNER_ID">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="POST" EntitySet="POSTs" />
           </AssociationSet>
-          <AssociationSet Name="FK__PASTEBOOK__COUNT__0AD2A005" Association="Self.FK__PASTEBOOK__COUNT__0AD2A005">
+          <AssociationSet Name="FK_COUNTRY_ID" Association="Self.FK_COUNTRY_ID">
             <End Role="REF_COUNTRY" EntitySet="REF_COUNTRY" />
-            <End Role="PASTEBOOK_USER" EntitySet="PASTEBOOK_USER" />
+            <End Role="USER" EntitySet="USERs" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -630,10 +653,10 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PASTEBOOKModelStoreContainer" CdmEntityContainer="PASTEBOOKEntities">
-          <EntitySetMapping Name="PASTEBOOK_COMMENT">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_COMMENT">
-              <MappingFragment StoreEntitySet="PASTEBOOK_COMMENT">
+        <EntityContainerMapping StorageEntityContainer="PastebookModelStoreContainer" CdmEntityContainer="PastebookEntities">
+          <EntitySetMapping Name="COMMENTs">
+            <EntityTypeMapping TypeName="PastebookModel.COMMENT">
+              <MappingFragment StoreEntitySet="COMMENT">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="POST_ID" ColumnName="POST_ID" />
                 <ScalarProperty Name="POSTER_ID" ColumnName="POSTER_ID" />
@@ -642,33 +665,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PASTEBOOK_FRIEND">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_FRIEND">
-              <MappingFragment StoreEntitySet="PASTEBOOK_FRIEND">
+          <EntitySetMapping Name="FRIENDs">
+            <EntityTypeMapping TypeName="PastebookModel.FRIEND">
+              <MappingFragment StoreEntitySet="FRIEND">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="FRIEND_ID" ColumnName="FRIEND_ID" />
                 <ScalarProperty Name="REQUEST" ColumnName="REQUEST" />
-                <ScalarProperty Name="IsBLOCKED" ColumnName="IsBLOCKED" />
+                <ScalarProperty Name="BLOCKED" ColumnName="BLOCKED" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PASTEBOOK_LIKE">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_LIKE">
-              <MappingFragment StoreEntitySet="PASTEBOOK_LIKE">
+          <EntitySetMapping Name="LIKEs">
+            <EntityTypeMapping TypeName="PastebookModel.LIKE">
+              <MappingFragment StoreEntitySet="LIKE">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="POST_ID" ColumnName="POST_ID" />
                 <ScalarProperty Name="LIKED_BY" ColumnName="LIKED_BY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PASTEBOOK_NOTIFICATION">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_NOTIFICATION">
-              <MappingFragment StoreEntitySet="PASTEBOOK_NOTIFICATION">
+          <EntitySetMapping Name="NOTIFICATIONs">
+            <EntityTypeMapping TypeName="PastebookModel.NOTIFICATION">
+              <MappingFragment StoreEntitySet="NOTIFICATION">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="NOTIF_TYPE" ColumnName="NOTIF_TYPE" />
                 <ScalarProperty Name="RECEIVER_ID" ColumnName="RECEIVER_ID" />
+                <ScalarProperty Name="NOTIF_TYPE" ColumnName="NOTIF_TYPE" />
                 <ScalarProperty Name="SENDER_ID" ColumnName="SENDER_ID" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="COMMENT_ID" ColumnName="COMMENT_ID" />
@@ -677,9 +700,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PASTEBOOK_POST">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_POST">
-              <MappingFragment StoreEntitySet="PASTEBOOK_POST">
+          <EntitySetMapping Name="POSTs">
+            <EntityTypeMapping TypeName="PastebookModel.POST">
+              <MappingFragment StoreEntitySet="POST">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
                 <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
@@ -688,9 +711,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PASTEBOOK_USER">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.PASTEBOOK_USER">
-              <MappingFragment StoreEntitySet="PASTEBOOK_USER">
+          <EntitySetMapping Name="REF_COUNTRY">
+            <EntityTypeMapping TypeName="PastebookModel.REF_COUNTRY">
+              <MappingFragment StoreEntitySet="REF_COUNTRY">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PastebookModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="PastebookModel.USER">
+              <MappingFragment StoreEntitySet="USER">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
                 <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
@@ -705,14 +747,6 @@
                 <ScalarProperty Name="DATE_CREATED" ColumnName="DATE_CREATED" />
                 <ScalarProperty Name="ABOUT_ME" ColumnName="ABOUT_ME" />
                 <ScalarProperty Name="EMAIL_ADDRESS" ColumnName="EMAIL_ADDRESS" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="REF_COUNTRY">
-            <EntityTypeMapping TypeName="PASTEBOOKModel.REF_COUNTRY">
-              <MappingFragment StoreEntitySet="REF_COUNTRY">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="COUNTRY" ColumnName="COUNTRY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

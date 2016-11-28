@@ -12,12 +12,12 @@ namespace PastebookEF
     using System;
     using System.Collections.Generic;
     
-    public partial class PASTEBOOK_COMMENT
+    public partial class COMMENT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PASTEBOOK_COMMENT()
+        public COMMENT()
         {
-            this.PASTEBOOK_NOTIFICATION = new HashSet<PASTEBOOK_NOTIFICATION>();
+            this.NOTIFICATIONs = new HashSet<NOTIFICATION>();
         }
     
         public int ID { get; set; }
@@ -27,8 +27,8 @@ namespace PastebookEF
         public System.DateTime DATE_CREATED { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION { get; set; }
-        public virtual PASTEBOOK_POST PASTEBOOK_POST { get; set; }
-        public virtual PASTEBOOK_USER PASTEBOOK_USER { get; set; }
+        public virtual ICollection<NOTIFICATION> NOTIFICATIONs { get; set; }
+        public virtual POST POST { get; set; }
+        public virtual USER USER { get; set; }
     }
 }

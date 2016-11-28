@@ -8,6 +8,6 @@ namespace Pastebook.Models
 {
     public class PostViewModel
     {
-        public List<PASTEBOOK_POST> ListOfPost = new List<PASTEBOOK_POST>();
+        public List<POST> ListOfPost = new List<POST>();
     }
 }

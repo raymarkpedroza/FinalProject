@@ -1,5 +1,8 @@
-﻿@model IEnumerable<PastebookEF.PASTEBOOK_NOTIFICATION>
+﻿@model IEnumerable<PastebookEF.NOTIFICATION>
 
+@{
+    ViewBag.Title = "Notifications";
+}
 
 <div class="container">
     <div class="row">
@@ -8,27 +11,35 @@
         </div>
             @foreach (var notification in Model)
             {
-                    if (notification.SENDER_ID != (int)Session["UserId"])
+                <div class="notification-notification-items notification-color">
+                    @if (notification.NOTIF_TYPE == "L")
                     {
-                        <div class="notification-notification-items">
-
-                            @if (notification.NOTIF_TYPE == "L" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
-                            {
-                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " liked a post  you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
-                            }
-
-                            @if (notification.NOTIF_TYPE == "C" && notification.PASTEBOOK_POST.PROFILE_OWNER_ID == (int)Session["UserId"] && notification.SENDER_ID != (int)Session["UserId"])
-                            {
-                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " commented on a post you posted.", "Posts", "Pastebook", new { postId = notification.POST_ID }, null);
-                            }
-
-
-                            @if (notification.NOTIF_TYPE == "F" && notification.SENDER_ID != (int)Session["UserId"])
-                            {
-                            @Html.ActionLink(notification.PASTEBOOK_USER1.FIRST_NAME + " " + notification.PASTEBOOK_USER1.LAST_NAME + " sent you a friend request.", "UserProfile", "Pastebook", new { username = notification.PASTEBOOK_USER1.USER_NAME }, null);
-                            }
-                        </div>
+                        <a href="@Url.Action("Posts", "Post", new { postId = notification.POST_ID })">
+                            <div>   
+                                <span>@notification.USER1.FIRST_NAME @notification.USER1.LAST_NAME liked a post you posted.</span>
+                            </div>
+                        </a>
                     }
+
+                    @if (notification.NOTIF_TYPE == "C")
+                    {
+                        <a href="@Url.Action("Posts", "Post", new { postId = notification.POST_ID })">
+                            <div>   
+                                <span>@notification.USER1.FIRST_NAME @notification.USER1.LAST_NAME commented on a post you posted.</span>
+                            </div>
+                        </a>
+                    }
+
+
+                    @if (notification.NOTIF_TYPE == "F")
+                    {
+                        <a href="@Url.Action("UserProfile", "Profile", new { username = notification.USER1.USER_NAME })">
+                            <div>  
+                                <span>@notification.USER1.FIRST_NAME @notification.USER1.LAST_NAME sent you a friend request.</span>
+                            </div>
+                        </a>
+                    }
+                </div>
             }
     </div>
 </div>

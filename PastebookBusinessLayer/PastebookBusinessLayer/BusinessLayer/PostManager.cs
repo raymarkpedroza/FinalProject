@@ -17,22 +17,22 @@ namespace PastebookBusinessLayer.BusinessLayer
             _postRepository = new PostRepository();
         }
 
-        public bool CreatePost(PASTEBOOK_POST post)
+        public bool CreatePost(POST post)
         {
             return _postRepository.Create(post);
         }
 
-        public List<PASTEBOOK_POST> GetNewsfeedPost(List<int> listOfPostersId)
+        public List<POST> GetNewsfeedPost(List<int> listOfPostersId)
         {
             return _postRepository.GetNewsfeedPost(listOfPostersId);
         }
 
-        public List<PASTEBOOK_POST> GetTimelinePost(int id)
+        public List<POST> GetTimelinePost(int id)
         {
             return _postRepository.GetTimelinePost(id);
         }
 
-        public PASTEBOOK_POST GetPost(int id)
+        public POST GetPost(int id)
         {
             return _postRepository.GetPost(id);
         }

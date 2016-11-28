@@ -12,14 +12,14 @@ namespace PastebookEF
     using System;
     using System.Collections.Generic;
     
-    public partial class PASTEBOOK_POST
+    public partial class POST
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PASTEBOOK_POST()
+        public POST()
         {
-            this.PASTEBOOK_COMMENT = new HashSet<PASTEBOOK_COMMENT>();
-            this.PASTEBOOK_LIKE = new HashSet<PASTEBOOK_LIKE>();
-            this.PASTEBOOK_NOTIFICATION = new HashSet<PASTEBOOK_NOTIFICATION>();
+            this.COMMENTs = new HashSet<COMMENT>();
+            this.LIKEs = new HashSet<LIKE>();
+            this.NOTIFICATIONs = new HashSet<NOTIFICATION>();
         }
     
         public int ID { get; set; }
@@ -29,12 +29,12 @@ namespace PastebookEF
         public int POSTER_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_COMMENT> PASTEBOOK_COMMENT { get; set; }
+        public virtual ICollection<COMMENT> COMMENTs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_LIKE> PASTEBOOK_LIKE { get; set; }
+        public virtual ICollection<LIKE> LIKEs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PASTEBOOK_NOTIFICATION> PASTEBOOK_NOTIFICATION { get; set; }
-        public virtual PASTEBOOK_USER PASTEBOOK_USER { get; set; }
-        public virtual PASTEBOOK_USER PASTEBOOK_USER1 { get; set; }
+        public virtual ICollection<NOTIFICATION> NOTIFICATIONs { get; set; }
+        public virtual USER USER { get; set; }
+        public virtual USER USER1 { get; set; }
     }
 }

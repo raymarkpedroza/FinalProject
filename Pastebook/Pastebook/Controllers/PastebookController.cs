@@ -15,7 +15,8 @@ namespace Pastebook.Controllers
     {
         AccountManager accountManager = new AccountManager();
         CountryManager countryManager = new CountryManager();
-        InteractionManager interactionManager = new InteractionManager();
+        CommentManager commentManager = new CommentManager();
+        FriendManager friendManager = new FriendManager();
         PostManager postManager = new PostManager();
         ValidationManager validationManager = new ValidationManager();
 
@@ -23,7 +24,7 @@ namespace Pastebook.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            PASTEBOOK_USER model = new PASTEBOOK_USER();
+            USER model = new USER();
             model = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
             return View("~/Views/Pastebook/Home.cshtml", model);
         }
@@ -69,7 +70,7 @@ namespace Pastebook.Controllers
         }
 
         [HttpPost, Route("account/register/")]
-        public ActionResult Register(RegisterViewModel registerViewModel, PASTEBOOK_USER user)
+        public ActionResult Register(RegisterViewModel registerViewModel, USER user)
         {
             user.PASSWORD = registerViewModel.Password;
             user.DATE_CREATED = DateTime.Now;
@@ -127,7 +128,7 @@ namespace Pastebook.Controllers
         }
 
         [HttpPost, Route("account/login/")]
-        public ActionResult Login(PASTEBOOK_USER user)
+        public ActionResult Login(USER user)
         {
             if (accountManager.LoginUser(user.EMAIL_ADDRESS, user.PASSWORD, out user))
             {
@@ -157,40 +158,6 @@ namespace Pastebook.Controllers
             return PartialView("~/Views/Pastebook/_PastebookNavbarPartialView.cshtml");
         }
 
-        [PastebookAuthorize]
-        [HttpGet, Route("{username}/")]
-        public ActionResult UserProfile(string username)
-        {
-            ProfileViewModel profileViewModel = new ProfileViewModel();
-            profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
-            profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
-
-            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
-            profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
-            return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
-        }
-
-        [PastebookAuthorize]
-        [HttpGet, Route("friends/")]
-        public ActionResult Friends()
-        {
-            List<PASTEBOOK_FRIEND> listOfFriend = new List<PASTEBOOK_FRIEND>();
-            FriendListViewModel friendListViewModel = new FriendListViewModel();
-            List<int> listOfFriendId = new List<int>();
-
-            listOfFriend = interactionManager.GetFriendList((int)Session["UserId"]);
-
-            foreach (var friend in listOfFriend)
-            {
-                if (friend.USER_ID == (int)Session["UserId"])
-                {
-                    friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
-                }
-            }
-
-            return View(friendListViewModel);
-        }
-
         public ActionResult FileUpload(HttpPostedFileBase file)
         {
             if (file != null)
@@ -202,7 +169,7 @@ namespace Pastebook.Controllers
                     file.InputStream.CopyTo(ms);
                     byte[] array = ms.GetBuffer();
 
-                    PASTEBOOK_USER user = new PASTEBOOK_USER();
+                    USER user = new USER();
                     user = accountManager.GetUser(x=>x.USER_NAME == Session["Username"].ToString());
                     user.PROFILE_PIC = array;
 
@@ -216,60 +183,16 @@ namespace Pastebook.Controllers
             profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
 
             profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
-            profileViewModel.ListOfFriends = interactionManager.GetListOfFriendRequest(profileViewModel.User.ID);
+            profileViewModel.ListOfFriends = friendManager.GetListOfFriendRequest(profileViewModel.User.ID);
             ViewBag.Result = true;
 
             return View("~/Views/Pastebook/Profile.cshtml", profileViewModel);
         }
 
-        public PartialViewResult GetProfileDetails(string username)
-        {
-            ProfileViewModel profileViewModel = new ProfileViewModel();
-            List<int> listOfFriendId = new List<int>();
-
-            profileViewModel.User = accountManager.GetUserWithCountry(x=>x.USER_NAME == username);
-            profileViewModel.CountryName = profileViewModel.User.REF_COUNTRY.COUNTRY;
-
-            profileViewModel.ListOfCountryModel = countryManager.GetAllCountries();
-            profileViewModel.ListOfFriends = interactionManager.GetFriendList(profileViewModel.User.ID);
-
-            return PartialView("~/Views/Pastebook/_ProfileDetailsPartialView.cshtml", profileViewModel);
-        }
-
-        public PartialViewResult GetFriendList(int id)
-        {
-            List<PASTEBOOK_FRIEND> listOfFriend = new List<PASTEBOOK_FRIEND>();
-            FriendListViewModel friendListViewModel = new FriendListViewModel();
-            List<int> listOfFriendId = new List<int>();
-
-            listOfFriend = interactionManager.GetFriendList(id);
-
-            foreach (var friend in listOfFriend)
-            {
-                if (friend.USER_ID == id)
-                {
-                    friendListViewModel.ListOfFriendsWithDetails.Add(new FriendUserModel() { Friend = friend, FriendDetails = friend.PASTEBOOK_USER });
-                }
-            }
-
-            friendListViewModel.ListOfFriendsWithDetails.OrderBy(x => x.FriendDetails.FIRST_NAME);
-
-            return PartialView("~/Views/Pastebook/_FriendListPartialView.cshtml", friendListViewModel);
-        }
-
-        [PastebookAuthorize]
-        [Route("posts/{postId:int}/")]
-        public ActionResult Posts(int postId)
-        {
-            PASTEBOOK_POST post = new PASTEBOOK_POST();
-            post = postManager.GetPost(postId);
-            return View(post);
-        }
-
-        [Route("search/")]
+        [Route("search/user")]
         public ActionResult Search(SearchModel search)
         {
-            List<PASTEBOOK_USER> searchResults = new List<PASTEBOOK_USER>();
+            List<USER> searchResults = new List<USER>();
             ResultsViewModel resultsViewModel = new ResultsViewModel();
             if (!validationManager.CheckIfIsNullOrEmpty(search.Name))
             {

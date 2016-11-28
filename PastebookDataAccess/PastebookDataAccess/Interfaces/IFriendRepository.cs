@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PastebookDataAccess
 {
-    public interface IFriendRepository:IRepository<PASTEBOOK_FRIEND>
+    public interface IFriendRepository:IRepository<FRIEND>
     {
-        List<PASTEBOOK_FRIEND> GetListOfFriend(int id);
-        List<PASTEBOOK_FRIEND> GetListOfFriendRequest(int id);
+        List<FRIEND> GetListOfFriend(int id);
+        List<FRIEND> GetListOfFriendRequest(int id);
     }
 }

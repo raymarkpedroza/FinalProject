@@ -10,7 +10,7 @@ namespace Pastebook.Models
     public class RegisterViewModel
     {
         public List<REF_COUNTRY> ListOfCountryModel = new List<REF_COUNTRY>();
-        public PASTEBOOK_USER User = new PASTEBOOK_USER();
+        public USER User = new USER();
 
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
